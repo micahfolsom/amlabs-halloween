@@ -35,7 +35,6 @@
  * If no protocol is defined, all protocols (except Bang&Olufsen) are active.
  * This must be done before the #include <IRremote.hpp>
  */
-
 #define DECODE_NEC          // Includes Apple and Onkyo
 #include <Arduino.h>
 #include "PinDefinitionsAndMore.h"
@@ -46,16 +45,9 @@ struct Timer {
   unsigned long duration;
 };
 
-/*
- * Set up the data to be sent.
- * For most protocols, the data is build up with a constant 8 (or 16 byte) address
- * and a variable 8 bit command.
- * There are exceptions like Sony and Denon, which have 5 bit address.
- */
-uint8_t sCommand = 0xDE;
+uint8_t sCommand = 0xAC;
 uint8_t sRepeats = 4;
 struct Timer send_timer;
-int const RPI_PIN_OUT = 4;
 
 void setup() {
     Serial.begin(115200);
@@ -74,12 +66,28 @@ void setup() {
     Serial.print(F("Send IR signals at pin "));
     Serial.println(IR_SEND_PIN);
     IrSender.begin(DISABLE_LED_FEEDBACK);
-
-    // Pi comms
-    pinMode(RPI_PIN_OUT, OUTPUT);
+    send_timer.duration = 5000;
+    send_timer.start = millis();
 }
 
 void loop() {
+  // Send
+  unsigned long current_time = millis();
+  if ((current_time - send_timer.start) >= send_timer.duration) {
+    Serial.println();
+    Serial.print(F("Send now: address=0x00, command=0x"));
+    Serial.print(sCommand, HEX);
+    Serial.print(F(", repeats="));
+    Serial.print(sRepeats);
+    Serial.println();
+
+    Serial.println(F("Send standard NEC with 8 bit address"));
+    Serial.flush();
+    send_timer.start = millis();
+
+    // Receiver output for the first loop must be: Protocol=NEC Address=0x102 Command=0x34 Raw-Data=0xCB340102 (32 bits)
+    IrSender.sendNEC(0x00, sCommand, sRepeats);
+  }
     /*
      * Check if received data is available and if yes, try to decode it.
      * Decoded result is in the IrReceiver.decodedIRData structure.
@@ -100,30 +108,12 @@ void loop() {
             IrReceiver.printIRResultRawFormatted(&Serial, true);
         }
         Serial.println();
-
-        /*
-         * !!!Important!!! Enable receiving of the next value,
+        /* !!!Important!!! Enable receiving of the next value,
          * since receiving has stopped after the end of the current received data packet.
          */
         IrReceiver.resume(); // Enable receiving of the next value
-
-        /*
-         * Finally, check the received data and perform actions according to the received command
-         */
-        if (IrReceiver.decodedIRData.command == 0xAC) {
-            Serial.println("Got 0xAC");
-            Serial.println();
-            Serial.print(F("Send now: address=0x00, command=0xDE"));
-            Serial.print(F(", repeats="));
-            Serial.print(sRepeats);
-            Serial.println();
-            Serial.flush();
-
-            // Send signal back confirming shot
-            delay(100);
-            IrSender.sendNEC(0x00, 0xDE, sRepeats);
-        } else {
-          Serial.println("Got something else");
+        if (IrReceiver.decodedIRData.command == 0xDE) {
+            Serial.println("Received DE");
         }
     }
 }
