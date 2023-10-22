@@ -15,11 +15,15 @@
   unsigned long duration;
 };
 
-int trigPin = 7;    // Trigger
-int echoPin = 8;    // Echo
-int roarPin = 9;    // Output to sound board
+int trigPin = 6;    // Trigger
+int echoPin = 7;    // Echo
+int const NROAR = 5;
+int roarPins[NROAR] = {8, 9, 10, 11, 12};
+int currRoar = 0;
 long duration, cm, inches;
 struct Timer roar_cooldown;
+int const RESET_TIME = 5000; // seconds
+float const TRIGGER_DISTANCE = 150.0; // cm
  
 void setup() {
   // Serial Port begin
@@ -27,12 +31,16 @@ void setup() {
   // Define inputs and outputs
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
-  pinMode(roarPin, OUTPUT);
-  // Sound board will play when PIN 2 goes LOW
-  // Must be LOW for ~500 ms - short pulses do not
-  // trigger
-  digitalWrite(roarPin, HIGH);
-  roar_cooldown.duration = 10000; // ms
+  for (int i=0;i < NROAR;++i) {
+    pinMode(roarPins[i], OUTPUT);
+    // Sound board will play when PIN 2 goes LOW
+    // Must be LOW for ~500 ms - short pulses do not
+    // trigger
+    digitalWrite(roarPins[i], HIGH);
+  }
+
+  roar_cooldown.duration = RESET_TIME; // ms
+  roar_cooldown.start = millis() - RESET_TIME + 1000;
 }
  
 void loop() {
@@ -65,13 +73,17 @@ void loop() {
   if ((current_time - roar_cooldown.start) < roar_cooldown.duration) {
     can_roar = false;
   }
-  if ((cm < 30.0) && can_roar) {
-    digitalWrite(roarPin, LOW);
+  if ((cm < TRIGGER_DISTANCE) && can_roar) {
+    digitalWrite(roarPins[currRoar], LOW);
     delay(500);
-    digitalWrite(roarPin, HIGH);
+    digitalWrite(roarPins[currRoar], HIGH);
     roar_cooldown.start = millis();
     Serial.print("ROAR");
     Serial.println();
+    currRoar++;
+    if (currRoar >= NROAR) {
+      currRoar = 0;
+    }
   }
   
   delay(500);
