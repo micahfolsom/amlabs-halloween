@@ -39,23 +39,24 @@
 #define DECODE_NEC          // Includes Apple and Onkyo
 #include <Arduino.h>
 #include "PinDefinitionsAndMore.h"
-#include <IRremote.hpp> // include the library
+#include <IRremote.hpp>
 
 struct Timer {
   unsigned long start;
   unsigned long duration;
 };
 
-/*
- * Set up the data to be sent.
- * For most protocols, the data is build up with a constant 8 (or 16 byte) address
- * and a variable 8 bit command.
- * There are exceptions like Sony and Denon, which have 5 bit address.
- */
-uint8_t sCommand = 0xDE;
-uint8_t sRepeats = 4;
+uint8_t sRepeats = 2;
 struct Timer send_timer;
-int const RPI_PIN_OUT = 4;
+int const RPI_TRIGGER_PIN = 4;
+int const RPI_RESET_PIN = 5;
+int const NPROJECTORS = 3;
+// 0, 1, or 2
+int const THIS_PROJECTOR = 0;
+// These correspond to 1, 2, and 3 on the remote
+int const RESET_CODES[NPROJECTORS] = { 0x0C, 0x18, 0x5E };
+int const TRIGGER_CODES[NPROJECTORS] = { 0xAB, 0xCD, 0xEF };
+int const CONFIRM_CODES[NPROJECTORS] = { 0xBA, 0xDC, 0xFE };
 
 void setup() {
     Serial.begin(115200);
@@ -76,7 +77,8 @@ void setup() {
     IrSender.begin(DISABLE_LED_FEEDBACK);
 
     // Pi comms
-    pinMode(RPI_PIN_OUT, OUTPUT);
+    pinMode(RPI_TRIGGER_PIN, OUTPUT);
+    pinMode(RPI_RESET_PIN, OUTPUT);
 }
 
 void loop() {
@@ -110,20 +112,29 @@ void loop() {
         /*
          * Finally, check the received data and perform actions according to the received command
          */
-        if (IrReceiver.decodedIRData.command == 0xAC) {
-            Serial.println("Got 0xAC");
-            Serial.println();
-            Serial.print(F("Send now: address=0x00, command=0xDE"));
-            Serial.print(F(", repeats="));
-            Serial.print(sRepeats);
-            Serial.println();
-            Serial.flush();
+        uint16_t cmd = IrReceiver.decodedIRData.command;
+        if (cmd == TRIGGER_CODES[THIS_PROJECTOR]) {
+          Serial.println("Got " + cmd);
+          Serial.println();
+          Serial.print(F("Sending back confirmation signal"));
+          Serial.print(F(", repeats="));
+          Serial.print(sRepeats);
+          Serial.println();
+          Serial.flush();
 
-            // Send signal back confirming shot
-            delay(100);
-            IrSender.sendNEC(0x00, 0xDE, sRepeats);
+          // Send signal back confirming shot
+          IrSender.sendNEC(0x00, CONFIRM_CODES[THIS_PROJECTOR], sRepeats);
+          digitalWrite(RPI_TRIGGER_PIN, HIGH);
+          delay(10);
+          digitalWrite(RPI_TRIGGER_PIN, LOW);
+        } else if (cmd == RESET_CODES[THIS_PROJECTOR]) {
+          Serial.print(F("Received reset signal!"));
+          digitalWrite(RPI_RESET_PIN, HIGH);
+          delay(10);
+          digitalWrite(RPI_RESET_PIN, LOW);
         } else {
-          Serial.println("Got something else");
+          Serial.print(F("Got something else: "));
+          Serial.println(cmd);
         }
     }
 }

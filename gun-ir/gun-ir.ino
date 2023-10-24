@@ -39,15 +39,30 @@
 #include <Arduino.h>
 #include "PinDefinitionsAndMore.h"
 #include <IRremote.hpp> // include the library
+#include <Adafruit_DotStar.h>
+#include <SPI.h>
 
 struct Timer {
   unsigned long start;
   unsigned long duration;
 };
 
-uint8_t sCommand = 0xAC;
 uint8_t sRepeats = 4;
-struct Timer send_timer;
+int const TRIGGER_PIN = 4;
+int const LED_CLOCK_PIN = 5;
+int const TRIGGER_LED_PIN = 6;
+int const NLEDS = 22;
+int const NGUNS = 3;
+// 0, 1, or 2
+int const THIS_GUN = 0;
+int const TRIGGER_CODES[NGUNS] = { 0xAB, 0xCD, 0xEF };
+int const CONFIRM_CODES[NGUNS] = { 0xBA, 0xDC, 0xFE };
+Adafruit_DotStar strip(NLEDS, TRIGGER_LED_PIN, LED_CLOCK_PIN, DOTSTAR_BRG);
+int const MAX_HITS = 3;
+int nHits = 0;
+struct Timer retrigger_cooldown;
+struct Timer reset_hold_timer;
+bool reset_initiated = false;
 
 void setup() {
     Serial.begin(115200);
@@ -66,54 +81,101 @@ void setup() {
     Serial.print(F("Send IR signals at pin "));
     Serial.println(IR_SEND_PIN);
     IrSender.begin(DISABLE_LED_FEEDBACK);
-    send_timer.duration = 5000;
-    send_timer.start = millis();
+    retrigger_cooldown.duration = 1000;
+    reset_hold_timer.duration = 5000;
+
+    // Set up LED and trigger button pins
+    strip.begin();
+    //strip.show();
+    pinMode(TRIGGER_PIN, INPUT);
+    pinMode(TRIGGER_LED_PIN, OUTPUT);
+    pinMode(LED_CLOCK_PIN, OUTPUT);
 }
 
 void loop() {
-  // Send
-  unsigned long current_time = millis();
-  if ((current_time - send_timer.start) >= send_timer.duration) {
-    Serial.println();
-    Serial.print(F("Send now: address=0x00, command=0x"));
-    Serial.print(sCommand, HEX);
-    Serial.print(F(", repeats="));
-    Serial.print(sRepeats);
-    Serial.println();
-
-    Serial.println(F("Send standard NEC with 8 bit address"));
-    Serial.flush();
-    send_timer.start = millis();
-
-    // Receiver output for the first loop must be: Protocol=NEC Address=0x102 Command=0x34 Raw-Data=0xCB340102 (32 bits)
-    IrSender.sendNEC(0x00, sCommand, sRepeats);
-  }
-    /*
-     * Check if received data is available and if yes, try to decode it.
-     * Decoded result is in the IrReceiver.decodedIRData structure.
-     *
-     * E.g. command is in IrReceiver.decodedIRData.command
-     * address is in command is in IrReceiver.decodedIRData.address
-     * and up to 32 bit raw data in IrReceiver.decodedIRData.decodedRawData
-     */
-    if (IrReceiver.decode()) {
-        /*
-         * Print a short summary of received data
-         */
-        IrReceiver.printIRResultShort(&Serial);
-        IrReceiver.printIRSendUsage(&Serial);
-        if (IrReceiver.decodedIRData.protocol == UNKNOWN) {
-            Serial.println(F("Received noise or an unknown (or not yet enabled) protocol"));
-            // We have an unknown protocol here, print more info
-            IrReceiver.printIRResultRawFormatted(&Serial, true);
-        }
-        Serial.println();
-        /* !!!Important!!! Enable receiving of the next value,
-         * since receiving has stopped after the end of the current received data packet.
-         */
-        IrReceiver.resume(); // Enable receiving of the next value
-        if (IrReceiver.decodedIRData.command == 0xDE) {
-            Serial.println("Received DE");
-        }
+  int trigger_val = digitalRead(TRIGGER_PIN);
+  if (trigger_val == HIGH) {
+    // Shoot
+    int elapsed = millis() - retrigger_cooldown.start;
+    bool off_cooldown = elapsed >= retrigger_cooldown.duration;
+    if (off_cooldown) {
+      Serial.print(F("Trigger pulled!"));
+      Serial.println();
+      Serial.flush();
+      IrSender.sendNEC(0x00, TRIGGER_CODES[THIS_GUN], sRepeats);
+      strip.fill(strip.Color(150, 0, 150), 0, NLEDS);
+      strip.show();
+      delay(200);
+      strip.fill(strip.Color(0, 0, 0), 0, NLEDS);
+      strip.show();
+      retrigger_cooldown.start = millis();
+      reset_hold_timer.start = millis();
+      reset_initiated = true;
     }
+    if (reset_initiated) {
+      elapsed = millis() - reset_hold_timer.start;
+      if (elapsed >= reset_hold_timer.duration) {
+        nHits = 0;
+        strip.clear();
+        reset_initiated = false;
+      }
+    }
+  } else {
+    reset_initiated = false;
+  }
+  /*
+  * Check if received data is available and if yes, try to decode it.
+  * Decoded result is in the IrReceiver.decodedIRData structure.
+  *
+  * E.g. command is in IrReceiver.decodedIRData.command
+  * address is in command is in IrReceiver.decodedIRData.address
+  * and up to 32 bit raw data in IrReceiver.decodedIRData.decodedRawData
+  */
+  if (IrReceiver.decode()) {
+    /*
+    * Print a short summary of received data
+    */
+    IrReceiver.printIRResultShort(&Serial);
+    IrReceiver.printIRSendUsage(&Serial);
+    if (IrReceiver.decodedIRData.protocol == UNKNOWN) {
+      Serial.println(F("Received noise or an unknown (or not yet enabled) protocol"));
+      // We have an unknown protocol here, print more info
+      IrReceiver.printIRResultRawFormatted(&Serial, true);
+    }
+    Serial.println();
+    /* !!!Important!!! Enable receiving of the next value,
+    * since receiving has stopped after the end of the current received data packet.
+    */
+    IrReceiver.resume(); // Enable receiving of the next value
+    if (IrReceiver.decodedIRData.command == CONFIRM_CODES[THIS_GUN]) {
+      Serial.println("Received hit confirmation");
+      // They just shot, and there's no delay on generating the return
+      // signal for accuracy
+      // Wait a short time so the "shot" lighting has a chance to happen
+      delay(100);
+      nHits++;
+      if (nHits == 1) {
+        for (int i=0;i < 10;++i) {
+          strip.fill(strip.Color(255, 0, 0), 0, (i / 2) + 1);
+          strip.setBrightness(i * (255.5 / 9.0));
+          strip.show();
+          delay(100);
+        }
+      } else if (nHits == 2) {
+        for (int i=0;i < 12;++i) {
+          strip.fill(strip.Color(255, 0, 0), 0, i + 1);
+          strip.setBrightness(i * (255.5 / 11.0));
+          strip.show();
+          delay(83);
+        }
+      } else if (nHits == 3) {
+        for (int i=0;i < 12;++i) {
+          strip.fill(strip.Color(255, 0, 0), 0, (2 * i) + 1);
+          strip.setBrightness(i * (255.5 / 11.0));
+          strip.show();
+          delay(83);
+        }
+      }
+    }
+  }
 }
