@@ -23,7 +23,8 @@ int currRoar = 0;
 long duration, cm, inches;
 struct Timer roar_cooldown;
 int const RESET_TIME = 5000; // seconds
-float const TRIGGER_DISTANCE = 150.0; // cm
+float const MIN_TRIGGER_DISTANCE = 10.0; // cm
+float const MAX_TRIGGER_DISTANCE = 150.0; // cm
  
 void setup() {
   // Serial Port begin
@@ -73,7 +74,7 @@ void loop() {
   if ((current_time - roar_cooldown.start) < roar_cooldown.duration) {
     can_roar = false;
   }
-  if ((cm < TRIGGER_DISTANCE) && can_roar) {
+  if ((cm > MIN_TRIGGER_DISTANCE) && (cm < MAX_TRIGGER_DISTANCE) && can_roar) {
     digitalWrite(roarPins[currRoar], LOW);
     delay(500);
     digitalWrite(roarPins[currRoar], HIGH);

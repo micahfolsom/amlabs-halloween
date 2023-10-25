@@ -63,6 +63,7 @@ int nHits = 0;
 struct Timer retrigger_cooldown;
 struct Timer reset_hold_timer;
 bool reset_initiated = false;
+struct Timer bounceback_cooldown;
 
 void setup() {
     Serial.begin(115200);
@@ -83,6 +84,7 @@ void setup() {
     IrSender.begin(DISABLE_LED_FEEDBACK);
     retrigger_cooldown.duration = 1000;
     reset_hold_timer.duration = 5000;
+    bounceback_cooldown.duration = 1000;
 
     // Set up LED and trigger button pins
     strip.begin();
@@ -98,7 +100,7 @@ void loop() {
     // Shoot
     int elapsed = millis() - retrigger_cooldown.start;
     bool off_cooldown = elapsed >= retrigger_cooldown.duration;
-    if (off_cooldown) {
+    if (off_cooldown && !reset_initiated) {
       Serial.print(F("Trigger pulled!"));
       Serial.println();
       Serial.flush();
@@ -118,6 +120,15 @@ void loop() {
         nHits = 0;
         strip.clear();
         reset_initiated = false;
+        Serial.println(F("Reset triggered by holding"));
+        for (int i=0;i < 3;++i) {
+          strip.fill(strip.Color(200, 200, 200), 0, NLEDS);
+          strip.show();
+          delay(200);
+          strip.clear();
+          strip.show();
+          delay(200);
+        }
       }
     }
   } else {
@@ -149,31 +160,36 @@ void loop() {
     IrReceiver.resume(); // Enable receiving of the next value
     if (IrReceiver.decodedIRData.command == CONFIRM_CODES[THIS_GUN]) {
       Serial.println("Received hit confirmation");
-      // They just shot, and there's no delay on generating the return
-      // signal for accuracy
-      // Wait a short time so the "shot" lighting has a chance to happen
-      delay(100);
-      nHits++;
-      if (nHits == 1) {
-        for (int i=0;i < 10;++i) {
-          strip.fill(strip.Color(255, 0, 0), 0, (i / 2) + 1);
-          strip.setBrightness(i * (255.5 / 9.0));
-          strip.show();
-          delay(100);
-        }
-      } else if (nHits == 2) {
-        for (int i=0;i < 12;++i) {
-          strip.fill(strip.Color(255, 0, 0), 0, i + 1);
-          strip.setBrightness(i * (255.5 / 11.0));
-          strip.show();
-          delay(83);
-        }
-      } else if (nHits == 3) {
-        for (int i=0;i < 12;++i) {
-          strip.fill(strip.Color(255, 0, 0), 0, (2 * i) + 1);
-          strip.setBrightness(i * (255.5 / 11.0));
-          strip.show();
-          delay(83);
+      int elapsed = millis() - bounceback_cooldown.start;
+      bool off_cooldown = elapsed >= bounceback_cooldown.duration;
+      if (off_cooldown) {
+        bounceback_cooldown.start = millis();
+        // They just shot, and there's no delay on generating the return
+        // signal for accuracy
+        // Wait a short time so the "shot" lighting has a chance to happen
+        delay(100);
+        nHits++;
+        if (nHits == 1) {
+          for (int i=0;i < 10;++i) {
+            strip.fill(strip.Color(255, 0, 0), 0, (i / 2) + 1);
+            strip.setBrightness(i * (255.5 / 9.0));
+            strip.show();
+            delay(100);
+          }
+        } else if (nHits == 2) {
+          for (int i=0;i < 12;++i) {
+            strip.fill(strip.Color(255, 0, 0), 0, i + 1);
+            strip.setBrightness(i * (255.5 / 11.0));
+            strip.show();
+            delay(83);
+          }
+        } else if (nHits == 3) {
+          for (int i=0;i < 12;++i) {
+            strip.fill(strip.Color(255, 0, 0), 0, (2 * i) + 1);
+            strip.setBrightness(i * (255.5 / 11.0));
+            strip.show();
+            delay(83);
+          }
         }
       }
     }
