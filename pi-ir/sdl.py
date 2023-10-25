@@ -1,5 +1,14 @@
 #!/usr/bin/env python
 import pygame
+import RPi.GPIO as gpio
+
+# GPIO pin numbers
+TRIGGER_PIN = 5
+RESET_PIN = 6
+# Use GPIO pin numbering, not raw header locations
+gpio.setmode(gpio.BCM)
+gpio.setup(TRIGGER_PIN, gpio.IN)
+gpio.setup(RESET_PIN, gpio.IN)
 
 # Init window, etc
 pygame.init()
@@ -43,6 +52,16 @@ while running:
                     state = 3
                     iframe = 0
 
+        if gpio.input(TRIGGER_PIN):
+            print(f"{TRIGGER_PIN}: HIGH. {val}")
+            state = 3
+            iframe = 0
+        if gpio.input(RESET_PIN):
+            print(f"{RESET_PIN}: HIGH. {val}")
+            state = 1
+            iframe = 0
+
+
         if state == 0:
             window.blit(source=rising_frames[iframe], dest=(0, 0))
             iframe = iframe + 1
@@ -63,7 +82,7 @@ while running:
 
         pygame.display.update()
         # 20 fps max
-        clock.tick(60)
+        clock.tick(20)
 
 
     # Check for CTRL+C
