@@ -46,7 +46,7 @@ struct Timer {
   unsigned long duration;
 };
 
-uint8_t sRepeats = 2;
+uint8_t sRepeats = 6;
 struct Timer send_timer;
 int const RPI_TRIGGER_PIN = 4;
 int const RPI_RESET_PIN = 5;
@@ -114,27 +114,29 @@ void loop() {
          */
         uint16_t cmd = IrReceiver.decodedIRData.command;
         if (cmd == TRIGGER_CODES[THIS_PROJECTOR]) {
-          Serial.println("Got " + cmd);
-          Serial.println();
-          Serial.print(F("Sending back confirmation signal"));
+          Serial.print("Got ");
+          Serial.println(cmd, HEX);
+          Serial.print(F("Sending back confirmation signal: "));
+          Serial.print(CONFIRM_CODES[THIS_PROJECTOR], HEX);
           Serial.print(F(", repeats="));
           Serial.print(sRepeats);
           Serial.println();
           Serial.flush();
 
           // Send signal back confirming shot
+          delay(100);
           IrSender.sendNEC(0x00, CONFIRM_CODES[THIS_PROJECTOR], sRepeats);
           digitalWrite(RPI_TRIGGER_PIN, HIGH);
-          delay(10);
+          delay(100);
           digitalWrite(RPI_TRIGGER_PIN, LOW);
         } else if (cmd == RESET_CODES[THIS_PROJECTOR]) {
           Serial.print(F("Received reset signal!"));
           digitalWrite(RPI_RESET_PIN, HIGH);
-          delay(10);
+          delay(100);
           digitalWrite(RPI_RESET_PIN, LOW);
         } else {
           Serial.print(F("Got something else: "));
-          Serial.println(cmd);
+          Serial.println(cmd, HEX);
         }
     }
 }

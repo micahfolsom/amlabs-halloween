@@ -83,8 +83,11 @@ void setup() {
     Serial.println(IR_SEND_PIN);
     IrSender.begin(DISABLE_LED_FEEDBACK);
     retrigger_cooldown.duration = 1000;
+    retrigger_cooldown.start = millis();
     reset_hold_timer.duration = 5000;
-    bounceback_cooldown.duration = 1000;
+    reset_hold_timer.start = millis();
+    bounceback_cooldown.duration = 2000;
+    bounceback_cooldown.start = millis();
 
     // Set up LED and trigger button pins
     strip.begin();
@@ -101,15 +104,38 @@ void loop() {
     int elapsed = millis() - retrigger_cooldown.start;
     bool off_cooldown = elapsed >= retrigger_cooldown.duration;
     if (off_cooldown && !reset_initiated) {
-      Serial.print(F("Trigger pulled!"));
-      Serial.println();
-      Serial.flush();
-      IrSender.sendNEC(0x00, TRIGGER_CODES[THIS_GUN], sRepeats);
-      strip.fill(strip.Color(150, 0, 150), 0, NLEDS);
-      strip.show();
-      delay(200);
-      strip.fill(strip.Color(0, 0, 0), 0, NLEDS);
-      strip.show();
+      if (nHits < 3) {
+        Serial.print(F("Trigger pulled!"));
+        Serial.println();
+        Serial.flush();
+        IrSender.sendNEC(0x00, TRIGGER_CODES[THIS_GUN], sRepeats);
+        strip.fill(strip.Color(150, 0, 150), 0, NLEDS);
+        strip.show();
+        delay(100);
+        strip.clear();
+        strip.show();
+        strip.fill(strip.Color(150, 0, 150), 0, NLEDS);
+        strip.show();
+        delay(100);
+        strip.clear();
+        strip.show();
+        strip.fill(strip.Color(150, 0, 150), 0, NLEDS);
+        strip.show();
+        delay(100);
+        strip.clear();
+        strip.show();
+      } else {
+          for (int i=0;i < 12;++i) {
+            strip.setBrightness(255.0 - (i * (255.5 / 11.0)));
+            strip.show();
+            delay(40);
+          }
+          for (int i=0;i < 12;++i) {
+            strip.setBrightness(i * (255.5 / 11.0));
+            strip.show();
+            delay(40);
+          }
+      }
       retrigger_cooldown.start = millis();
       reset_hold_timer.start = millis();
       reset_initiated = true;
@@ -134,6 +160,8 @@ void loop() {
   } else {
     reset_initiated = false;
   }
+  //strip.clear();
+  //strip.show();
   /*
   * Check if received data is available and if yes, try to decode it.
   * Decoded result is in the IrReceiver.decodedIRData structure.
@@ -143,9 +171,6 @@ void loop() {
   * and up to 32 bit raw data in IrReceiver.decodedIRData.decodedRawData
   */
   if (IrReceiver.decode()) {
-    /*
-    * Print a short summary of received data
-    */
     IrReceiver.printIRResultShort(&Serial);
     IrReceiver.printIRSendUsage(&Serial);
     if (IrReceiver.decodedIRData.protocol == UNKNOWN) {
@@ -167,31 +192,39 @@ void loop() {
         // They just shot, and there's no delay on generating the return
         // signal for accuracy
         // Wait a short time so the "shot" lighting has a chance to happen
-        delay(100);
+        //delay(100);
         nHits++;
         if (nHits == 1) {
           for (int i=0;i < 10;++i) {
-            strip.fill(strip.Color(255, 0, 0), 0, (i / 2) + 1);
+            Serial.println("Hits = 1");
+            strip.fill(strip.Color(0, 255, 255), 0, (i / 2) + 1);
             strip.setBrightness(i * (255.5 / 9.0));
             strip.show();
             delay(100);
           }
         } else if (nHits == 2) {
           for (int i=0;i < 12;++i) {
-            strip.fill(strip.Color(255, 0, 0), 0, i + 1);
+            Serial.println("Hits = 2");
+            strip.fill(strip.Color(0, 255, 255), 0, i + 1);
             strip.setBrightness(i * (255.5 / 11.0));
             strip.show();
             delay(83);
           }
-        } else if (nHits == 3) {
+        } else if (nHits >= 3) {
+          Serial.println("Hits = 3");
           for (int i=0;i < 12;++i) {
-            strip.fill(strip.Color(255, 0, 0), 0, (2 * i) + 1);
+            strip.fill(strip.Color(0, 255, 255), 0, (2 * i) + 1);
             strip.setBrightness(i * (255.5 / 11.0));
             strip.show();
             delay(83);
           }
         }
       }
+    } else {
+      Serial.print("Got something else: ");
+      Serial.print(IrReceiver.decodedIRData.command, HEX);
+      Serial.println();
+      Serial.flush();
     }
   }
 }
