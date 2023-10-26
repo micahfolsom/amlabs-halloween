@@ -11,7 +11,7 @@ if ! [[ "${GHOST}" =~ ^(red|pink|yellow)$ ]]; then
 fi
 
 sudo apt update
-sudo apt upgrade
+sudo apt upgrade -y
 sudo apt install -y \
   vim \
   build-essential \
