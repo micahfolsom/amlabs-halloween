@@ -65,6 +65,9 @@ while running:
                     state = 3
                     iframe = 0
                     print("3 pressed")
+                if event.key == pygame.K_ESCAPE:
+                    print("ESC pressed")
+                    running = False
 
         if gpio.input(TRIGGER_PIN):
             #print(f"{TRIGGER_PIN}: HIGH.")
