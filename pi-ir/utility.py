@@ -1,57 +1,64 @@
 #!/usr/bin/env python
-#import pygame
+import pygame
 import time
-
-def get_time_ms():
-    return time.time() * 1000
 
 class Timer:
     def __init__(self, duration):
         # ms
-        self.start = 0
+        self.start_time = 0
         # ms
         self.duration = duration
 
     def start(self, offset = 0):
-        self.start = get_time_ms() - offset
+        self.start_time = get_time_ms() - offset
 
     def finished(self) -> bool:
-        elapsed = get_time_ms() - self.start
+        elapsed = get_time_ms() - self.start_time
         if (elapsed >= self.duration):
             return True
         else:
             return False
 
+RED_GHOST = 0
+PINK_GHOST = 1
+YELLOW_GHOST = 2
+STATE_RISING = 0
+STATE_FLOATING = 1
+STATE_DYING = 2
 class GhostAnim:
-    def __init__(self):
-        self.NFRAMES = 168
+    def __init__(self, which_ghost):
+        # Set this equal to the highest number file
+        self.NFRAMES = 169
         # Ending frame # for the different parts of the animation
         self.END_FRAMES = [80, 135]
         self.rising_frames = []
         self.floating_frames = []
         self.dying_frames = []
         self.iframe = 0
-        self.kill_cooldown = Timer()
-        self.kill_cooldown.start(10000)
+        # How long he stays dead, in ms
+        self.kill_cooldown = Timer(15000)
+        self.kill_cooldown.start()
+        self.this_ghost = which_ghost
+        self.state = STATE_RISING
 
         prefix = ""
-        if THIS_GHOST == RED_GHOST:
+        if self.this_ghost == RED_GHOST:
             prefix = "red_frames/frame"
-        elif THIS_GHOST == PINK_GHOST:
+        elif self.this_ghost == PINK_GHOST:
             prefix = "pink_frames/frame"
         else:
             prefix = "yellow_frames/frame"
 
         for i in range(1, self.NFRAMES):
             if i <= self.END_FRAMES[0]:
-                self.rising_red_frames.append(pygame.image.load(f"{prefix}{i + 1}.png"))
+                self.rising_frames.append(pygame.image.load(f"{prefix}{i + 1}.png"))
             elif i <= self.END_FRAMES[1]:
-                self.floating_red_frames.append(pygame.image.load(f"{prefix}frame{i + 1}.png"))
+                self.floating_frames.append(pygame.image.load(f"{prefix}{i + 1}.png"))
             else:
-                self.dying_red_frames.append(pygame.image.load(f"{prefix}frame{i + 1}.png"))
+                self.dying_frames.append(pygame.image.load(f"{prefix}{i + 1}.png"))
 
     def kill(self):
-        if self.kill_cooldown.finished():
+        if self.kill_cooldown.finished() and self.state == STATE_FLOATING:
             self.state = STATE_DYING
             self.iframe = 0
             self.kill_cooldown.start()
@@ -61,20 +68,26 @@ class GhostAnim:
         self.iframe = 0
 
     def next_frame(self, window):
-        if state == STATE_RISING:
-            window.blit(source=self.rising_frames[iframe], dest=(0, 0))
+        if self.state == STATE_RISING:
+            window.blit(source=self.rising_frames[self.iframe], dest=(0, 0))
             self.iframe = self.iframe + 1
-            if self.iframe >= (self.END_FRAMES[0] - 1):
-                state = STATE_FLOATING
+            if self.iframe >= (self.END_FRAMES[STATE_RISING] - 1):
+                self.state = STATE_FLOATING
                 self.iframe = 0
-        elif state == STATE_FLOATING:
+        elif self.state == STATE_FLOATING:
             window.blit(source=self.floating_frames[self.iframe], dest=(0, 0))
             self.iframe = self.iframe + 1
-            if self.iframe >= ((self.END_FRAMES[1] - self.END_FRAMES[0]) - 1):
+            if self.iframe >= ((self.END_FRAMES[STATE_FLOATING] - self.END_FRAMES[STATE_RISING]) - 1):
                 self.iframe = 0
         else:
             window.blit(source=self.dying_frames[self.iframe], dest=(0, 0))
             self.iframe = self.iframe + 1
-            if self.iframe >= ((self.NFRAMES - self.END_FRAMES[1]) - 1):
-                state = STATE_RISING
-                self.iframe = 0
+            if self.iframe >= ((self.NFRAMES - self.END_FRAMES[STATE_FLOATING]) - 1):
+                if self.kill_cooldown.finished():
+                    self.state = STATE_RISING
+                    self.iframe = 0
+                else:
+                    self.iframe = self.iframe - 1
+
+def get_time_ms():
+    return time.time() * 1000

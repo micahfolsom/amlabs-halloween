@@ -2,17 +2,15 @@
 import pygame
 import RPi.GPIO as gpio
 import time
-from .utility import Timer, GhostAnim, get_time_ms
+from utility import (
+    Timer,
+    GhostAnim,
+    get_time_ms,
+    RED_GHOST, PINK_GHOST, YELLOW_GHOST
+)
 
 # Ghost settings
-RED_GHOST = 0
-PINK_GHOST = 1
-YELLOW_GHOST = 2
-THIS_GHOST = RED_GHOST
-STATE_RISING = 1
-STATE_FLOATING = 2
-STATE_DYING = 3
-state = STATE_RISING
+THIS_GHOST = PINK_GHOST
 
 # GPIO pin numbers
 TRIGGER_PIN = 5
@@ -28,9 +26,9 @@ window = pygame.display.set_mode((1280, 720), pygame.FULLSCREEN)
 pygame.display.set_caption("Spooky")
 clock = pygame.time.Clock()
 
-frame_timer = Timer(30)
+frame_timer = Timer(20)
 frame_timer.start()
-ghost_anim = GhostAnim()
+ghost_anim = GhostAnim(THIS_GHOST)
 running = True
 while running:
     try:
@@ -42,6 +40,12 @@ while running:
                 if event.key == pygame.K_ESCAPE:
                     print("ESC pressed. Exiting.")
                     running = False
+                if event.key == pygame.K_1:
+                    print("1 pressed, killing")
+                    ghost_anim.kill()
+                if event.key == pygame.K_2:
+                    print("2 pressed, resetting")
+                    ghost_anim.reset()
 
         if gpio.input(TRIGGER_PIN):
             ghost_anim.kill()
@@ -51,7 +55,7 @@ while running:
         if frame_timer.finished():
             ghost_anim.next_frame(window)
             pygame.display.update()
-            frame_timer.start = time.time() * 1000
+            frame_timer.start()
             # 20 fps max
             #clock.tick(20)
 
