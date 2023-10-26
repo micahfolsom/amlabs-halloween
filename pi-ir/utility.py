@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import pygame
 import time
+import random
 
 class Timer:
     def __init__(self, duration):
@@ -30,13 +31,13 @@ class GhostAnim:
         # Set this equal to the highest number file
         self.NFRAMES = 169
         # Ending frame # for the different parts of the animation
-        self.END_FRAMES = [80, 135]
+        self.END_FRAMES = [80, 151]
         self.rising_frames = []
         self.floating_frames = []
         self.dying_frames = []
         self.iframe = 0
         # How long he stays dead, in ms
-        self.kill_cooldown = Timer(15000)
+        self.kill_cooldown = Timer(get_rand_respawn())
         self.kill_cooldown.start()
         self.this_ghost = which_ghost
         self.state = STATE_RISING
@@ -61,6 +62,7 @@ class GhostAnim:
         if self.kill_cooldown.finished() and self.state == STATE_FLOATING:
             self.state = STATE_DYING
             self.iframe = 0
+            self.kill_cooldown.duration = get_rand_respawn()
             self.kill_cooldown.start()
 
     def reset(self):
@@ -91,3 +93,7 @@ class GhostAnim:
 
 def get_time_ms():
     return time.time() * 1000
+
+# Returns a random respawn time in ms
+def get_rand_respawn() -> float:
+    return random.random(10000.0, 20000.0)
