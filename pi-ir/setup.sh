@@ -10,8 +10,8 @@ if ! [[ "${GHOST}" =~ ^(red|pink|yellow)$ ]]; then
   exit 1
 fi
 
-#sudo apt update
-#sudo apt upgrade
+sudo apt update
+sudo apt upgrade
 sudo apt install \
   vim \
   build-essential \
