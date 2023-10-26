@@ -96,4 +96,4 @@ def get_time_ms():
 
 # Returns a random respawn time in ms
 def get_rand_respawn() -> float:
-    return random.random(10000.0, 20000.0)
+    return random.uniform(10000.0, 20000.0)
