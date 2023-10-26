@@ -43,11 +43,11 @@ class GhostAnim:
 
         prefix = ""
         if self.this_ghost == RED_GHOST:
-            prefix = "red_frames/frame"
+            prefix = "/home/ghost/repos/amlabs-halloween/pi-ir/red_frames/frame"
         elif self.this_ghost == PINK_GHOST:
-            prefix = "pink_frames/frame"
+            prefix = "/home/ghost/repos/amlabs-halloween/pi-ir/pink_frames/frame"
         else:
-            prefix = "yellow_frames/frame"
+            prefix = "/home/ghost/repos/amlabs-halloween/pi-ir/yellow_frames/frame"
 
         for i in range(1, self.NFRAMES):
             if i <= self.END_FRAMES[0]:

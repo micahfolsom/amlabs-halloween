@@ -10,6 +10,8 @@ if ! [[ "${GHOST}" =~ ^(red|pink|yellow)$ ]]; then
   exit 1
 fi
 
+#sudo apt update
+#sudo apt upgrade
 sudo apt install \
   vim \
   build-essential \
@@ -17,9 +19,13 @@ sudo apt install \
   python3-pygame \
   python3-rpi.gpio
 
+# Change desktop background (path is in the config)
+sudo cp desktop-items-0.conf /etc/xdg/pcmanfm/LXDE-pi/
+sudo cp desktop-items-1.conf /etc/xdg/pcmanfm/LXDE-pi/
+
 grep -qxF \
-  "@python3 /home/micah/repos/amlabs-halloween/pi-ir/${GHOST}.py" \
+  "@python3 /home/ghost/repos/amlabs-halloween/pi-ir/${GHOST}.py" \
   /etc/xdg/lxsession/LXDE-pi/autostart || \
   sudo echo \
-  "@python3 /home/micah/repos/amlabs-halloween/pi-ir/${GHOST}.py" >> \
+  "@python3 /home/ghost/repos/amlabs-halloween/pi-ir/${GHOST}.py" >> \
   /etc/xdg/lxsession/LXDE-pi/autostart
