@@ -45,18 +45,19 @@ struct Timer {
   unsigned long start;
   unsigned long duration;
 };
+enum GhostColor { RED_GHOST=0, PINK_GHOST, YELLOW_GHOST };
 
 uint8_t sRepeats = 6;
 struct Timer send_timer;
 int const RPI_TRIGGER_PIN = 4;
 int const RPI_RESET_PIN = 5;
-int const NPROJECTORS = 3;
+int const NGHOSTS = 3;
 // 0, 1, or 2
-int const THIS_PROJECTOR = 0;
+int const THIS_GHOST = RED_GHOST;
 // These correspond to 1, 2, and 3 on the remote
-int const RESET_CODES[NPROJECTORS] = { 0x0C, 0x18, 0x5E };
-int const TRIGGER_CODES[NPROJECTORS] = { 0xAB, 0xCD, 0xEF };
-int const CONFIRM_CODES[NPROJECTORS] = { 0xBA, 0xDC, 0xFE };
+int const RESET_CODES[NGHOSTS] = { 0x0C, 0x18, 0x5E };
+int const TRIGGER_CODES[NGHOSTS] = { 0xAB, 0xCD, 0xEF };
+int const CONFIRM_CODES[NGHOSTS] = { 0xBA, 0xDC, 0xFE };
 
 void setup() {
     Serial.begin(115200);
@@ -113,23 +114,27 @@ void loop() {
          * Finally, check the received data and perform actions according to the received command
          */
         uint16_t cmd = IrReceiver.decodedIRData.command;
-        if (cmd == TRIGGER_CODES[THIS_PROJECTOR]) {
+        if (cmd == TRIGGER_CODES[THIS_GHOST]) {
           Serial.print("Got ");
           Serial.println(cmd, HEX);
           Serial.print(F("Sending back confirmation signal: "));
-          Serial.print(CONFIRM_CODES[THIS_PROJECTOR], HEX);
+          Serial.print(CONFIRM_CODES[THIS_GHOST], HEX);
           Serial.print(F(", repeats="));
           Serial.print(sRepeats);
           Serial.println();
           Serial.flush();
 
           // Send signal back confirming shot
+          // This delay is really important! Otherwise, the emitting shot
+          // interferes with the reading
           delay(100);
-          IrSender.sendNEC(0x00, CONFIRM_CODES[THIS_PROJECTOR], sRepeats);
+          IrSender.sendNEC(0x00, CONFIRM_CODES[THIS_GHOST], sRepeats);
           digitalWrite(RPI_TRIGGER_PIN, HIGH);
+          // Make the pulse long enough that the python loop will get it
+          // for sure (> 50 ms)
           delay(100);
           digitalWrite(RPI_TRIGGER_PIN, LOW);
-        } else if (cmd == RESET_CODES[THIS_PROJECTOR]) {
+        } else if (cmd == RESET_CODES[THIS_GHOST]) {
           Serial.print(F("Received reset signal!"));
           digitalWrite(RPI_RESET_PIN, HIGH);
           delay(100);

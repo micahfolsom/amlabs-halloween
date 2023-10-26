@@ -46,6 +46,7 @@ struct Timer {
   unsigned long start;
   unsigned long duration;
 };
+enum GunColor { RED_GHOST=0, PINK_GHOST, YELLOW_GHOST };
 
 uint8_t sRepeats = 4;
 int const TRIGGER_PIN = 4;
@@ -54,7 +55,7 @@ int const TRIGGER_LED_PIN = 6;
 int const NLEDS = 22;
 int const NGUNS = 3;
 // 0, 1, or 2
-int const THIS_GUN = 0;
+int const THIS_GUN = RED_GHOST;
 int const TRIGGER_CODES[NGUNS] = { 0xAB, 0xCD, 0xEF };
 int const CONFIRM_CODES[NGUNS] = { 0xBA, 0xDC, 0xFE };
 Adafruit_DotStar strip(NLEDS, TRIGGER_LED_PIN, LED_CLOCK_PIN, DOTSTAR_BRG);
@@ -91,7 +92,6 @@ void setup() {
 
     // Set up LED and trigger button pins
     strip.begin();
-    //strip.show();
     pinMode(TRIGGER_PIN, INPUT);
     pinMode(TRIGGER_LED_PIN, OUTPUT);
     pinMode(LED_CLOCK_PIN, OUTPUT);
@@ -160,8 +160,6 @@ void loop() {
   } else {
     reset_initiated = false;
   }
-  //strip.clear();
-  //strip.show();
   /*
   * Check if received data is available and if yes, try to decode it.
   * Decoded result is in the IrReceiver.decodedIRData structure.
@@ -192,7 +190,6 @@ void loop() {
         // They just shot, and there's no delay on generating the return
         // signal for accuracy
         // Wait a short time so the "shot" lighting has a chance to happen
-        //delay(100);
         nHits++;
         if (nHits == 1) {
           for (int i=0;i < 10;++i) {
