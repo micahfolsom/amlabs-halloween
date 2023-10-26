@@ -1,16 +1,14 @@
 /*
  * created by Rui Santos, https://randomnerdtutorials.com
- * 
  * Complete Guide for Ultrasonic Sensor HC-SR04
- *
-    Ultrasonic sensor Pins:
-        VCC: +5VDC
-        Trig : Trigger (INPUT)
-        Echo: Echo (OUTPUT)
-        GND: GND
+Ultrasonic sensor Pins:
+    VCC: +5VDC
+    Trig : Trigger (INPUT)
+    Echo: Echo (OUTPUT)
+    GND: GND
  */
  
- struct Timer {
+struct Timer {
   unsigned long start;
   unsigned long duration;
 };
@@ -18,10 +16,12 @@
 int trigPin = 6;    // Trigger
 int echoPin = 7;    // Echo
 int const NROAR = 5;
+// Output pins going to sound board
 int roarPins[NROAR] = {8, 9, 10, 11, 12};
 int currRoar = 0;
 long duration, cm, inches;
 struct Timer roar_cooldown;
+// Time before it can trigger again
 int const RESET_TIME = 5000; // seconds
 float const MIN_TRIGGER_DISTANCE = 10.0; // cm
 float const MAX_TRIGGER_DISTANCE = 150.0; // cm
@@ -70,8 +70,8 @@ void loop() {
   Serial.println();
 
   bool can_roar = true;
-  unsigned long current_time = millis();
-  if ((current_time - roar_cooldown.start) < roar_cooldown.duration) {
+  unsigned long elapsed = millis() - roar_cooldown.start;
+  if (elapsed < roar_cooldown.duration) {
     can_roar = false;
   }
   if ((cm > MIN_TRIGGER_DISTANCE) && (cm < MAX_TRIGGER_DISTANCE) && can_roar) {

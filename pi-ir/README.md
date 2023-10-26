@@ -9,4 +9,12 @@ Input pins on the Pi:
 * TRIGGER PIN = 5
 * RESET PIN = 6
 
-To configure a pi, run `./setup.sh`
+## Flashing a Pi ##
+
+- Flash a new SD card with Raspberry Pi OS
+- Make the username `ghost` - this is hardcoded in many places!
+- Password: coast2coast
+- Install git: `sudo apt install git`
+- Clone this repo into $HOME/repos
+- Navigate into the `pi-ir` directory and run `setup.sh` from there
+- Reboot
