@@ -59,7 +59,7 @@ uint32_t const YELLOW_COLOR = strip.Color(255, 255, 0);
 uint32_t const ALL_COLORS[NGUNS] = { RED_COLOR, PINK_COLOR, YELLOW_COLOR };
 /************************************/
 /******* SET ME! ********************/
-int const THIS_GUN = YELLOW_GHOST;
+int const THIS_GUN = RED_GHOST;
 /************************************/
 
 uint8_t sRepeats = 4;
