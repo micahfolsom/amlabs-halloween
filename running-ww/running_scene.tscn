@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2hgsuunpypt3"]
+[gd_scene load_steps=6 format=3 uid="uid://d2hgsuunpypt3"]
 
 [ext_resource type="Script" path="res://running_scene.gd" id="1_uri5o"]
 [ext_resource type="Texture2D" uid="uid://crl46ifkdg58o" path="res://werewolf_sprite.png" id="2_a8s27"]
 [ext_resource type="Texture2D" uid="uid://qkif312dpi34" path="res://lab_background.png" id="2_h2lm0"]
 [ext_resource type="Script" path="res://WerewolfRunner.gd" id="4_r2tq4"]
+[ext_resource type="Script" path="res://RunClock.gd" id="5_0ujkx"]
 
 [node name="RunningScene" type="Node2D"]
 script = ExtResource("1_uri5o")
@@ -19,3 +20,29 @@ texture = ExtResource("2_a8s27")
 hframes = 3
 frame = 2
 script = ExtResource("4_r2tq4")
+
+[node name="StepsLabel" type="Label" parent="WerewolfRunner"]
+anchors_preset = -1
+anchor_left = -4.152
+anchor_top = -2.966
+anchor_right = -4.152
+anchor_bottom = -2.966
+offset_left = 433.456
+offset_top = 173.648
+offset_right = 546.456
+offset_bottom = 207.648
+theme_type_variation = &"HeaderMedium"
+text = "00 steps"
+
+[node name="RunClock" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("5_0ujkx")
+
+[node name="TimerLabel" type="Label" parent="RunClock"]
+anchors_preset = -1
+offset_left = 646.0
+offset_top = 239.0
+offset_right = 700.0
+offset_bottom = 273.0
+theme_type_variation = &"HeaderMedium"
+text = "10 s"
