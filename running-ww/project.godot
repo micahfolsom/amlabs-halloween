@@ -11,14 +11,14 @@ config_version=5
 [application]
 
 config/name="ww-halloween"
-run/main_scene="res://running_scene.tscn"
+run/main_scene="res://title_scene.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=800
+window/size/viewport_width=1200
+window/size/viewport_height=960
 window/size/resizable=false
 
 [rendering]

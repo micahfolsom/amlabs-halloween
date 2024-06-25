@@ -1,21 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2hgsuunpypt3"]
+[gd_scene load_steps=7 format=3 uid="uid://d2hgsuunpypt3"]
 
 [ext_resource type="Script" path="res://running_scene.gd" id="1_uri5o"]
 [ext_resource type="Texture2D" uid="uid://crl46ifkdg58o" path="res://werewolf_sprite.png" id="2_a8s27"]
 [ext_resource type="Texture2D" uid="uid://qkif312dpi34" path="res://lab_background.png" id="2_h2lm0"]
 [ext_resource type="Script" path="res://WerewolfRunner.gd" id="4_r2tq4"]
 [ext_resource type="Script" path="res://RunClock.gd" id="5_0ujkx"]
+[ext_resource type="Texture2D" uid="uid://1bcv3pm354ao" path="res://blank.png" id="6_abcvf"]
 
 [node name="RunningScene" type="Node2D"]
 script = ExtResource("1_uri5o")
 
 [node name="StaticBackground" type="Sprite2D" parent="."]
-position = Vector2(596, 328)
-scale = Vector2(1.34167, 1.34167)
+position = Vector2(600, 480)
+scale = Vector2(2, 2)
 texture = ExtResource("2_h2lm0")
 
 [node name="WerewolfRunner" type="Sprite2D" parent="."]
-position = Vector2(596, 444)
+position = Vector2(597, 652)
 texture = ExtResource("2_a8s27")
 hframes = 3
 frame = 2
@@ -27,10 +28,10 @@ anchor_left = -4.152
 anchor_top = -2.966
 anchor_right = -4.152
 anchor_bottom = -2.966
-offset_left = 433.456
-offset_top = 173.648
-offset_right = 546.456
-offset_bottom = 207.648
+offset_left = 410.456
+offset_top = 80.648
+offset_right = 523.456
+offset_bottom = 114.648
 theme_type_variation = &"HeaderMedium"
 text = "00 steps"
 
@@ -39,10 +40,34 @@ one_shot = true
 script = ExtResource("5_0ujkx")
 
 [node name="TimerLabel" type="Label" parent="RunClock"]
-anchors_preset = -1
-offset_left = 646.0
-offset_top = 239.0
-offset_right = 700.0
-offset_bottom = 273.0
+offset_left = 654.0
+offset_top = 353.0
+offset_right = 708.0
+offset_bottom = 387.0
 theme_type_variation = &"HeaderMedium"
 text = "10 s"
+
+[node name="ReadyTimer" type="Timer" parent="."]
+
+[node name="ReadyCountdownBackground" type="Sprite2D" parent="ReadyTimer"]
+visible = false
+position = Vector2(592, 488)
+texture = ExtResource("6_abcvf")
+
+[node name="TimeToStartLabel" type="Label" parent="ReadyTimer"]
+visible = false
+offset_left = 516.0
+offset_top = 361.0
+offset_right = 661.0
+offset_bottom = 400.0
+theme_type_variation = &"HeaderLarge"
+text = "Start in 3..."
+
+[node name="RunLabel" type="Label" parent="ReadyTimer"]
+visible = false
+offset_left = 551.0
+offset_top = 524.0
+offset_right = 620.0
+offset_bottom = 563.0
+theme_type_variation = &"HeaderLarge"
+text = "RUN!"
