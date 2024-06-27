@@ -18,11 +18,13 @@ func _process(delta):
 		frame = 1
 		steps_count += 1
 		last_press = LEFT_PRESS
+		$LeftPressSFX.playing = true
 	var right_pressed = Input.is_action_just_pressed("ui_right")
 	if (right_pressed) and (last_press != RIGHT_PRESS):
 		print('right_pressed: ', right_pressed)
 		frame = 2
 		steps_count += 1
 		last_press = RIGHT_PRESS
+		$RightPressSFX.playing = true
 	var steps_string = "%02d steps"
 	$StepsLabel.text = steps_string % steps_count

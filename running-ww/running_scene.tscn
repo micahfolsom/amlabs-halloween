@@ -1,11 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://d2hgsuunpypt3"]
+[gd_scene load_steps=10 format=3 uid="uid://d2hgsuunpypt3"]
 
 [ext_resource type="Script" path="res://running_scene.gd" id="1_uri5o"]
 [ext_resource type="Texture2D" uid="uid://crl46ifkdg58o" path="res://werewolf_sprite.png" id="2_a8s27"]
 [ext_resource type="Texture2D" uid="uid://qkif312dpi34" path="res://lab_background.png" id="2_h2lm0"]
 [ext_resource type="Script" path="res://WerewolfRunner.gd" id="4_r2tq4"]
 [ext_resource type="Script" path="res://RunClock.gd" id="5_0ujkx"]
+[ext_resource type="AudioStream" uid="uid://bh4h5w5t7djyh" path="res://right step.wav" id="5_lmrts"]
 [ext_resource type="Texture2D" uid="uid://1bcv3pm354ao" path="res://blank.png" id="6_abcvf"]
+[ext_resource type="AudioStream" uid="uid://dcdx1n050xwok" path="res://left step.wav" id="6_nsbui"]
 [ext_resource type="AudioStream" uid="uid://bq1twx6wwlsws" path="res://Weretrack awoo.wav" id="7_hc4jy"]
 
 [node name="RunningScene" type="Node2D"]
@@ -35,6 +37,12 @@ offset_right = 523.456
 offset_bottom = 114.648
 theme_type_variation = &"HeaderMedium"
 text = "00 steps"
+
+[node name="RightPressSFX" type="AudioStreamPlayer" parent="WerewolfRunner"]
+stream = ExtResource("5_lmrts")
+
+[node name="LeftPressSFX" type="AudioStreamPlayer" parent="WerewolfRunner"]
+stream = ExtResource("6_nsbui")
 
 [node name="RunClock" type="Timer" parent="."]
 one_shot = true
@@ -73,6 +81,6 @@ offset_bottom = 563.0
 theme_type_variation = &"HeaderLarge"
 text = "RUN!"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_hc4jy")
 autoplay = true
