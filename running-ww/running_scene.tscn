@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d2hgsuunpypt3"]
+[gd_scene load_steps=8 format=3 uid="uid://d2hgsuunpypt3"]
 
 [ext_resource type="Script" path="res://running_scene.gd" id="1_uri5o"]
 [ext_resource type="Texture2D" uid="uid://crl46ifkdg58o" path="res://werewolf_sprite.png" id="2_a8s27"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://WerewolfRunner.gd" id="4_r2tq4"]
 [ext_resource type="Script" path="res://RunClock.gd" id="5_0ujkx"]
 [ext_resource type="Texture2D" uid="uid://1bcv3pm354ao" path="res://blank.png" id="6_abcvf"]
+[ext_resource type="AudioStream" uid="uid://bq1twx6wwlsws" path="res://Weretrack awoo.wav" id="7_hc4jy"]
 
 [node name="RunningScene" type="Node2D"]
 script = ExtResource("1_uri5o")
@@ -71,3 +72,7 @@ offset_right = 620.0
 offset_bottom = 563.0
 theme_type_variation = &"HeaderLarge"
 text = "RUN!"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_hc4jy")
+autoplay = true
