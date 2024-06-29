@@ -2,6 +2,7 @@
 
 [Projector/Pi Info](pi-ir/README.md)
 [Proximity Sensor ROAR Code](arduino-roar/README.md)
+[Running Werewolf](ww-halloween/README.md)
 
 Pi colors <--> Ghost colors:
 
