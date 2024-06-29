@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://d2hgsuunpypt3"]
 
 [ext_resource type="Script" path="res://running_scene.gd" id="1_uri5o"]
-[ext_resource type="Texture2D" uid="uid://crl46ifkdg58o" path="res://werewolf_sprite.png" id="2_a8s27"]
 [ext_resource type="Texture2D" uid="uid://qkif312dpi34" path="res://lab_background.png" id="2_h2lm0"]
+[ext_resource type="Texture2D" uid="uid://bwoexhwegkm6e" path="res://werewolf sprite green.png" id="3_cbtp6"]
 [ext_resource type="Script" path="res://WerewolfRunner.gd" id="4_r2tq4"]
 [ext_resource type="Script" path="res://RunClock.gd" id="5_0ujkx"]
 [ext_resource type="AudioStream" uid="uid://bh4h5w5t7djyh" path="res://right step.wav" id="5_lmrts"]
@@ -21,7 +21,7 @@ texture = ExtResource("2_h2lm0")
 [node name="WerewolfRunner" type="Sprite2D" parent="."]
 position = Vector2(597, 568)
 scale = Vector2(2.64063, 2.64063)
-texture = ExtResource("2_a8s27")
+texture = ExtResource("3_cbtp6")
 hframes = 3
 frame = 2
 script = ExtResource("4_r2tq4")
