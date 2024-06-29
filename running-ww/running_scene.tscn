@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://bh4h5w5t7djyh" path="res://right step.wav" id="5_lmrts"]
 [ext_resource type="Texture2D" uid="uid://1bcv3pm354ao" path="res://blank.png" id="6_abcvf"]
 [ext_resource type="AudioStream" uid="uid://dcdx1n050xwok" path="res://left step.wav" id="6_nsbui"]
-[ext_resource type="AudioStream" uid="uid://bq1twx6wwlsws" path="res://Weretrack awoo.wav" id="7_hc4jy"]
+[ext_resource type="AudioStream" uid="uid://c7tsvbp1vd40u" path="res://Running.wav" id="9_cky13"]
 
 [node name="RunningScene" type="Node2D"]
 script = ExtResource("1_uri5o")
@@ -19,7 +19,8 @@ scale = Vector2(2, 2)
 texture = ExtResource("2_h2lm0")
 
 [node name="WerewolfRunner" type="Sprite2D" parent="."]
-position = Vector2(597, 652)
+position = Vector2(597, 568)
+scale = Vector2(2.64063, 2.64063)
 texture = ExtResource("2_a8s27")
 hframes = 3
 frame = 2
@@ -82,5 +83,5 @@ theme_type_variation = &"HeaderLarge"
 text = "RUN!"
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_hc4jy")
+stream = ExtResource("9_cky13")
 autoplay = true

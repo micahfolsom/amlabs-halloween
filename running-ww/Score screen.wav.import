@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://2xgkbwsytbq4"
+path="res://.godot/imported/Score screen.wav-735b52149962eb444db583cd42178366.sample"
+
+[deps]
+
+source_file="res://Score screen.wav"
+dest_files=["res://.godot/imported/Score screen.wav-735b52149962eb444db583cd42178366.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-3
+compress/mode=0
