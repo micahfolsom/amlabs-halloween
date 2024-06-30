@@ -1,17 +1,26 @@
-[gd_scene load_steps=10 format=3 uid="uid://d2hgsuunpypt3"]
+[gd_scene load_steps=12 format=3 uid="uid://d2hgsuunpypt3"]
 
 [ext_resource type="Script" path="res://running_scene.gd" id="1_uri5o"]
 [ext_resource type="Texture2D" uid="uid://qkif312dpi34" path="res://lab_background.png" id="2_h2lm0"]
+[ext_resource type="PackedScene" uid="uid://bdvkdv77fslji" path="res://addons/midi/ADSR.tscn" id="2_uwblj"]
+[ext_resource type="PackedScene" uid="uid://cuyd1qv0pn26e" path="res://addons/midi/MidiPlayer.tscn" id="3_341tc"]
 [ext_resource type="Texture2D" uid="uid://bwoexhwegkm6e" path="res://werewolf sprite green.png" id="3_cbtp6"]
 [ext_resource type="Script" path="res://WerewolfRunner.gd" id="4_r2tq4"]
 [ext_resource type="Script" path="res://RunClock.gd" id="5_0ujkx"]
 [ext_resource type="AudioStream" uid="uid://bh4h5w5t7djyh" path="res://right step.wav" id="5_lmrts"]
 [ext_resource type="Texture2D" uid="uid://1bcv3pm354ao" path="res://blank.png" id="6_abcvf"]
 [ext_resource type="AudioStream" uid="uid://dcdx1n050xwok" path="res://left step.wav" id="6_nsbui"]
-[ext_resource type="AudioStream" uid="uid://c7tsvbp1vd40u" path="res://Running.wav" id="9_cky13"]
+[ext_resource type="AudioStream" uid="uid://dm1h2neftkkm8" path="res://audio/Moonlight Sonata Nightmare - Backing.wav" id="9_wddfg"]
 
 [node name="RunningScene" type="Node2D"]
 script = ExtResource("1_uri5o")
+
+[node name="ADSR" parent="." instance=ExtResource("2_uwblj")]
+
+[node name="MidiPlayer" parent="." instance=ExtResource("3_341tc")]
+file = "res://audio/Moonlight Sonata Nightmare - Piano.mid"
+playing = true
+soundfont = "res://audio/UprightPianoKW-small-20190703.sf2"
 
 [node name="StaticBackground" type="Sprite2D" parent="."]
 position = Vector2(600, 480)
@@ -41,9 +50,11 @@ text = "00 steps"
 
 [node name="RightPressSFX" type="AudioStreamPlayer" parent="WerewolfRunner"]
 stream = ExtResource("5_lmrts")
+volume_db = -10.0
 
 [node name="LeftPressSFX" type="AudioStreamPlayer" parent="WerewolfRunner"]
 stream = ExtResource("6_nsbui")
+volume_db = -10.0
 
 [node name="RunClock" type="Timer" parent="."]
 one_shot = true
@@ -83,5 +94,7 @@ theme_type_variation = &"HeaderLarge"
 text = "RUN!"
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_cky13")
-autoplay = true
+stream = ExtResource("9_wddfg")
+volume_db = 2.0
+
+[connection signal="midi_event" from="MidiPlayer" to="." method="_on_midi_player_midi_event"]

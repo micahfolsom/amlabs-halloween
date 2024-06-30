@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dm1h2neftkkm8"
+path="res://.godot/imported/Moonlight Sonata Nightmare - Backing.wav-da26254398d2937359dd8875d989f716.sample"
+
+[deps]
+
+source_file="res://audio/Moonlight Sonata Nightmare - Backing.wav"
+dest_files=["res://.godot/imported/Moonlight Sonata Nightmare - Backing.wav-da26254398d2937359dd8875d989f716.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
