@@ -24,7 +24,7 @@ func _process(delta):
 	
 	if time >= time_delay and not playing:
 		bgMusic.play()
-		playing = true
+		#playing = true
 	
 
 func _on_midi_player_midi_event(channel, event):
