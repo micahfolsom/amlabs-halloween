@@ -1,36 +1,83 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxhacy0x6cx2k"]
+[gd_scene load_steps=7 format=3 uid="uid://dxhacy0x6cx2k"]
 
 [ext_resource type="Script" path="res://TitleScene.gd" id="1_vf8ll"]
 [ext_resource type="Texture2D" uid="uid://1bcv3pm354ao" path="res://blank.png" id="2_iiee8"]
+[ext_resource type="FontFile" uid="uid://dcuxp0iyuxysj" path="res://neon_pixel-7.ttf" id="3_cjp6w"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4gywk"]
+font = ExtResource("3_cjp6w")
+font_size = 19
+font_color = Color(0.380392, 0.819608, 0.129412, 1)
+outline_size = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_q2lbm"]
+font = ExtResource("3_cjp6w")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_gat72"]
+font = ExtResource("3_cjp6w")
+font_size = 40
 
 [node name="TitleScene" type="Node2D"]
 script = ExtResource("1_vf8ll")
 
+[node name="Title Display" type="Label" parent="."]
+z_index = 1
+offset_left = 134.0
+offset_top = 80.0
+offset_right = 794.0
+offset_bottom = 720.0
+text = "
+╭╮╭╮╭╮╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭╮╭━╮
+┃┃┃┃┃┃╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱┃┃┃╭╯
+┃┃┃┃┃┣━━┳━┳━━┳╮╭╮╭┳━━┫┣╯╰╮
+┃╰╯╰╯┃┃━┫╭┫┃━┫╰╯╰╯┃╭╮┃┣╮╭╯
+╰╮╭╮╭┫┃━┫┃┃┃━╋╮╭╮╭┫╰╯┃╰┫┃
+╱╰╯╰╯╰━━┻╯╰━━╯╰╯╰╯╰━━┻━┻╯
+╭━━━╮╱╱╱╱╭╮
+┃╭━━╯╱╱╱╱┃┃
+┃╰━━┳━╮╭━╯┣╮╭┳━┳━━┳━╮╭━━┳━━╮
+┃╭━━┫╭╮┫╭╮┃┃┃┃╭┫╭╮┃╭╮┫╭━┫┃━┫
+┃╰━━┫┃┃┃╰╯┃╰╯┃┃┃╭╮┃┃┃┃╰━┫┃━┫
+╰━━━┻╯╰┻━━┻━━┻╯╰╯╰┻╯╰┻━━┻━━╯
+╭━━━━╮╱╱╱╱╭╮
+┃╭╮╭╮┃╱╱╱╭╯╰╮
+╰╯┃┃┣┻━┳━┻╮╭╋┳━╮╭━━╮
+╱╱┃┃┃┃━┫━━┫┃┣┫╭╮┫╭╮┃
+╱╱┃┃┃┃━╋━━┃╰┫┃┃┃┃╰╯┃
+╱╱╰╯╰━━┻━━┻━┻┻╯╰┻━╮┃
+╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━╯┃
+╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╰━━╯"
+label_settings = SubResource("LabelSettings_4gywk")
+
 [node name="PlayLabel" type="Label" parent="."]
 top_level = true
-offset_left = 327.0
-offset_top = 451.0
-offset_right = 576.0
-offset_bottom = 490.0
+offset_left = 359.0
+offset_top = 729.0
+offset_right = 608.0
+offset_bottom = 768.0
 scale = Vector2(2.08661, 2.08661)
 theme_type_variation = &"HeaderLarge"
 text = "Press -> to start"
+label_settings = SubResource("LabelSettings_q2lbm")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
 [node name="HighScoreLabel" type="Label" parent="."]
 top_level = true
-offset_left = 246.0
-offset_top = 251.0
-offset_right = 658.0
-offset_bottom = 290.0
+offset_left = 192.0
+offset_top = 807.0
+offset_right = 666.0
+offset_bottom = 847.0
 scale = Vector2(1.7675, 1.7675)
 theme_type_variation = &"HeaderLarge"
 text = "Press ^ to view high scores"
+label_settings = SubResource("LabelSettings_gat72")
 uppercase = true
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(600, 480)
 scale = Vector2(2, 2)
 texture = ExtResource("2_iiee8")
+metadata/_edit_lock_ = true
