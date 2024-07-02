@@ -9,8 +9,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("Toggle_Fullscreen"):
 		var windowMode = DisplayServer.window_get_mode()
 		
-		if windowMode == 0:
+		if windowMode == DisplayServer.WINDOW_MODE_WINDOWED:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 		else:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-
