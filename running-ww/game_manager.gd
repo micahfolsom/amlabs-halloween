@@ -1,11 +1,9 @@
 extends Node
 
-var isFullscreen
+var isFullscreen = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	isFullscreen = false
-	
 	pass # Replace with function body.
 
 
