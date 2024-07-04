@@ -28,8 +28,9 @@ scale = Vector2(2, 2)
 texture = ExtResource("2_h2lm0")
 
 [node name="WerewolfRunner" type="Sprite2D" parent="."]
+texture_filter = 1
 position = Vector2(613, 560)
-scale = Vector2(4.6543, 4.6543)
+scale = Vector2(5, 5)
 texture = ExtResource("3_cbtp6")
 hframes = 3
 frame = 2
@@ -60,10 +61,10 @@ one_shot = true
 script = ExtResource("5_0ujkx")
 
 [node name="TimerLabel" type="Label" parent="RunClock"]
-offset_left = 792.0
-offset_top = 324.0
-offset_right = 853.0
-offset_bottom = 361.0
+offset_left = 771.0
+offset_top = 329.0
+offset_right = 862.0
+offset_bottom = 377.0
 theme_type_variation = &"HeaderMedium"
 text = "10 s"
 label_settings = SubResource("LabelSettings_ulh0q")
