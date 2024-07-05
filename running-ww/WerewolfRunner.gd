@@ -1,6 +1,9 @@
 extends Sprite2D
 
 var steps_count = 0
+var power_level = 0
+var POWER_LEVEL_DIVISOR = 10 # can be used as a difficulty
+
 var LEFT_PRESS = 0
 var RIGHT_PRESS = 1
 var last_press = -1
@@ -8,7 +11,6 @@ var last_press = -1
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -26,5 +28,8 @@ func _process(delta):
 		steps_count += 1
 		last_press = RIGHT_PRESS
 		$RightPressSFX.playing = true
+	
 	var steps_string = "%02d steps"
 	$StepsLabel.text = steps_string % steps_count
+
+	power_level = abs(steps_count / POWER_LEVEL_DIVISOR)

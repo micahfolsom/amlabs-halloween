@@ -12,4 +12,5 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	var ww_power_level = $WerewolfRunner.power_level
+	$PowerGauge.set_power_level(ww_power_level)
