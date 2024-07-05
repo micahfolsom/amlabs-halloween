@@ -1,8 +1,5 @@
 extends Node2D
 
-var LEFT_PRESS = 0
-var RIGHT_PRESS = 1
-var last_press = -1
 
 
 # Called when the node enters the scene tree for the first time.

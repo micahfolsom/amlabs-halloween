@@ -13,4 +13,6 @@ func _process(delta):
 	time_elapsed += delta
 	var txt_to_format = "%d s"
 	var time_left = TOTAL_TIME - time_elapsed
+	if time_left < 0:
+		time_left = 0
 	$TimerLabel.text = txt_to_format % time_left
