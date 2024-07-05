@@ -13,11 +13,10 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_02nb2"]
 font = ExtResource("5_p4j8p")
-font_size = 20
 
 [sub_resource type="LabelSettings" id="LabelSettings_ulh0q"]
 font = ExtResource("5_p4j8p")
-font_size = 32
+font_size = 48
 
 [node name="RunningScene" type="Node2D"]
 script = ExtResource("1_uri5o")
@@ -29,8 +28,9 @@ scale = Vector2(2, 2)
 texture = ExtResource("2_h2lm0")
 
 [node name="WerewolfRunner" type="Sprite2D" parent="."]
-position = Vector2(597, 568)
-scale = Vector2(2.64063, 2.64063)
+texture_filter = 1
+position = Vector2(613, 560)
+scale = Vector2(5, 5)
 texture = ExtResource("3_cbtp6")
 hframes = 3
 frame = 2
@@ -42,10 +42,10 @@ anchor_left = -4.152
 anchor_top = -2.966
 anchor_right = -4.152
 anchor_bottom = -2.966
-offset_left = 476.924
-offset_top = 289.139
-offset_right = 572.924
-offset_bottom = 323.139
+offset_left = 474.305
+offset_top = 313.473
+offset_right = 525.305
+offset_bottom = 325.473
 theme_type_variation = &"HeaderMedium"
 text = "00 steps"
 label_settings = SubResource("LabelSettings_02nb2")
@@ -61,10 +61,10 @@ one_shot = true
 script = ExtResource("5_0ujkx")
 
 [node name="TimerLabel" type="Label" parent="RunClock"]
-offset_left = 696.0
-offset_top = 388.0
-offset_right = 757.0
-offset_bottom = 422.0
+offset_left = 771.0
+offset_top = 329.0
+offset_right = 862.0
+offset_bottom = 377.0
 theme_type_variation = &"HeaderMedium"
 text = "10 s"
 label_settings = SubResource("LabelSettings_ulh0q")
