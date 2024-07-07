@@ -32,7 +32,7 @@ texture_filter = 1
 position = Vector2(613, 560)
 scale = Vector2(5, 5)
 texture = ExtResource("3_cbtp6")
-hframes = 3
+hframes = 7
 frame = 2
 script = ExtResource("4_r2tq4")
 
