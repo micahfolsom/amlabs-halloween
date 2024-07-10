@@ -13,6 +13,7 @@ func _process(delta):
 	var up_pressed = Input.is_action_just_pressed("ui_up")
 	if (up_pressed):
 		print('up_pressed: ', up_pressed)
+		get_tree().change_scene_to_file("res://score_scene.tscn")
 	var right_pressed = Input.is_action_just_pressed("ui_right")
 	if (right_pressed):
 		print('right_pressed: ', right_pressed)

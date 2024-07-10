@@ -1,6 +1,6 @@
 extends Node2D
 
-
+const SAVE_PATH = "user://high_scores.json"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,4 +14,14 @@ func _process(delta):
 
 func _handle_game_over():
 	print("GAME OVER!!!!")
+	_save_latest_score()
 	get_tree().change_scene_to_file("res://score_scene.tscn")
+
+func _save_latest_score():
+	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	# TODO: check whether the score makes the list
+	var nsteps = get_node("WerewolfRunner").steps_count
+	var score = {"AAA": nsteps}
+	print(score)
+	file.store_line(JSON.stringify(score))
+	file.close()
