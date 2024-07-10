@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://qvrgm6fwo21y"]
+[gd_scene load_steps=6 format=3 uid="uid://qvrgm6fwo21y"]
 
 [ext_resource type="Texture2D" uid="uid://1bcv3pm354ao" path="res://blank.png" id="1_qplyj"]
 [ext_resource type="Script" path="res://score_scene.gd" id="1_w68ab"]
@@ -8,10 +8,15 @@
 font = ExtResource("3_ls2wr")
 font_size = 58
 
+[sub_resource type="LabelSettings" id="LabelSettings_nyxpf"]
+font = ExtResource("3_ls2wr")
+font_size = 50
+
 [node name="ScoreScene" type="Node2D"]
 script = ExtResource("1_w68ab")
 
 [node name="ScoreBackground" type="Sprite2D" parent="."]
+z_index = -1
 position = Vector2(600, 480)
 scale = Vector2(2, 2)
 texture = ExtResource("1_qplyj")
@@ -26,5 +31,18 @@ label_settings = SubResource("LabelSettings_dgq7a")
 uppercase = true
 
 [node name="HighScoresList" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 498.0
+offset_top = 112.0
+offset_right = 713.0
+offset_bottom = 670.0
+text = "AAA: 1
+AAA: 1
+AAA: 1
+AAA: 1
+AAA: 1
+AAA: 1
+AAA: 1
+AAA: 1
+AAA: 1
+AAA: 10"
+label_settings = SubResource("LabelSettings_nyxpf")

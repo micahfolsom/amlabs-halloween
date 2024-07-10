@@ -18,7 +18,8 @@ func _handle_game_over():
 	get_tree().change_scene_to_file("res://score_scene.tscn")
 
 func _save_latest_score():
-	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	var file = FileAccess.open(SAVE_PATH, FileAccess.READ_WRITE)
+	file.seek_end()
 	# TODO: check whether the score makes the list
 	var nsteps = get_node("WerewolfRunner").steps_count
 	var score = {"AAA": nsteps}
