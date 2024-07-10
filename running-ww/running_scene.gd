@@ -18,10 +18,14 @@ func _handle_game_over():
 	get_tree().change_scene_to_file("res://score_scene.tscn")
 
 func _save_latest_score():
-	var file = FileAccess.open(SAVE_PATH, FileAccess.READ_WRITE)
+	var facc = FileAccess.WRITE
+	if FileAccess.file_exists(SAVE_PATH):
+		facc = FileAccess.READ_WRITE
+	var file = FileAccess.open(SAVE_PATH, facc)
 	file.seek_end()
 	# TODO: check whether the score makes the list
 	var nsteps = get_node("WerewolfRunner").steps_count
+	# TODO: user input for name
 	var score = {"AAA": nsteps}
 	print(score)
 	file.store_line(JSON.stringify(score))
