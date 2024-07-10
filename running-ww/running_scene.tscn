@@ -29,7 +29,8 @@ scale = Vector2(2, 2)
 texture = ExtResource("2_h2lm0")
 
 [node name="PowerGauge" parent="." instance=ExtResource("3_bfqf3")]
-position = Vector2(353, 315)
+position = Vector2(330, 322)
+scale = Vector2(2.5, 2.5)
 
 [node name="WerewolfRunner" type="Sprite2D" parent="."]
 texture_filter = 1
