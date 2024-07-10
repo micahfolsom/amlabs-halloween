@@ -62,7 +62,9 @@ stream = ExtResource("5_lmrts")
 stream = ExtResource("6_nsbui")
 
 [node name="RunClock" type="Timer" parent="."]
+wait_time = 3.0
 one_shot = true
+autostart = true
 script = ExtResource("5_0ujkx")
 
 [node name="TimerLabel" type="Label" parent="RunClock"]
@@ -71,7 +73,6 @@ offset_top = 329.0
 offset_right = 862.0
 offset_bottom = 377.0
 theme_type_variation = &"HeaderMedium"
-text = "10 s"
 label_settings = SubResource("LabelSettings_ulh0q")
 
 [node name="ReadyTimer" type="Timer" parent="."]

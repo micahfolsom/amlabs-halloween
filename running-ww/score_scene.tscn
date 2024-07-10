@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://qvrgm6fwo21y"]
+
+[ext_resource type="Texture2D" uid="uid://1bcv3pm354ao" path="res://blank.png" id="1_qplyj"]
+[ext_resource type="Script" path="res://score_scene.gd" id="1_w68ab"]
+[ext_resource type="FontFile" uid="uid://84rgsxbpke2d" path="res://pixel font-7.ttf" id="2_58ous"]
+
+[sub_resource type="Theme" id="Theme_gbtxs"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dgq7a"]
+
+[node name="ScoreScene" type="Node2D"]
+script = ExtResource("1_w68ab")
+
+[node name="ScoreBackground" type="Sprite2D" parent="."]
+position = Vector2(600, 480)
+scale = Vector2(2, 2)
+texture = ExtResource("1_qplyj")
+
+[node name="StartForTitleLabel" type="Label" parent="."]
+offset_left = 438.0
+offset_top = 643.0
+offset_right = 850.0
+offset_bottom = 802.0
+theme = SubResource("Theme_gbtxs")
+theme_type_variation = &"HeaderLarge"
+theme_override_fonts/font = ExtResource("2_58ous")
+theme_override_font_sizes/font_size = 72
+text = "Press START to return to TITLE"
+label_settings = SubResource("LabelSettings_dgq7a")
+uppercase = true

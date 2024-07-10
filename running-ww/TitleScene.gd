@@ -1,6 +1,6 @@
 extends Node2D
 
-var run_scene = preload("res://running_scene.tscn").instantiate()
+#var run_scene = preload("res://running_scene.tscn").instantiate()
 
 
 # Called when the node enters the scene tree for the first time.
