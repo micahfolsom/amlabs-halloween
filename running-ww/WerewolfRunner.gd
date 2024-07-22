@@ -33,4 +33,4 @@ func _process(delta):
 	var steps_string = "%02d steps"
 	$StepsLabel.text = steps_string % steps_count
 
-	power_level = abs(steps_count / POWER_LEVEL_DIVISOR)
+	power_level = int(steps_count / POWER_LEVEL_DIVISOR)
