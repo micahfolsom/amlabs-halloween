@@ -46,7 +46,7 @@ func update_hsl():
 	var idx = 0
 	
 	for hs_doc in GameManager.high_scores:
-		var line_str = "%s : %d" % [hs_doc["initials"], hs_doc["score"]]
+		var line_str = "%s : %d - PL.%d" % [hs_doc["initials"], hs_doc["score"], hs_doc["power_level"]]
 		
 		if GameManager.hs_last_add_ts == hs_doc["ts"]:
 			hsl_label.append_text("[pulse color=gold freq=10]" + line_str + "[/pulse]\n")

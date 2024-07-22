@@ -19,6 +19,8 @@ func _handle_game_over():
 	GameManager.change_to_scene_path("res://score_scene.tscn")
 
 func _save_latest_score():
-	var nsteps = get_node("WerewolfRunner").steps_count
+	var ww_node = get_node("WerewolfRunner")
+	var nsteps = ww_node.steps_count
+	var power_level = ww_node.power_level
 	
-	GameManager.add_new_high_score("AAA", nsteps, Time.get_unix_time_from_system())
+	GameManager.add_new_high_score("AAA", nsteps, power_level, Time.get_unix_time_from_system())

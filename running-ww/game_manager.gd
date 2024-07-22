@@ -28,7 +28,10 @@ func change_to_scene_path(resPath):
 func sort_hs_descending(a, b):
 	# if there's a tie, the earlier score wins
 	if a["score"] == b["score"]:
-		return a["ts"] < b["ts"]
+		if a["power_level"] == b["power_level"]:
+			return a["ts"] < b["ts"]
+		else:
+			return a["power_level"] > b["power_level"]
 	else:
 		return a["score"] > b["score"]
 
@@ -41,11 +44,14 @@ func hs_data_cb(hs_doc):
 	if not hs_doc.has("initials"):
 		hs_doc["initials"] = ""
 	
+	if not hs_doc.has("power_level"):
+		hs_doc["power_level"] = 0
+	
 	return hs_doc
 
 # less intensive append of new score to end of file
-func add_new_high_score(initials,score,ts,sortOnAdd=true):
-	var new_hs = {"score": int(score), "initials": initials, "ts": int(ts)}
+func add_new_high_score(initials,score,power_level,ts,sortOnAdd=true):
+	var new_hs = {"score": int(score), "initials": initials, "power_level": int(power_level), "ts": int(ts)}
 	hs_last_add_ts = int(ts)
 	
 	high_scores.push_back(new_hs)
@@ -72,7 +78,7 @@ func load_high_scores(sortAfterLoad=true):
 	print("LOADING High Scores from file: ", HIGH_SCORE_SAVE_PATH)
 	
 	# JSON parser casts all numbers to floats, so go through and convert them all to ints
-	high_scores = JsonFileUtils.load_data_from_file(HIGH_SCORE_SAVE_PATH)
+	high_scores = JsonFileUtils.load_data_from_file(HIGH_SCORE_SAVE_PATH, hs_data_cb)
 	
 	# sort isn't stable...
 	# so if there's a tie, there's no guarantee

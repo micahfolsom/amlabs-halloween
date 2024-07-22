@@ -24,18 +24,27 @@ texture = ExtResource("1_qplyj")
 
 [node name="StartForTitleLabel" type="Label" parent="."]
 offset_left = 219.0
-offset_top = 704.0
+offset_top = 784.0
 offset_right = 989.0
-offset_bottom = 763.0
+offset_bottom = 843.0
 text = "Press START to return to TITLE"
 label_settings = SubResource("LabelSettings_dgq7a")
 uppercase = true
 
+[node name="ScoreTitleLabel" type="Label" parent="."]
+offset_left = 219.0
+offset_top = 120.0
+offset_right = 989.0
+offset_bottom = 179.0
+text = "Endurance Test Results"
+label_settings = SubResource("LabelSettings_dgq7a")
+uppercase = true
+
 [node name="HighScoreScroller" type="ScrollContainer" parent="."]
-offset_left = 221.0
-offset_top = 128.0
-offset_right = 984.0
-offset_bottom = 689.0
+offset_left = 220.0
+offset_top = 200.0
+offset_right = 983.0
+offset_bottom = 761.0
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 
