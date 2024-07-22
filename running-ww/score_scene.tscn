@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://qvrgm6fwo21y"]
+[gd_scene load_steps=7 format=3 uid="uid://qvrgm6fwo21y"]
 
 [ext_resource type="Texture2D" uid="uid://1bcv3pm354ao" path="res://blank.png" id="1_qplyj"]
 [ext_resource type="Script" path="res://score_scene.gd" id="1_w68ab"]
 [ext_resource type="FontFile" uid="uid://dcuxp0iyuxysj" path="res://neon_pixel-7.ttf" id="3_ls2wr"]
+[ext_resource type="Script" path="res://HighScoreListRichText.gd" id="4_rxxb2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dgq7a"]
 font = ExtResource("3_ls2wr")
@@ -68,3 +69,4 @@ AAA: 1234
 AAA: 12345
 AAA: 123456"
 fit_content = true
+script = ExtResource("4_rxxb2")

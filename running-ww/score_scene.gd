@@ -37,7 +37,7 @@ func can_scroll():
 	var hss_scrolled_height = $HighScoreScroller.scroll_vertical
 	
 	# the 5 is a fudge factor
-	if hss_scrolled_height <  line_height * last_hs_index + 5: # hsl_content_height - hss_height:
+	if hss_scrolled_height <  line_height * (last_hs_index - 3) + 5: # hsl_content_height - hss_height:
 		return true
 	else:
 		return false
@@ -49,7 +49,7 @@ func update_hsl():
 		var line_str = "%s : %d" % [hs_doc["initials"], hs_doc["score"]]
 		
 		if GameManager.hs_last_add_ts == hs_doc["ts"]:
-			hsl_label.append_text("[color=gold]" + line_str + "[/color]\n")
+			hsl_label.append_text("[pulse color=gold freq=10]" + line_str + "[/pulse]\n")
 			last_hs_index = idx
 		else:
 			hsl_label.append_text(line_str + "\n")
