@@ -35,7 +35,8 @@ offset_left = 221.0
 offset_top = 128.0
 offset_right = 984.0
 offset_bottom = 689.0
-horizontal_scroll_mode = 0
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
 
 [node name="HighScoreListRichText" type="RichTextLabel" parent="HighScoreScroller"]
 layout_mode = 2
