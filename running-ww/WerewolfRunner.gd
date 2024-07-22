@@ -8,7 +8,7 @@ var max_sps = 0
 # pl_threshholds[n] = sps means level n starts at sps steps per second
 var pl_threshholds = [0, 3.5, 4.4, 5.5, 8.9, 10.1, 11.45]
 var pl_steps_per_update = 7
-var pl_elapsed_time = 0.0
+#var pl_elapsed_time = 0.0
 var pl_step_times = []
 
 var LEFT_PRESS = 0

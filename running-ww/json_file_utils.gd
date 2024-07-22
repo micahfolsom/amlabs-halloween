@@ -46,7 +46,12 @@ func load_data_from_file(filePath=false, dataCB: Callable=Callable()) -> Array:
 		var file = FileAccess.open(filePath, FileAccess.READ)
 		
 		for line in file.get_as_text().split("\n"):
+			#print("Line: ", line)
+			if line.length() == 0:
+				continue
+			
 			var doc = JSON.parse_string(line)
+			#print("doc: ", doc)
 			
 			if doc != null:
 				if dataCB.is_valid():
