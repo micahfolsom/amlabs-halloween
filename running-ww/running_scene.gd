@@ -15,18 +15,10 @@ func _process(delta):
 func _handle_game_over():
 	print("GAME OVER!!!!")
 	_save_latest_score()
-	get_tree().change_scene_to_file("res://score_scene.tscn")
+	
+	GameManager.change_to_scene_path("res://score_scene.tscn")
 
 func _save_latest_score():
-	var facc = FileAccess.WRITE
-	if FileAccess.file_exists(SAVE_PATH):
-		facc = FileAccess.READ_WRITE
-	var file = FileAccess.open(SAVE_PATH, facc)
-	file.seek_end()
-	# TODO: check whether the score makes the list
 	var nsteps = get_node("WerewolfRunner").steps_count
-	# TODO: user input for name
-	var score = {"AAA": nsteps}
-	print(score)
-	file.store_line(JSON.stringify(score))
-	file.close()
+	
+	GameManager.add_new_high_score("AAA", nsteps, Time.get_unix_time_from_system())

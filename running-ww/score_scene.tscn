@@ -8,9 +8,9 @@
 font = ExtResource("3_ls2wr")
 font_size = 58
 
-[sub_resource type="LabelSettings" id="LabelSettings_nyxpf"]
-font = ExtResource("3_ls2wr")
-font_size = 50
+[sub_resource type="Theme" id="Theme_owjvh"]
+default_font = ExtResource("3_ls2wr")
+default_font_size = 52
 
 [node name="ScoreScene" type="Node2D"]
 script = ExtResource("1_w68ab")
@@ -30,19 +30,40 @@ text = "Press START to return to TITLE"
 label_settings = SubResource("LabelSettings_dgq7a")
 uppercase = true
 
-[node name="HighScoresList" type="Label" parent="."]
-offset_left = 498.0
-offset_top = 112.0
-offset_right = 713.0
-offset_bottom = 670.0
-text = "AAA: 1
+[node name="HighScoreScroller" type="ScrollContainer" parent="."]
+offset_left = 221.0
+offset_top = 128.0
+offset_right = 984.0
+offset_bottom = 689.0
+horizontal_scroll_mode = 0
+
+[node name="HighScoreListRichText" type="RichTextLabel" parent="HighScoreScroller"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_owjvh")
+bbcode_enabled = true
+text = "AAA: 20
+AAA: 19
+AAA: 18
+AAA: 17
+AAA: 16
+AAA: 15
+AAA: 14
+[color=gold]AAA: 13[/color]
+AAA: 12
+AAA: 11
+AAA: 10
+AAA: 9
+AAA: 8
+AAA: 7
+AAA: 6
+AAA: 5
+AAA: 4
+AAA: 3
+AAA: 2
 AAA: 1
-AAA: 1
-AAA: 1
-AAA: 1
-AAA: 1
-AAA: 1
-AAA: 1
-AAA: 1
-AAA: 10"
-label_settings = SubResource("LabelSettings_nyxpf")
+AAA: 123
+AAA: 1234
+AAA: 12345
+AAA: 123456"
+fit_content = true

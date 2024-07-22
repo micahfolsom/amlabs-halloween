@@ -1,12 +1,26 @@
 extends Node2D
 
-const SAVE_PATH = "user://high_scores.json"
+#const SAVE_PATH = "user://high_scores.json"
+var scroll_lines_enabled = false
+var line_height = 52
+var line_scroll_speed = 2 # lines per second
+var last_hs_index = 0
+
+@onready var hsl_label = $HighScoreScroller/HighScoreListRichText
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_load_high_scores()
-
-
+	# done on autoload
+	# GameManager.load_high_scores()
+	# $HighScoresListRichText.get_content_height()
+	hsl_label.text = ""
+	update_hsl()
+	
+	line_height = hsl_label.get_content_height() / GameManager.high_scores.size()
+	scroll_lines_enabled = true
+	
+	#print(GameManager.high_scores, GameManager.hs_last_add_ts)
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var accept_pressed = Input.is_action_just_pressed("ui_accept")
@@ -14,25 +28,30 @@ func _process(delta):
 		print('accept_pressed: ', accept_pressed)
 		get_tree().change_scene_to_file("res://title_scene.tscn")
 
-func _load_high_scores():
-	print("LOADING")
-	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
-	var j = JSON.new()
-	#print(file.get_as_text())
-	var hs_string = ""
-	var count = 0
-	for line in file.get_as_text().split("\n"):
-		#print(line)
-		var error = j.parse(line)
-		if error == OK:
-			var data = j.data
-			#print(data)
-			for item in data:
-				var line_str = "%s : %d" % [item, data[item]]
-				hs_string += line_str + "\n"
-		if count > 8:
-			break
-		count += 1
-	print(hs_string)
-	$HighScoresList.text = hs_string
-	file.close()
+	if scroll_lines_enabled and can_scroll():
+		$HighScoreScroller.scroll_vertical += line_scroll_speed * line_height * delta
+
+func can_scroll():
+	var hsl_content_height = hsl_label.get_content_height()
+	var hss_height = $HighScoreScroller.size[1]
+	var hss_scrolled_height = $HighScoreScroller.scroll_vertical
+	
+	# the 5 is a fudge factor
+	if hss_scrolled_height <  line_height * last_hs_index + 5: # hsl_content_height - hss_height:
+		return true
+	else:
+		return false
+
+func update_hsl():
+	var idx = 0
+	
+	for hs_doc in GameManager.high_scores:
+		var line_str = "%s : %d" % [hs_doc["initials"], hs_doc["score"]]
+		
+		if GameManager.hs_last_add_ts == hs_doc["ts"]:
+			hsl_label.append_text("[color=gold]" + line_str + "[/color]\n")
+			last_hs_index = idx
+		else:
+			hsl_label.append_text(line_str + "\n")
+		
+		idx += 1
