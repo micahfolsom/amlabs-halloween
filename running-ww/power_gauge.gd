@@ -20,7 +20,11 @@ func _process(delta):
 		_animation_player.play("MaxPower")
 
 func set_power_level(target_power_level):
-	if target_power_level >= MIN_POWER_LEVEL and target_power_level <= MAX_POWER_LEVEL:
-		power_level = target_power_level
-	else:
-		print("Target Power Level Out of Range")
+	power_level = clamp(target_power_level, MIN_POWER_LEVEL, MAX_POWER_LEVEL)
+	#if target_power_level >= MIN_POWER_LEVEL:
+		#if target_power_level > MAX_POWER_LEVEL:
+			#power_level = MAX_POWER_LEVEL
+		#else:
+			#power_level = target_power_level
+	#else:
+		#power_level = 0

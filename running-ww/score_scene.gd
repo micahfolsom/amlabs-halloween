@@ -32,8 +32,8 @@ func _process(delta):
 		$HighScoreScroller.scroll_vertical += line_scroll_speed * line_height * delta
 
 func can_scroll():
-	var hsl_content_height = hsl_label.get_content_height()
-	var hss_height = $HighScoreScroller.size[1]
+	#var hsl_content_height = hsl_label.get_content_height()
+	#var hss_height = $HighScoreScroller.size[1]
 	var hss_scrolled_height = $HighScoreScroller.scroll_vertical
 	
 	# the 5 is a fudge factor
