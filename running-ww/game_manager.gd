@@ -47,6 +47,9 @@ func hs_data_cb(hs_doc):
 	if not hs_doc.has("power_level"):
 		hs_doc["power_level"] = 0
 	
+	if not hs_doc.has("ts"):
+		hs_doc["ts"] = 0
+	
 	return hs_doc
 
 # less intensive append of new score to end of file
