@@ -10,9 +10,11 @@ var last_hs_index = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# done on autoload
-	# GameManager.load_high_scores()
-	# $HighScoresListRichText.get_content_height()
+	# Hack for music continuity - can eventually move this (using
+	# an Autoload node? or new scene?) so it's the same as the
+	# one used in the running scene
+	$VictoryMusic.seek(3)
+
 	hsl_label.text = ""
 	update_hsl()
 	

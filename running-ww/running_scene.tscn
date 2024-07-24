@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d2hgsuunpypt3"]
+[gd_scene load_steps=15 format=3 uid="uid://d2hgsuunpypt3"]
 
 [ext_resource type="Script" path="res://running_scene.gd" id="1_uri5o"]
 [ext_resource type="Texture2D" uid="uid://qkif312dpi34" path="res://lab_background.png" id="2_h2lm0"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://1bcv3pm354ao" path="res://blank.png" id="6_abcvf"]
 [ext_resource type="AudioStream" uid="uid://dcdx1n050xwok" path="res://left step.wav" id="6_nsbui"]
 [ext_resource type="AudioStream" uid="uid://c7tsvbp1vd40u" path="res://Running.wav" id="9_cky13"]
+[ext_resource type="AudioStream" uid="uid://2xgkbwsytbq4" path="res://Score screen.wav" id="12_nh7u6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_02nb2"]
 font = ExtResource("5_p4j8p")
@@ -103,3 +104,10 @@ text = "RUN!"
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_cky13")
 autoplay = true
+
+[node name="VictoryMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_nh7u6")
+
+[node name="VictoryTimeout" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
