@@ -1,15 +1,12 @@
 extends Sprite2D
 
 var steps_count = 0
+
 var power_level = 0
-
-var max_sps = 0
-
-# pl_threshholds[n] = sps means level n starts at sps steps per second
 var pl_threshholds = [0, 3.5, 4.4, 5.5, 8.9, 10.1, 11.45]
 var pl_steps_per_update = 7
-#var pl_elapsed_time = 0.0
 var pl_step_times = []
+var max_sps = 0
 
 var LEFT_PRESS = 0
 var RIGHT_PRESS = 1
@@ -28,7 +25,7 @@ func _process(delta):
 		frame = 1
 		steps_count += 1
 		pl_step_times.push_back(Time.get_unix_time_from_system())
-		print("Step times: ", pl_step_times)
+		#print("Step times: ", pl_step_times)
 		last_press = LEFT_PRESS
 		$LeftPressSFX.playing = true
 	var right_pressed = Input.is_action_just_pressed("ui_right")
@@ -37,7 +34,7 @@ func _process(delta):
 		frame = 2
 		steps_count += 1
 		pl_step_times.push_back(Time.get_unix_time_from_system())
-		print("Step times: ", pl_step_times)
+		#print("Step times: ", pl_step_times)
 		last_press = RIGHT_PRESS
 		$RightPressSFX.playing = true
 	

@@ -1,6 +1,7 @@
 extends Node
 
 const HIGH_SCORE_SAVE_PATH = "user://high_scores.json"
+const HIGH_SCORE_DEFAULT_INITIALS = "AAA"
 
 var high_scores = []
 var hs_last_add_ts = 0
@@ -11,6 +12,8 @@ func _ready():
 		load_high_scores()
 	else:
 		print("High score file not found at: ", HIGH_SCORE_SAVE_PATH)
+	
+	save_high_scores()
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -39,10 +42,10 @@ func hs_data_cb(hs_doc):
 	if hs_doc.has("score"):
 		hs_doc["score"] = int(hs_doc["score"])
 	else:
-		hs_doc["score"] = -1
+		hs_doc["score"] = 0
 	
 	if not hs_doc.has("initials"):
-		hs_doc["initials"] = ""
+		hs_doc["initials"] = HIGH_SCORE_DEFAULT_INITIALS
 	
 	if not hs_doc.has("power_level"):
 		hs_doc["power_level"] = 0
@@ -59,11 +62,11 @@ func add_new_high_score(initials,score,power_level,ts,sortOnAdd=true):
 	
 	high_scores.push_back(new_hs)
 	
+	JsonFileUtils.append_data_to_file(HIGH_SCORE_SAVE_PATH, new_hs)
+	
 	# @todo maybe optimization via insertion instead of a full sort?
 	if sortOnAdd:
 		high_scores.sort_custom(sort_hs_descending)
-	
-	JsonFileUtils.append_data_to_file(HIGH_SCORE_SAVE_PATH, new_hs)
 
 # more expensive, will replace all high scores with what's
 # in high_scores, useful if you want to store the list pre-sorted
