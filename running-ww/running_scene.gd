@@ -1,6 +1,7 @@
 extends Node2D
 
 const SAVE_PATH = "user://high_scores.json"
+var GAME_OVER = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,6 +18,9 @@ func _handle_game_over():
 	print("GAME OVER!!!!", $WerewolfRunner.max_sps)
 	_save_latest_score()
 	
+	GAME_OVER = true
+	$WerewolfRunner.visible = false
+	$VictoryWerewolf.visible = true
 	$BackgroundMusic.playing = false
 	$VictoryMusic.play()
 	$VictoryTimeout.start()

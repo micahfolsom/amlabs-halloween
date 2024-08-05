@@ -22,28 +22,29 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var left_pressed = Input.is_action_just_pressed("ui_left")
-	if (left_pressed) and (last_press != LEFT_PRESS):
-		print('left_pressed: ', left_pressed)
-		frame = 1
-		steps_count += 1
-		pl_step_times.push_back(Time.get_unix_time_from_system())
-		print("Step times: ", pl_step_times)
-		last_press = LEFT_PRESS
-		$LeftPressSFX.playing = true
-	var right_pressed = Input.is_action_just_pressed("ui_right")
-	if (right_pressed) and (last_press != RIGHT_PRESS):
-		print('right_pressed: ', right_pressed)
-		frame = 2
-		steps_count += 1
-		pl_step_times.push_back(Time.get_unix_time_from_system())
-		print("Step times: ", pl_step_times)
-		last_press = RIGHT_PRESS
-		$RightPressSFX.playing = true
-	
-	if 	pl_step_times.size() >= pl_steps_per_update:
-		power_level = calc_power_level()
-		pl_step_times = []
+	if not get_parent().GAME_OVER:
+		var left_pressed = Input.is_action_just_pressed("ui_left")
+		if (left_pressed) and (last_press != LEFT_PRESS):
+			print('left_pressed: ', left_pressed)
+			frame = 1
+			steps_count += 1
+			pl_step_times.push_back(Time.get_unix_time_from_system())
+			print("Step times: ", pl_step_times)
+			last_press = LEFT_PRESS
+			$LeftPressSFX.playing = true
+		var right_pressed = Input.is_action_just_pressed("ui_right")
+		if (right_pressed) and (last_press != RIGHT_PRESS):
+			print('right_pressed: ', right_pressed)
+			frame = 2
+			steps_count += 1
+			pl_step_times.push_back(Time.get_unix_time_from_system())
+			print("Step times: ", pl_step_times)
+			last_press = RIGHT_PRESS
+			$RightPressSFX.playing = true
+		
+		if 	pl_step_times.size() >= pl_steps_per_update:
+			power_level = calc_power_level()
+			pl_step_times = []
 	
 	var steps_string = "%02d steps"
 	$StepsLabel.text = steps_string % steps_count

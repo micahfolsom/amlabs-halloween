@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d2hgsuunpypt3"]
+[gd_scene load_steps=19 format=3 uid="uid://d2hgsuunpypt3"]
 
 [ext_resource type="Script" path="res://running_scene.gd" id="1_uri5o"]
 [ext_resource type="Texture2D" uid="uid://qkif312dpi34" path="res://lab_background.png" id="2_h2lm0"]
@@ -19,6 +19,35 @@ font = ExtResource("5_p4j8p")
 [sub_resource type="LabelSettings" id="LabelSettings_ulh0q"]
 font = ExtResource("5_p4j8p")
 font_size = 48
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_051ll"]
+atlas = ExtResource("3_cbtp6")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b46g2"]
+atlas = ExtResource("3_cbtp6")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4okkx"]
+atlas = ExtResource("3_cbtp6")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1romy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_051ll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b46g2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4okkx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="RunningScene" type="Node2D"]
 script = ExtResource("1_uri5o")
@@ -69,6 +98,7 @@ autostart = true
 script = ExtResource("5_0ujkx")
 
 [node name="TimerLabel" type="Label" parent="RunClock"]
+z_index = -1
 offset_left = 771.0
 offset_top = 329.0
 offset_right = 862.0
@@ -111,3 +141,10 @@ stream = ExtResource("12_nh7u6")
 [node name="VictoryTimeout" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
+
+[node name="VictoryWerewolf" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(613, 560)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_1romy")
+autoplay = "default"
