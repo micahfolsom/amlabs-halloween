@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://qvrgm6fwo21y"]
+[gd_scene load_steps=10 format=3 uid="uid://qvrgm6fwo21y"]
 
 [ext_resource type="Texture2D" uid="uid://1bcv3pm354ao" path="res://blank.png" id="1_qplyj"]
 [ext_resource type="Script" path="res://score_scene.gd" id="1_w68ab"]
@@ -13,6 +13,14 @@ font_size = 58
 [sub_resource type="Theme" id="Theme_owjvh"]
 default_font = ExtResource("3_ls2wr")
 default_font_size = 52
+
+[sub_resource type="LabelSettings" id="LabelSettings_fviek"]
+font = ExtResource("3_ls2wr")
+font_size = 58
+
+[sub_resource type="LabelSettings" id="LabelSettings_f3gyu"]
+font = ExtResource("3_ls2wr")
+font_size = 58
 
 [node name="ScoreScene" type="Node2D"]
 script = ExtResource("1_w68ab")
@@ -42,6 +50,7 @@ label_settings = SubResource("LabelSettings_dgq7a")
 uppercase = true
 
 [node name="HighScoreScroller" type="ScrollContainer" parent="."]
+visible = false
 offset_left = 220.0
 offset_top = 200.0
 offset_right = 983.0
@@ -84,3 +93,21 @@ script = ExtResource("4_rxxb2")
 [node name="VictoryMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_neapv")
 autoplay = true
+
+[node name="InputInitialsLabel" type="Label" parent="."]
+offset_left = 223.0
+offset_top = 280.0
+offset_right = 910.0
+offset_bottom = 339.0
+text = "Please input your initials
+
+
+_ _ _"
+label_settings = SubResource("LabelSettings_fviek")
+
+[node name="InputInitialsActual" type="Label" parent="."]
+offset_left = 226.0
+offset_top = 449.0
+offset_right = 266.0
+offset_bottom = 472.0
+label_settings = SubResource("LabelSettings_f3gyu")

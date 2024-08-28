@@ -5,6 +5,7 @@ var scroll_lines_enabled = false
 var line_height = 52
 var line_scroll_speed = 2 # lines per second
 var last_hs_index = 0
+var initials_entered = 0
 
 @onready var hsl_label = $HighScoreScroller/HighScoreListRichText
 
@@ -15,27 +16,51 @@ func _ready():
 	# one used in the running scene
 	$VictoryMusic.seek(3)
 
-	hsl_label.text = ""
-	update_hsl()
-	
-	line_height = hsl_label.get_content_height() / GameManager.high_scores.size()
-	scroll_lines_enabled = true
-	
-	#print(GameManager.high_scores, GameManager.hs_last_add_ts)
+
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var accept_pressed = Input.is_action_just_pressed("ui_accept")
-	if (accept_pressed):
-		print('accept_pressed: ', accept_pressed)
-		get_tree().change_scene_to_file("res://title_scene.tscn")
-
 	if scroll_lines_enabled and can_scroll():
 		$HighScoreScroller.scroll_vertical += line_scroll_speed * line_height * delta
+		
+func _input(event):
+	# Scrolling
+	if scroll_lines_enabled:
+		var accept_pressed = Input.is_action_just_pressed("ui_accept")
+		if (accept_pressed):
+			print('accept_pressed: ', accept_pressed)
+			get_tree().change_scene_to_file("res://title_scene.tscn")
+			
+	# For initials input, only letters and numbers are valid
+	if event is InputEventKey:
+		if event.pressed:
+			var kp_number = false
+			var kp_letter = false
+			# 48 = 0, 57 = 9
+			if event.keycode >= 48 and event.keycode <= 57:
+				kp_number = true
+			# 65 = A, 90 = Z
+			if event.keycode >= 65 and event.keycode <= 90:
+				kp_letter = true
+			if (kp_number or kp_letter) and (initials_entered < 3):
+				print(event.as_text_key_label() + ' was pressed')
+				$InputInitialsActual.text += event.as_text_key_label() + ' '
+				initials_entered += 1
+	
+	# 3 entered, confirm, then enable scroll
+	if (not scroll_lines_enabled) and (initials_entered == 3):
+		var accept_pressed = Input.is_action_just_pressed("ui_accept")
+		if accept_pressed:
+			hsl_label.text = ""
+			update_hsl()
+			line_height = hsl_label.get_content_height() / GameManager.high_scores.size()
+			scroll_lines_enabled = true
+			$HighScoreScroller.visible = true
+			$InputInitialsActual.visible = false
+			$InputInitialsLabel.visible = false
+
 
 func can_scroll():
-	#var hsl_content_height = hsl_label.get_content_height()
-	#var hss_height = $HighScoreScroller.size[1]
 	var hss_scrolled_height = $HighScoreScroller.scroll_vertical
 	
 	# the 5 is a fudge factor
