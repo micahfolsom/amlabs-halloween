@@ -4,6 +4,8 @@ const HIGH_SCORE_SAVE_PATH = "user://high_scores.json"
 
 var high_scores = []
 var hs_last_add_ts = 0
+var nsteps = 0
+var power_level = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

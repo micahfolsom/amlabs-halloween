@@ -32,10 +32,11 @@ func _handle_victory_timeout_finished():
 
 func _save_latest_score():
 	var ww_node = get_node("WerewolfRunner")
-	var nsteps = ww_node.steps_count
 	var power_level = ww_node.power_level
 	
 	if power_level > $PowerGauge.MAX_POWER_LEVEL:
 		power_level = $PowerGauge.MAX_POWER_LEVEL
-	
-	GameManager.add_new_high_score("AAA", nsteps, power_level, Time.get_unix_time_from_system())
+		
+	GameManager.nsteps = ww_node.steps_count
+	GameManager.power_level = ww_node.power_level
+
