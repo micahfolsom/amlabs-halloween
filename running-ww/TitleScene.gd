@@ -1,7 +1,5 @@
 extends Node2D
 
-var run_scene = preload("res://running_scene.tscn").instantiate()
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -10,10 +8,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var up_pressed = Input.is_action_just_pressed("ui_up")
-	if (up_pressed):
-		print('up_pressed: ', up_pressed)
-	var right_pressed = Input.is_action_just_pressed("ui_right")
-	if (right_pressed):
-		print('right_pressed: ', right_pressed)
+	pass
+	
+func _input(event):
+	var accept_pressed = Input.is_action_just_pressed("ui_accept")
+	if (accept_pressed):
+		print('accept_pressed: ', accept_pressed)
 		get_tree().change_scene_to_file("res://running_scene.tscn")

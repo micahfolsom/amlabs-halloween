@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://d2hgsuunpypt3"]
+[gd_scene load_steps=20 format=3 uid="uid://d2hgsuunpypt3"]
 
 [ext_resource type="Script" path="res://running_scene.gd" id="1_uri5o"]
 [ext_resource type="Texture2D" uid="uid://qkif312dpi34" path="res://lab_background.png" id="2_h2lm0"]
+[ext_resource type="PackedScene" uid="uid://cqy5iqdocd73e" path="res://power_gauge.tscn" id="3_bfqf3"]
 [ext_resource type="Texture2D" uid="uid://bwoexhwegkm6e" path="res://werewolf sprite green.png" id="3_cbtp6"]
 [ext_resource type="Script" path="res://WerewolfRunner.gd" id="4_r2tq4"]
 [ext_resource type="Script" path="res://RunClock.gd" id="5_0ujkx"]
@@ -10,13 +11,49 @@
 [ext_resource type="Texture2D" uid="uid://1bcv3pm354ao" path="res://blank.png" id="6_abcvf"]
 [ext_resource type="AudioStream" uid="uid://dcdx1n050xwok" path="res://left step.wav" id="6_nsbui"]
 [ext_resource type="AudioStream" uid="uid://c7tsvbp1vd40u" path="res://Running.wav" id="9_cky13"]
+[ext_resource type="AudioStream" uid="uid://2xgkbwsytbq4" path="res://Score screen.wav" id="12_nh7u6"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_02nb2"]
+[sub_resource type="LabelSettings" id="LabelSettings_bv82m"]
 font = ExtResource("5_p4j8p")
+font_size = 72
+shadow_size = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_ulh0q"]
 font = ExtResource("5_p4j8p")
 font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_uliet"]
+font = ExtResource("5_p4j8p")
+font_size = 72
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_051ll"]
+atlas = ExtResource("3_cbtp6")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b46g2"]
+atlas = ExtResource("3_cbtp6")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4okkx"]
+atlas = ExtResource("3_cbtp6")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1romy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_051ll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b46g2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4okkx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="RunningScene" type="Node2D"]
 script = ExtResource("1_uri5o")
@@ -27,6 +64,10 @@ position = Vector2(606, 483)
 scale = Vector2(2, 2)
 texture = ExtResource("2_h2lm0")
 
+[node name="PowerGauge" parent="." instance=ExtResource("3_bfqf3")]
+position = Vector2(330, 322)
+scale = Vector2(2.5, 2.5)
+
 [node name="WerewolfRunner" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(613, 560)
@@ -36,40 +77,42 @@ hframes = 7
 frame = 2
 script = ExtResource("4_r2tq4")
 
-[node name="StepsLabel" type="Label" parent="WerewolfRunner"]
-anchors_preset = -1
-anchor_left = -4.152
-anchor_top = -2.966
-anchor_right = -4.152
-anchor_bottom = -2.966
-offset_left = 474.305
-offset_top = 313.473
-offset_right = 525.305
-offset_bottom = 325.473
-theme_type_variation = &"HeaderMedium"
-text = "00 steps"
-label_settings = SubResource("LabelSettings_02nb2")
-
 [node name="RightPressSFX" type="AudioStreamPlayer" parent="WerewolfRunner"]
 stream = ExtResource("5_lmrts")
 
 [node name="LeftPressSFX" type="AudioStreamPlayer" parent="WerewolfRunner"]
 stream = ExtResource("6_nsbui")
 
+[node name="StepsLabel" type="Label" parent="WerewolfRunner"]
+visible = false
+texture_filter = 2
+offset_left = -55.0
+offset_top = -65.0
+offset_right = 7.0
+offset_bottom = -49.0
+scale = Vector2(0.2, 0.2)
+theme_type_variation = &"HeaderLarge"
+text = "00 steps"
+label_settings = SubResource("LabelSettings_bv82m")
+
 [node name="RunClock" type="Timer" parent="."]
+wait_time = 10.0
 one_shot = true
 script = ExtResource("5_0ujkx")
 
 [node name="TimerLabel" type="Label" parent="RunClock"]
+visible = false
 offset_left = 771.0
 offset_top = 329.0
 offset_right = 862.0
 offset_bottom = 377.0
 theme_type_variation = &"HeaderMedium"
-text = "10 s"
 label_settings = SubResource("LabelSettings_ulh0q")
 
 [node name="ReadyTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+autostart = true
 
 [node name="ReadyCountdownBackground" type="Sprite2D" parent="ReadyTimer"]
 visible = false
@@ -77,13 +120,13 @@ position = Vector2(592, 488)
 texture = ExtResource("6_abcvf")
 
 [node name="TimeToStartLabel" type="Label" parent="ReadyTimer"]
-visible = false
-offset_left = 516.0
-offset_top = 361.0
-offset_right = 661.0
-offset_bottom = 400.0
+offset_left = 340.0
+offset_top = 237.0
+offset_right = 649.0
+offset_bottom = 296.0
 theme_type_variation = &"HeaderLarge"
-text = "Start in 3..."
+text = "Ready?"
+label_settings = SubResource("LabelSettings_uliet")
 
 [node name="RunLabel" type="Label" parent="ReadyTimer"]
 visible = false
@@ -97,3 +140,18 @@ text = "RUN!"
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_cky13")
 autoplay = true
+
+[node name="VictoryMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_nh7u6")
+
+[node name="VictoryTimeout" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="VictoryWerewolf" type="AnimatedSprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(613, 560)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_1romy")
+autoplay = "default"
