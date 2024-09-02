@@ -22,7 +22,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if not get_parent().GAME_OVER:
+	if not get_parent().GAME_OVER and get_parent().GAME_START:
 		var left_pressed = Input.is_action_just_pressed("ui_left")
 		if (left_pressed) and (last_press != LEFT_PRESS):
 			print('left_pressed: ', left_pressed)
