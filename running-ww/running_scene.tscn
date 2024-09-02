@@ -13,14 +13,16 @@
 [ext_resource type="AudioStream" uid="uid://c7tsvbp1vd40u" path="res://Running.wav" id="9_cky13"]
 [ext_resource type="AudioStream" uid="uid://2xgkbwsytbq4" path="res://Score screen.wav" id="12_nh7u6"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_02nb2"]
+[sub_resource type="LabelSettings" id="LabelSettings_bv82m"]
 font = ExtResource("5_p4j8p")
+font_size = 72
+shadow_size = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_ulh0q"]
 font = ExtResource("5_p4j8p")
 font_size = 48
 
-[sub_resource type="LabelSettings" id="LabelSettings_chhok"]
+[sub_resource type="LabelSettings" id="LabelSettings_uliet"]
 font = ExtResource("5_p4j8p")
 font_size = 72
 
@@ -75,26 +77,23 @@ hframes = 7
 frame = 2
 script = ExtResource("4_r2tq4")
 
-[node name="StepsLabel" type="Label" parent="WerewolfRunner"]
-visible = false
-anchors_preset = -1
-anchor_left = -4.152
-anchor_top = -2.966
-anchor_right = -4.152
-anchor_bottom = -2.966
-offset_left = 474.305
-offset_top = 313.473
-offset_right = 525.305
-offset_bottom = 325.473
-theme_type_variation = &"HeaderMedium"
-text = "00 steps"
-label_settings = SubResource("LabelSettings_02nb2")
-
 [node name="RightPressSFX" type="AudioStreamPlayer" parent="WerewolfRunner"]
 stream = ExtResource("5_lmrts")
 
 [node name="LeftPressSFX" type="AudioStreamPlayer" parent="WerewolfRunner"]
 stream = ExtResource("6_nsbui")
+
+[node name="StepsLabel" type="Label" parent="WerewolfRunner"]
+visible = false
+texture_filter = 2
+offset_left = -55.0
+offset_top = -65.0
+offset_right = 7.0
+offset_bottom = -49.0
+scale = Vector2(0.2, 0.2)
+theme_type_variation = &"HeaderLarge"
+text = "00 steps"
+label_settings = SubResource("LabelSettings_bv82m")
 
 [node name="RunClock" type="Timer" parent="."]
 wait_time = 10.0
@@ -127,7 +126,7 @@ offset_right = 649.0
 offset_bottom = 296.0
 theme_type_variation = &"HeaderLarge"
 text = "Ready?"
-label_settings = SubResource("LabelSettings_chhok")
+label_settings = SubResource("LabelSettings_uliet")
 
 [node name="RunLabel" type="Label" parent="ReadyTimer"]
 visible = false
