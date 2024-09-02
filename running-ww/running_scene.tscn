@@ -101,7 +101,7 @@ one_shot = true
 script = ExtResource("5_0ujkx")
 
 [node name="TimerLabel" type="Label" parent="RunClock"]
-z_index = -1
+visible = false
 offset_left = 771.0
 offset_top = 329.0
 offset_right = 862.0

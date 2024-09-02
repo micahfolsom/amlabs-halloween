@@ -27,6 +27,7 @@ func _handle_game_start():
 	$RunClock.start()
 	$WerewolfRunner/StepsLabel.visible = true
 	$ReadyTimer/TimeToStartLabel.visible = false
+	$RunClock/TimerLabel.visible = true
 	GAME_START = true
 
 func _handle_game_over():
@@ -37,6 +38,7 @@ func _handle_game_over():
 	$WerewolfRunner.visible = false
 	$VictoryWerewolf.visible = true
 	$BackgroundMusic.playing = false
+	$RunClock/TimerLabel.visible = false
 	$VictoryMusic.play()
 	$VictoryTimeout.start()
 	
