@@ -48,13 +48,13 @@ label_settings = SubResource("LabelSettings_4gywk")
 
 [node name="PlayLabel" type="Label" parent="."]
 top_level = true
-offset_left = 359.0
-offset_top = 729.0
-offset_right = 608.0
-offset_bottom = 768.0
+offset_left = 290.0
+offset_top = 721.0
+offset_right = 576.0
+offset_bottom = 760.0
 scale = Vector2(2.08661, 2.08661)
 theme_type_variation = &"HeaderLarge"
-text = "Press -> to start"
+text = "Press enter to start"
 label_settings = SubResource("LabelSettings_q2lbm")
 horizontal_alignment = 1
 vertical_alignment = 1

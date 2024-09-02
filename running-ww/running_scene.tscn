@@ -97,7 +97,7 @@ stream = ExtResource("5_lmrts")
 stream = ExtResource("6_nsbui")
 
 [node name="RunClock" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 10.0
 one_shot = true
 script = ExtResource("5_0ujkx")
 

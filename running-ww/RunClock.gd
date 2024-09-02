@@ -10,7 +10,9 @@ func _process(delta):
 	var txt_to_format = "%d s"
 	#$TimerLabel.set("theme_override_colors/font_color", Color(1.0,0.0,0.0,1.0))
 	#$TimerLabel.add_theme_color_override("font_color", Color(1.0,0.0,0.0,1.0))
-	if self.time_left <= 5.0 and self.time_left > 3.0:
+	if self.time_left > 6.0:
+		$TimerLabel.self_modulate = Color(1.0,1.0,1.0,1.0)
+	if self.time_left <= 6.0 and self.time_left > 3.0:
 		$TimerLabel.self_modulate = Color(1.0,1.0,0.0,1.0)
 	if self.time_left <= 3.0:
 		$TimerLabel.self_modulate = Color(1.0,0.0,0.0,1.0)
