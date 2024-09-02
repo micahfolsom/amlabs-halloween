@@ -150,6 +150,7 @@ one_shot = true
 
 [node name="VictoryWerewolf" type="AnimatedSprite2D" parent="."]
 visible = false
+texture_filter = 1
 position = Vector2(613, 560)
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_1romy")
