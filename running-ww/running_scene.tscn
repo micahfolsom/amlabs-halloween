@@ -15,7 +15,7 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_bv82m"]
 font = ExtResource("5_p4j8p")
-font_size = 72
+font_size = 94
 shadow_size = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_ulh0q"]
@@ -65,12 +65,12 @@ scale = Vector2(2, 2)
 texture = ExtResource("2_h2lm0")
 
 [node name="PowerGauge" parent="." instance=ExtResource("3_bfqf3")]
-position = Vector2(94, 125)
+position = Vector2(103, 133)
 scale = Vector2(2.5, 2.5)
 
 [node name="WerewolfRunner" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(613, 560)
+position = Vector2(611, 535)
 scale = Vector2(5, 5)
 texture = ExtResource("3_cbtp6")
 hframes = 7
@@ -86,10 +86,10 @@ stream = ExtResource("6_nsbui")
 [node name="StepsLabel" type="Label" parent="WerewolfRunner"]
 visible = false
 texture_filter = 2
-offset_left = -55.0
-offset_top = -65.0
-offset_right = 7.0
-offset_bottom = -49.0
+offset_left = -37.6
+offset_top = -59.0
+offset_right = 347.4
+offset_bottom = 39.0
 scale = Vector2(0.2, 0.2)
 theme_type_variation = &"HeaderLarge"
 text = "00 steps"
