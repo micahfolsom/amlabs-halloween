@@ -64,7 +64,7 @@ func _save_latest_score():
 	GameManager.power_level = ww_node.power_level
 
 func _update_bg_music_pitch_for_power_level(target_power_level, delta):
-	var target_pitch = 1.0 + float(target_power_level)/240
+	var target_pitch = 1.0 + float(target_power_level**2)/240.0
 	var new_pitch
 	
 	if BG_Music.pitch_scale >= target_pitch:
