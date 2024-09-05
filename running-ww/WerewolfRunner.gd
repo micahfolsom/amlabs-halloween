@@ -19,6 +19,7 @@ var last_press = -1
 func _ready():
 	pl_step_times = []
 	power_level = 0
+	frame = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
