@@ -8,6 +8,8 @@ var max_sps = 0
 # pl_threshholds[n] = sps means level n starts at sps steps per second
 var pl_threshholds = [0, 3.5, 4.4, 5.5, 8.9, 10.1, 11.45]
 var pl_steps_per_update = 7
+var pl_elapsed_since_last_step = 0.0
+var pl_min_seconds_per_update = 10
 #var pl_elapsed_time = 0.0
 var pl_step_times = []
 
@@ -19,6 +21,9 @@ var last_press = -1
 func _ready():
 	pl_step_times = []
 	power_level = 0
+	
+	pl_min_seconds_per_update =  1 / pl_threshholds[1]
+	
 	frame = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -30,6 +35,7 @@ func _process(delta):
 			frame = 1
 			steps_count += 1
 			pl_step_times.push_back(Time.get_unix_time_from_system())
+			pl_elapsed_since_last_step = 0.0
 			print("Step times: ", pl_step_times)
 			last_press = LEFT_PRESS
 			$LeftPressSFX.playing = true
@@ -39,13 +45,27 @@ func _process(delta):
 			frame = 2
 			steps_count += 1
 			pl_step_times.push_back(Time.get_unix_time_from_system())
+			pl_elapsed_since_last_step = 0.0
 			print("Step times: ", pl_step_times)
 			last_press = RIGHT_PRESS
 			$RightPressSFX.playing = true
 		
+		if pl_elapsed_since_last_step >= pl_min_seconds_per_update:
+			power_level = clamp(power_level - 1, 0, pl_threshholds.size())
+			pl_step_times = []
+			pl_elapsed_since_last_step = 0.0
+		
 		if 	pl_step_times.size() >= pl_steps_per_update:
 			power_level = calc_power_level()
 			pl_step_times = []
+			pl_elapsed_since_last_step = 0.0
+		
+		var power_level_idx = clamp(power_level+1, 1, pl_threshholds.size() - 1)
+		pl_min_seconds_per_update = 2 / pl_threshholds[power_level_idx]
+		
+		pl_elapsed_since_last_step += delta
+		print("elapsed since last step: ", pl_elapsed_since_last_step)
+		print("min secs per update: ", pl_min_seconds_per_update)
 	
 	var steps_string = "%02d steps"
 	$StepsLabel.text = steps_string % steps_count
@@ -64,7 +84,10 @@ func calc_power_level():
 	for i in n_steps - 1:
 		var step_time = pl_step_times[i+1] - pl_step_times[i]
 		sum += step_time ** 2
-		
+	
+	if sum <= 0:
+		return 0
+	
 	var steps_per_sec = 1 / sqrt(sum / n_steps)
 	var new_power_level = 0
 	
