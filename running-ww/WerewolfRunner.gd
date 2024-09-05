@@ -9,7 +9,7 @@ var max_sps = 0
 var pl_threshholds = [0, 3.5, 4.4, 5.5, 8.9, 10.1, 11.45]
 var pl_steps_per_update = 7
 var pl_elapsed_since_last_step = 0.0
-var pl_min_seconds_per_update = 0.2
+var pl_min_seconds_per_update = 10
 #var pl_elapsed_time = 0.0
 var pl_step_times = []
 
@@ -22,7 +22,7 @@ func _ready():
 	pl_step_times = []
 	power_level = 0
 	
-	pl_min_seconds_per_update = 10
+	pl_min_seconds_per_update =  1 / pl_threshholds[1]
 	
 	frame = 0
 
@@ -50,16 +50,18 @@ func _process(delta):
 			last_press = RIGHT_PRESS
 			$RightPressSFX.playing = true
 		
-		if 	pl_step_times.size() >= pl_steps_per_update or pl_elapsed_since_last_step >= pl_min_seconds_per_update:
-			power_level = calc_power_level()
+		if pl_elapsed_since_last_step >= pl_min_seconds_per_update:
+			power_level = clamp(power_level - 1, 0, pl_threshholds.size())
 			pl_step_times = []
-			
 			pl_elapsed_since_last_step = 0.0
 		
-		if power_level > 0:
-			var power_level_idx = clamp(power_level, 0, pl_threshholds.size() - 1)
-			
-			pl_min_seconds_per_update = 2 / pl_threshholds[power_level_idx]
+		if 	pl_step_times.size() >= pl_steps_per_update:
+			power_level = calc_power_level()
+			pl_step_times = []
+			pl_elapsed_since_last_step = 0.0
+		
+		var power_level_idx = clamp(power_level+1, 1, pl_threshholds.size() - 1)
+		pl_min_seconds_per_update = 2 / pl_threshholds[power_level_idx]
 		
 		pl_elapsed_since_last_step += delta
 		print("elapsed since last step: ", pl_elapsed_since_last_step)
