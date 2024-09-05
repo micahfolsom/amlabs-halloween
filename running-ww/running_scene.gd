@@ -3,6 +3,10 @@ extends Node2D
 const SAVE_PATH = "user://high_scores.json"
 var GAME_START = false
 var GAME_OVER = false
+var GAME_LENGTH = 10 # in seconds
+var PITCH_RAMP_TIME = 1.0 # in seconds
+
+@onready var BG_Music = $BackgroundMusic
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,6 +19,7 @@ func _ready():
 func _process(delta):
 	var ww_power_level = $WerewolfRunner.power_level
 	$PowerGauge.set_power_level(ww_power_level)
+	_update_bg_music_pitch_for_power_level(ww_power_level, delta)
 	
 	if $ReadyTimer.time_left <= 1:
 		$ReadyTimer/TimeToStartLabel.text = "Start in 1..."
@@ -24,6 +29,7 @@ func _process(delta):
 		$ReadyTimer/TimeToStartLabel.text = "Start in 3..."
 		
 func _handle_game_start():
+	$RunClock.set_wait_time(GAME_LENGTH)
 	$RunClock.start()
 	$WerewolfRunner/StepsLabel.visible = true
 	$ReadyTimer/TimeToStartLabel.visible = false
@@ -57,3 +63,14 @@ func _save_latest_score():
 	GameManager.nsteps = ww_node.steps_count
 	GameManager.power_level = ww_node.power_level
 
+func _update_bg_music_pitch_for_power_level(target_power_level, delta):
+	var target_pitch = 1.0 + float(target_power_level)/240
+	var new_pitch
+	
+	if BG_Music.pitch_scale >= target_pitch:
+		new_pitch = target_pitch
+	else:
+		new_pitch = BG_Music.pitch_scale + (delta / PITCH_RAMP_TIME) * (float(target_power_level)/240)
+	
+	BG_Music.set_pitch_scale(new_pitch)
+	
