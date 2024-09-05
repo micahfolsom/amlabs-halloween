@@ -16,8 +16,6 @@ func _ready():
 	# an Autoload node? or new scene?) so it's the same as the
 	# one used in the running scene
 	$VictoryMusic.seek(3)
-
-
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -54,9 +52,7 @@ func _input(event):
 		var accept_pressed = Input.is_action_just_pressed("ui_accept")
 		if accept_pressed:
 			_save_latest_score()
-			hsl_label.text = ""
 			update_hsl()
-			line_height = hsl_label.get_content_height() / GameManager.high_scores.size()
 			scroll_lines_enabled = true
 			$HighScoreScroller.visible = true
 			$InputInitialsActual.visible = false
@@ -74,6 +70,7 @@ func can_scroll():
 
 func update_hsl():
 	var idx = 0
+	hsl_label.text = ""
 	
 	for hs_doc in GameManager.high_scores:
 		var line_str = "%s : %d - PL.%d" % [hs_doc["initials"], hs_doc["score"], hs_doc["power_level"]]
@@ -85,6 +82,8 @@ func update_hsl():
 			hsl_label.append_text(line_str + "\n")
 		
 		idx += 1
+	
+	line_height = hsl_label.get_content_height() / GameManager.high_scores.size()
 
 func _save_latest_score():	
 	GameManager.add_new_high_score(initials_entered, GameManager.nsteps, GameManager.power_level, Time.get_unix_time_from_system())
