@@ -49,17 +49,21 @@ text = "Endurance Test Results"
 label_settings = SubResource("LabelSettings_dgq7a")
 uppercase = true
 
-[node name="HighScoreScroller" type="ScrollContainer" parent="."]
+[node name="HighScoreContainer" type="Control" parent="."]
 visible = false
+clip_contents = true
+custom_minimum_size = Vector2(763, 561)
+layout_mode = 3
+anchors_preset = 0
 offset_left = 220.0
 offset_top = 200.0
 offset_right = 983.0
 offset_bottom = 761.0
-horizontal_scroll_mode = 3
-vertical_scroll_mode = 3
 
-[node name="HighScoreListRichText" type="RichTextLabel" parent="HighScoreScroller"]
+[node name="HighScoreListRichText" type="RichTextLabel" parent="HighScoreContainer"]
 layout_mode = 2
+offset_right = 763.0
+offset_bottom = 1248.0
 size_flags_horizontal = 3
 theme = SubResource("Theme_owjvh")
 bbcode_enabled = true

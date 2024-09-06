@@ -8,7 +8,7 @@ var last_hs_index = 0
 var num_initials_entered = 0
 var initials_entered = ""
 
-@onready var hsl_label = $HighScoreScroller/HighScoreListRichText
+@onready var hsl_label = $HighScoreContainer/HighScoreListRichText
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,7 +20,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if scroll_lines_enabled and can_scroll():
-		$HighScoreScroller.scroll_vertical += line_scroll_speed * line_height * delta
+		hsl_label.position -= Vector2(0,line_scroll_speed * line_height * delta)
 		
 func _input(event):
 	# Scrolling
@@ -54,16 +54,16 @@ func _input(event):
 			_save_latest_score()
 			update_hsl()
 			scroll_lines_enabled = true
-			$HighScoreScroller.visible = true
+			$HighScoreContainer.visible = true
 			$InputInitialsActual.visible = false
 			$InputInitialsLabel.visible = false
 
 
 func can_scroll():
-	var hss_scrolled_height = $HighScoreScroller.scroll_vertical
-	
+	var hss_scrolled_height = hsl_label.position
+	print("hss_scrolled_height: ", hss_scrolled_height[1])
 	# the 5 is a fudge factor
-	if hss_scrolled_height <  line_height * (last_hs_index - 3) + 5: # hsl_content_height - hss_height:
+	if -1 * hss_scrolled_height[1] < line_height * (last_hs_index - 3) + 5: # hsl_content_height - hss_height:
 		return true
 	else:
 		return false
