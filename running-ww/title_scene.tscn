@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dxhacy0x6cx2k"]
+[gd_scene load_steps=7 format=3 uid="uid://dxhacy0x6cx2k"]
 
 [ext_resource type="Script" path="res://TitleScene.gd" id="1_vf8ll"]
 [ext_resource type="Texture2D" uid="uid://1bcv3pm354ao" path="res://blank.png" id="2_iiee8"]
 [ext_resource type="FontFile" uid="uid://dcuxp0iyuxysj" path="res://neon_pixel-7.ttf" id="3_cjp6w"]
+[ext_resource type="AudioStream" uid="uid://b6x2h3pbk2hh6" path="res://were intro.mp3" id="4_rq6jl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4gywk"]
 font = ExtResource("3_cjp6w")
@@ -65,3 +66,8 @@ position = Vector2(600, 480)
 scale = Vector2(2, 2)
 texture = ExtResource("2_iiee8")
 metadata/_edit_lock_ = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_rq6jl")
+autoplay = true
+parameters/looping = true
