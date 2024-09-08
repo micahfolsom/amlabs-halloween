@@ -19,6 +19,10 @@ func _ready():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	pass
+
+# runs at a fixed 60fps
+func _physics_process(delta):
 	if scroll_lines_enabled and can_scroll():
 		hsl_label.position -= Vector2(0,line_scroll_speed * line_height * delta)
 		
@@ -58,10 +62,9 @@ func _input(event):
 			$InputInitialsActual.visible = false
 			$InputInitialsLabel.visible = false
 
-
 func can_scroll():
 	var hss_scrolled_height = hsl_label.position
-	print("hss_scrolled_height: ", hss_scrolled_height[1])
+	# print("hss_scrolled_height: ", hss_scrolled_height[1])
 	# the 5 is a fudge factor
 	if -1 * hss_scrolled_height[1] < line_height * (last_hs_index - 3) + 5: # hsl_content_height - hss_height:
 		return true
