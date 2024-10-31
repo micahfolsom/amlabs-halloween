@@ -75,7 +75,7 @@ void setup() {
     pinMode(LED_BUILTIN, OUTPUT);
     Serial.print(F("Send IR signals at pin "));
     Serial.println(IR_SEND_PIN);
-    IrSender.begin(DISABLE_LED_FEEDBACK);
+    IrSender.begin(DISABLE_LED_FEEDBACK, 0);
 
     // Pi comms
     pinMode(RPI_TRIGGER_PIN, OUTPUT);
