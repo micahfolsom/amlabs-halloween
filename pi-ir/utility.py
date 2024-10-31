@@ -41,6 +41,9 @@ class GhostAnim:
         self.kill_cooldown.start()
         self.this_ghost = which_ghost
         self.state = STATE_RISING
+        # Sounds
+        pygame.mixer.init()
+        pygame.music.load('ghost_shot.mp3')
 
         prefix = ""
         if self.this_ghost == RED_GHOST:
@@ -64,6 +67,7 @@ class GhostAnim:
             self.iframe = 0
             self.kill_cooldown.duration = get_rand_respawn()
             self.kill_cooldown.start()
+            pygame.mixer.music.play()
 
     def reset(self):
         self.state = STATE_RISING
