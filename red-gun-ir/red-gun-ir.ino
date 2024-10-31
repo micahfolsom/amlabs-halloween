@@ -89,7 +89,7 @@ void setup() {
     pinMode(LED_BUILTIN, OUTPUT);
     Serial.print(F("Send IR signals at pin "));
     Serial.println(IR_SEND_PIN);
-    IrSender.begin(DISABLE_LED_FEEDBACK);
+    IrSender.begin(DISABLE_LED_FEEDBACK, 0);
     retrigger_cooldown.duration = 1000;
     retrigger_cooldown.start = millis();
     reset_hold_timer.duration = 5000;
@@ -102,6 +102,17 @@ void setup() {
     pinMode(TRIGGER_PIN, INPUT);
     pinMode(TRIGGER_LED_PIN, OUTPUT);
     pinMode(LED_CLOCK_PIN, OUTPUT);
+
+    for (int i=0;i < 12;++i) {
+      strip.setBrightness(255.0 - (i * (255.5 / 11.0)));
+      strip.show();
+      delay(40);
+    }
+    for (int i=0;i < 12;++i) {
+      strip.setBrightness(i * (255.5 / 11.0));
+      strip.show();
+      delay(40);
+    }
 }
 
 void loop() {
@@ -116,21 +127,8 @@ void loop() {
         Serial.println();
         Serial.flush();
         IrSender.sendNEC(0x00, TRIGGER_CODES[THIS_GUN], sRepeats);
-        strip.fill(THIS_GUN_COLOR, 0, NLEDS);
-        strip.show();
-        delay(100);
-        strip.clear();
-        strip.show();
-        strip.fill(THIS_GUN_COLOR, 0, NLEDS);
-        strip.show();
-        delay(100);
-        strip.clear();
-        strip.show();
-        strip.fill(THIS_GUN_COLOR, 0, NLEDS);
-        strip.show();
-        delay(100);
-        strip.clear();
-        strip.show();
+        show_trigger_lights();
+        set_lights_for_nhits(nHits);
       } else {
           for (int i=0;i < 12;++i) {
             strip.setBrightness(255.0 - (i * (255.5 / 11.0)));
@@ -198,31 +196,7 @@ void loop() {
         // signal for accuracy
         // Wait a short time so the "shot" lighting has a chance to happen
         nHits++;
-        if (nHits == 1) {
-          for (int i=0;i < 10;++i) {
-            Serial.println("Hits = 1");
-            strip.fill(THIS_GUN_COLOR, 0, (i / 2) + 1);
-            strip.setBrightness(i * (255.5 / 9.0));
-            strip.show();
-            delay(100);
-          }
-        } else if (nHits == 2) {
-          for (int i=0;i < 12;++i) {
-            Serial.println("Hits = 2");
-            strip.fill(THIS_GUN_COLOR, 0, i + 1);
-            strip.setBrightness(i * (255.5 / 11.0));
-            strip.show();
-            delay(83);
-          }
-        } else if (nHits >= 3) {
-          Serial.println("Hits = 3");
-          for (int i=0;i < 12;++i) {
-            strip.fill(THIS_GUN_COLOR, 0, (2 * i) + 1);
-            strip.setBrightness(i * (255.5 / 11.0));
-            strip.show();
-            delay(83);
-          }
-        }
+        set_lights_for_nhits(nHits);
       }
     } else {
       Serial.print("Got something else: ");
@@ -231,4 +205,51 @@ void loop() {
       Serial.flush();
     }
   }
+}
+
+void set_lights_for_nhits(int nhits) {
+  if (nhits == 1) {
+    for (int i=0;i < 10;++i) {
+      Serial.println("Hits = 1");
+      strip.fill(THIS_GUN_COLOR, 0, (i / 2) + 1);
+      strip.setBrightness(i * (255.5 / 9.0));
+      strip.show();
+      delay(100);
+    }
+  } else if (nhits == 2) {
+    for (int i=0;i < 12;++i) {
+      Serial.println("Hits = 2");
+      strip.fill(THIS_GUN_COLOR, 0, i + 1);
+      strip.setBrightness(i * (255.5 / 11.0));
+      strip.show();
+      delay(83);
+    }
+  } else if (nhits >= 3) {
+    Serial.println("Hits = 3");
+    for (int i=0;i < 12;++i) {
+      strip.fill(THIS_GUN_COLOR, 0, (2 * i) + 1);
+      strip.setBrightness(i * (255.5 / 11.0));
+      strip.show();
+      delay(83);
+    }
+  }
+}
+
+void show_trigger_lights() {
+  strip.clear();
+  strip.fill(THIS_GUN_COLOR, 0, NLEDS);
+  strip.show();
+  delay(100);
+  strip.clear();
+  strip.show();
+  strip.fill(THIS_GUN_COLOR, 0, NLEDS);
+  strip.show();
+  delay(100);
+  strip.clear();
+  strip.show();
+  strip.fill(THIS_GUN_COLOR, 0, NLEDS);
+  strip.show();
+  delay(100);
+  strip.clear();
+  strip.show();
 }
