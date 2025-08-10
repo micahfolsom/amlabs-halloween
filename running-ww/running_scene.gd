@@ -56,4 +56,3 @@ func _save_latest_score():
 		
 	GameManager.nsteps = ww_node.steps_count
 	GameManager.power_level = ww_node.power_level
-

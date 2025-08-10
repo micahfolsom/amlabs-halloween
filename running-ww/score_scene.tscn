@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://qvrgm6fwo21y"]
 
 [ext_resource type="Texture2D" uid="uid://1bcv3pm354ao" path="res://blank.png" id="1_qplyj"]
-[ext_resource type="Script" path="res://score_scene.gd" id="1_w68ab"]
+[ext_resource type="Script" uid="uid://bsflnwg482krf" path="res://score_scene.gd" id="1_w68ab"]
 [ext_resource type="FontFile" uid="uid://dcuxp0iyuxysj" path="res://neon_pixel-7.ttf" id="3_ls2wr"]
-[ext_resource type="Script" path="res://HighScoreListRichText.gd" id="4_rxxb2"]
+[ext_resource type="Script" uid="uid://b63e7jclt5xk0" path="res://HighScoreListRichText.gd" id="4_rxxb2"]
 [ext_resource type="AudioStream" uid="uid://2xgkbwsytbq4" path="res://Score screen.wav" id="5_neapv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dgq7a"]

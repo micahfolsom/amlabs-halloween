@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://dalyauegkc2bh"]
+
+[ext_resource type="Script" uid="uid://b7jft0clpaiby" path="res://main.gd" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://okcal22n54om" path="res://reflexlab_background.png" id="1_ig7tw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0xm2m"]
+font_size = 40
+font_color = Color(0.933333, 1, 0.8, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_h2yge"]
+font_size = 60
+font_color = Color(0.933333, 1, 0.8, 1)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_0xm2m")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ScoreLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 1268.0
+offset_top = 364.0
+offset_right = 1419.0
+offset_bottom = 419.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_0xm2m")
+
+[node name="FinalScoreLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 785.0
+offset_top = 300.0
+offset_right = 1165.0
+offset_bottom = 383.0
+text = "Final Score: 0"
+label_settings = SubResource("LabelSettings_h2yge")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(960, 538)
+texture = ExtResource("1_ig7tw")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="Spawn1" type="Node2D" parent="."]
+position = Vector2(549, 863)
+
+[node name="Spawn2" type="Node2D" parent="."]
+position = Vector2(790, 859)
+
+[node name="Spawn3" type="Node2D" parent="."]
+position = Vector2(1059, 862)
+
+[node name="Spawn4" type="Node2D" parent="."]
+position = Vector2(1318, 868)
