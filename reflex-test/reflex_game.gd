@@ -24,6 +24,8 @@ func _ready():
 	TargetAnims = [$Target1, $Target2, $Target3, $Target4]
 	
 func _physics_process(delta: float) -> void:
+	# move targets if they are 1) active and 2) in the correct
+	# state
 	for i in range(NTARGETS):
 		if fHoleActive[i]:
 			if TargetState[i] == TARGET_RAISING:
@@ -38,7 +40,6 @@ func _physics_process(delta: float) -> void:
 					TargetState[i] = TARGET_RAISING
 					fHoleActive[i] = false
 					_show_lid(i, true)
-	pass
 	
 func _input(_event):
 	# Keyboard bindings: 1, 2, 3, 4 for the 4 holes
@@ -48,6 +49,8 @@ func _input(_event):
 	for i in range(NTARGETS):
 		var action_name = "hole" + str(i + 1)
 		if Input.is_action_just_pressed(action_name) and fHoleActive[i]:
+			if not fHoleActive[i]:
+				return
 			print("hole " + str(i) + " target hit")
 			_score_hit()
 			#fHoleActive[i] = false
@@ -96,6 +99,7 @@ func raise_target():
 func _score_hit():
 	PlayerScore += 1
 	$CurrentScoreLabel.text = "Score: " + str(PlayerScore)
+	$CurrentScoreLabel.add_score()
 	
 func _show_lid(ilid: int, toggle: bool):
 	if toggle:

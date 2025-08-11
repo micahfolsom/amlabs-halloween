@@ -1,14 +1,23 @@
-[gd_scene load_steps=33 format=3 uid="uid://cybspqymj4ic8"]
+[gd_scene load_steps=36 format=3 uid="uid://cybspqymj4ic8"]
 
 [ext_resource type="Script" uid="uid://cmfgcelmnbk0p" path="res://reflex_game.gd" id="1_jp0xa"]
 [ext_resource type="Texture2D" uid="uid://b46eovjtsekp3" path="res://reflexlab_background.png" id="1_v3j5b"]
 [ext_resource type="Texture2D" uid="uid://bjpmt2mp1jmro" path="res://reflexlab_foregroundLIDS.png" id="3_3tnpr"]
+[ext_resource type="Script" uid="uid://yhftn3i2mmv7" path="res://current_score_label.gd" id="3_lg64v"]
 [ext_resource type="Texture2D" uid="uid://d0rxgxrawvxn7" path="res://reflexlab_foreground.png" id="3_vjh6j"]
 [ext_resource type="Texture2D" uid="uid://d1vr6ebfu5xk3" path="res://scientist_micah.png" id="5_5y4j1"]
 [ext_resource type="Texture2D" uid="uid://c1eockiwluxab" path="res://scientist_senia.png" id="6_j7wn0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vjh6j"]
 font_size = 44
+
+[sub_resource type="LabelSettings" id="LabelSettings_j7wn0"]
+font_size = 44
+font_color = Color(0, 1, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lg64v"]
+font_size = 44
+font_color = Color(1, 0, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5y4j1"]
 atlas = ExtResource("5_5y4j1")
@@ -215,6 +224,28 @@ offset_right = 1417.0
 offset_bottom = 416.0
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_vjh6j")
+script = ExtResource("3_lg64v")
+
+[node name="ScoreUpLabel" type="Label" parent="CurrentScoreLabel"]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_left = 129.0
+offset_top = -29.0
+offset_right = 179.0
+offset_bottom = 32.0
+text = "+1"
+label_settings = SubResource("LabelSettings_j7wn0")
+
+[node name="ScoreDownLabel" type="Label" parent="CurrentScoreLabel"]
+visible = false
+z_index = 1
+offset_left = 129.0
+offset_top = 21.0
+offset_right = 179.0
+offset_bottom = 82.0
+text = "-1"
+label_settings = SubResource("LabelSettings_lg64v")
 
 [node name="HolePlatformForeground" type="Sprite2D" parent="."]
 z_index = 1
