@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cybspqymj4ic8"]
+[gd_scene load_steps=38 format=3 uid="uid://cybspqymj4ic8"]
 
 [ext_resource type="Script" uid="uid://cmfgcelmnbk0p" path="res://reflex_game.gd" id="1_jp0xa"]
 [ext_resource type="Texture2D" uid="uid://b46eovjtsekp3" path="res://reflexlab_background.png" id="1_v3j5b"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://d0rxgxrawvxn7" path="res://reflexlab_foreground.png" id="3_vjh6j"]
 [ext_resource type="Texture2D" uid="uid://d1vr6ebfu5xk3" path="res://scientist_micah.png" id="5_5y4j1"]
 [ext_resource type="Texture2D" uid="uid://c1eockiwluxab" path="res://scientist_senia.png" id="6_j7wn0"]
+[ext_resource type="AudioStream" uid="uid://c5j4j6xpsmoof" path="res://sounds/monster_hit.wav" id="8_mmrs6"]
+[ext_resource type="AudioStream" uid="uid://cgtg2sjvn1ls2" path="res://sounds/scientist_hit.wav" id="9_oyhy4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vjh6j"]
 font_size = 44
@@ -318,3 +320,9 @@ position = Vector2(1311, 974)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_ear4u")
 animation = &"micah_raise"
+
+[node name="ScoreUpSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_mmrs6")
+
+[node name="ScoreDownSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_oyhy4")

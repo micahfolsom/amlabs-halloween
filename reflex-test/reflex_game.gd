@@ -1,8 +1,6 @@
 extends Node2D
 
 var NTARGETS: int = 4
-var fLockedOut: bool = false
-var LOCKOUT_TIME: float =  2.0 # sec
 var PlayerScore: int = 0
 var fHoleActive: Array = [false, false, false, false]
 var fTargetHit: Array = [false, false, false, false]
@@ -18,7 +16,6 @@ var TARGET_VELOCITY = (TARGET_YBOTTOM - TARGET_YTOP) / TARGET_RAISE_TIME
 
 func _ready():
 	$TargetRaiseTimer.connect("timeout", raise_target)
-	fLockedOut = false
 	PlayerScore = 0
 	LidPivots = [$LidPivot1, $LidPivot2, $LidPivot3, $LidPivot4]
 	TargetAnims = [$Target1, $Target2, $Target3, $Target4]
@@ -43,9 +40,6 @@ func _physics_process(delta: float) -> void:
 	
 func _input(_event):
 	# Keyboard bindings: 1, 2, 3, 4 for the 4 holes
-	if fLockedOut:
-		return
-		
 	for i in range(NTARGETS):
 		var action_name = "hole" + str(i + 1)
 		if Input.is_action_just_pressed(action_name) and fHoleActive[i]:
@@ -64,10 +58,8 @@ func _input(_event):
 	var accept_pressed = Input.is_action_just_pressed("ui_accept")
 	if (accept_pressed):
 		print('accept_pressed: ', accept_pressed)
-		get_tree().change_scene_to_file("res://reflex_game.tscn")
 
 func raise_target():
-	print("raise")
 	# Don't do anything if all holes are active
 	var is_active = func(hole_flag):
 		return hole_flag
@@ -90,16 +82,18 @@ func raise_target():
 		print("monster target")
 	TargetAnims[itarget].play("micah_raise")
 	
-	# TODO: move cover (need individual lids)
-	
-	# TODO: play monster animation1
-	
-	# TODO: begin raising monster
 
 func _score_hit():
 	PlayerScore += 1
 	$CurrentScoreLabel.text = "Score: " + str(PlayerScore)
 	$CurrentScoreLabel.add_score()
+	$ScoreUpSFX.play()
+	
+func _score_error():
+	PlayerScore -= 1
+	$CurrentScoreLabel.text = "Score: " + str(PlayerScore)
+	$CurrentScoreLabel.remove_score()
+	$ScoreDownSFX.play()
 	
 func _show_lid(ilid: int, toggle: bool):
 	if toggle:
