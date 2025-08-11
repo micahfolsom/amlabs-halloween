@@ -1,15 +1,17 @@
 extends Node2D
 
-var NTARGETS = 4
-var fLockedOut = false
-var LOCKOUT_TIME =  2.0 # sec
-var PlayerScore = 0
-var fHoleActive = [false, false, false, false]
+var NTARGETS: int = 4
+var fLockedOut: bool = false
+var LOCKOUT_TIME: float =  2.0 # sec
+var PlayerScore: int = 0
+var fHoleActive: Array = [false, false, false, false]
+var HoleLids: Array = [null, null, null, null]
 
 func _ready():
 	$TargetRaiseTimer.connect("timeout", raise_target)
 	fLockedOut = false
 	PlayerScore = 0
+	HoleLids = [$HoleLid1, $HoleLid2, $HoleLid3, $HoleLid4]
 
 func _process(_delta):
 	pass
@@ -19,10 +21,14 @@ func _input(_event):
 	if fLockedOut:
 		return
 		
-	for i in range(4):
+	for i in range(NTARGETS):
 		var action_name = "hole" + str(i + 1)
 		if Input.is_action_just_pressed(action_name) and fHoleActive[i]:
 			print("hole " + str(i) + " target hit")
+			_score_hit()
+			fHoleActive[i] = false
+			# TODO: play hit animation, return lid when it's done
+			_show_lid(i, true)
 			return
 			
 	# TODO: figure out button mappings for test joystick setup
@@ -45,6 +51,7 @@ func raise_target():
 		itarget = randi() % NTARGETS
 	fHoleActive[itarget] = true
 	print("chose target " + str(itarget))
+	_show_lid(itarget, false)
 	
 	# Choose a target type
 	if randf() < 0.25:
@@ -54,6 +61,16 @@ func raise_target():
 	
 	# TODO: move cover (need individual lids)
 	
-	# TODO: play monster animation
+	# TODO: play monster animation1
 	
 	# TODO: begin raising monster
+
+func _score_hit():
+	PlayerScore += 1
+	$CurrentScoreLabel.text = "Score: " + str(PlayerScore)
+	
+func _show_lid(ilid: int, toggle: bool):
+	if toggle:
+		HoleLids[ilid].show()
+	else:
+		HoleLids[ilid].hide()

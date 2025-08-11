@@ -23,11 +23,6 @@ offset_bottom = 416.0
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_vjh6j")
 
-[node name="HoleCovers" type="Sprite2D" parent="."]
-z_index = 2
-position = Vector2(961, 538)
-texture = ExtResource("3_3tnpr")
-
 [node name="HolePlatformForeground" type="Sprite2D" parent="."]
 z_index = 1
 position = Vector2(960, 540)
@@ -35,3 +30,31 @@ texture = ExtResource("3_vjh6j")
 
 [node name="TargetRaiseTimer" type="Timer" parent="."]
 autostart = true
+
+[node name="HoleLid1" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(545, 870)
+texture = ExtResource("3_3tnpr")
+region_enabled = true
+region_rect = Rect2(446.154, 827.718, 196.82, 89.6411)
+
+[node name="HoleLid2" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(795, 870)
+texture = ExtResource("3_3tnpr")
+region_enabled = true
+region_rect = Rect2(446.154, 827.718, 196.82, 89.6411)
+
+[node name="HoleLid3" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(1054, 870)
+texture = ExtResource("3_3tnpr")
+region_enabled = true
+region_rect = Rect2(446.154, 827.718, 196.82, 89.6411)
+
+[node name="HoleLid4" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(1314, 870)
+texture = ExtResource("3_3tnpr")
+region_enabled = true
+region_rect = Rect2(446.154, 827.718, 196.82, 89.6411)
