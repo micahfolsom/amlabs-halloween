@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://cybspqymj4ic8"]
+
+[ext_resource type="Script" uid="uid://cmfgcelmnbk0p" path="res://reflex_game.gd" id="1_jp0xa"]
+[ext_resource type="Texture2D" uid="uid://b46eovjtsekp3" path="res://reflexlab_background.png" id="1_v3j5b"]
+[ext_resource type="Texture2D" uid="uid://bjpmt2mp1jmro" path="res://reflexlab_foregroundLIDS.png" id="3_3tnpr"]
+[ext_resource type="Texture2D" uid="uid://d0rxgxrawvxn7" path="res://reflexlab_foreground.png" id="3_vjh6j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vjh6j"]
+font_size = 44
+
+[node name="ReflexGame" type="Node2D"]
+script = ExtResource("1_jp0xa")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("1_v3j5b")
+
+[node name="CurrentScoreLabel" type="Label" parent="."]
+offset_left = 1244.0
+offset_top = 355.0
+offset_right = 1410.0
+offset_bottom = 416.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_vjh6j")
+
+[node name="HoleCovers" type="Sprite2D" parent="."]
+z_index = 2
+position = Vector2(961, 538)
+texture = ExtResource("3_3tnpr")
+
+[node name="HolePlatformForeground" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(960, 540)
+texture = ExtResource("3_vjh6j")
+
+[node name="TargetRaiseTimer" type="Timer" parent="."]
+autostart = true
