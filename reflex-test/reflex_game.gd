@@ -5,13 +5,13 @@ var fLockedOut: bool = false
 var LOCKOUT_TIME: float =  2.0 # sec
 var PlayerScore: int = 0
 var fHoleActive: Array = [false, false, false, false]
-var HoleLids: Array = [null, null, null, null]
+var LidPivots: Array = [null, null, null, null]
 
 func _ready():
 	$TargetRaiseTimer.connect("timeout", raise_target)
 	fLockedOut = false
 	PlayerScore = 0
-	HoleLids = [$HoleLid1, $HoleLid2, $HoleLid3, $HoleLid4]
+	LidPivots = [$LidPivot1, $LidPivot2, $LidPivot3, $LidPivot4]
 
 func _process(_delta):
 	pass
@@ -71,6 +71,6 @@ func _score_hit():
 	
 func _show_lid(ilid: int, toggle: bool):
 	if toggle:
-		HoleLids[ilid].show()
+		LidPivots[ilid].rotation_degrees = 0
 	else:
-		HoleLids[ilid].hide()
+		LidPivots[ilid].rotation_degrees = -90

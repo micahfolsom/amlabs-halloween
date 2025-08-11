@@ -16,9 +16,9 @@ position = Vector2(960, 540)
 texture = ExtResource("1_v3j5b")
 
 [node name="CurrentScoreLabel" type="Label" parent="."]
-offset_left = 1244.0
+offset_left = 1226.0
 offset_top = 355.0
-offset_right = 1410.0
+offset_right = 1417.0
 offset_bottom = 416.0
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_vjh6j")
@@ -31,30 +31,42 @@ texture = ExtResource("3_vjh6j")
 [node name="TargetRaiseTimer" type="Timer" parent="."]
 autostart = true
 
-[node name="HoleLid1" type="Sprite2D" parent="."]
+[node name="LidPivot1" type="Node2D" parent="."]
+position = Vector2(451, 866)
+
+[node name="HoleLid1" type="Sprite2D" parent="LidPivot1"]
 z_index = 1
-position = Vector2(545, 870)
+position = Vector2(94, 4)
 texture = ExtResource("3_3tnpr")
 region_enabled = true
 region_rect = Rect2(446.154, 827.718, 196.82, 89.6411)
 
-[node name="HoleLid2" type="Sprite2D" parent="."]
+[node name="LidPivot2" type="Node2D" parent="."]
+position = Vector2(699, 866)
+
+[node name="HoleLid2" type="Sprite2D" parent="LidPivot2"]
 z_index = 1
-position = Vector2(795, 870)
+position = Vector2(96, 4)
 texture = ExtResource("3_3tnpr")
 region_enabled = true
 region_rect = Rect2(446.154, 827.718, 196.82, 89.6411)
 
-[node name="HoleLid3" type="Sprite2D" parent="."]
+[node name="LidPivot3" type="Node2D" parent="."]
+position = Vector2(959, 866)
+
+[node name="HoleLid3" type="Sprite2D" parent="LidPivot3"]
 z_index = 1
-position = Vector2(1054, 870)
+position = Vector2(95, 4)
 texture = ExtResource("3_3tnpr")
 region_enabled = true
 region_rect = Rect2(446.154, 827.718, 196.82, 89.6411)
 
-[node name="HoleLid4" type="Sprite2D" parent="."]
+[node name="LidPivot4" type="Node2D" parent="."]
+position = Vector2(1220, 866)
+
+[node name="HoleLid4" type="Sprite2D" parent="LidPivot4"]
 z_index = 1
-position = Vector2(1314, 870)
+position = Vector2(94, 4)
 texture = ExtResource("3_3tnpr")
 region_enabled = true
 region_rect = Rect2(446.154, 827.718, 196.82, 89.6411)
