@@ -5,15 +5,39 @@ var fLockedOut: bool = false
 var LOCKOUT_TIME: float =  2.0 # sec
 var PlayerScore: int = 0
 var fHoleActive: Array = [false, false, false, false]
+var fTargetHit: Array = [false, false, false, false]
 var LidPivots: Array = [null, null, null, null]
+enum {TARGET_RAISING, TARGET_LOWERING}
+var TargetState: Array = [TARGET_RAISING,TARGET_RAISING,TARGET_RAISING,TARGET_RAISING]
+var TargetAnims: Array = [null, null, null, null]
+
+var TARGET_YBOTTOM: float = 974.0
+var TARGET_YTOP: float = 735.0
+var TARGET_RAISE_TIME: float = 2.0
+var TARGET_VELOCITY = (TARGET_YBOTTOM - TARGET_YTOP) / TARGET_RAISE_TIME
 
 func _ready():
 	$TargetRaiseTimer.connect("timeout", raise_target)
 	fLockedOut = false
 	PlayerScore = 0
 	LidPivots = [$LidPivot1, $LidPivot2, $LidPivot3, $LidPivot4]
-
-func _process(_delta):
+	TargetAnims = [$Target1, $Target2, $Target3, $Target4]
+	
+func _physics_process(delta: float) -> void:
+	for i in range(NTARGETS):
+		if fHoleActive[i]:
+			if TargetState[i] == TARGET_RAISING:
+				TargetAnims[i].translate(Vector2(0, -TARGET_VELOCITY * delta))
+				if TargetAnims[i].position.y <= TARGET_YTOP:
+					TargetAnims[i].position.y = TARGET_YTOP
+					TargetState[i] = TARGET_LOWERING
+			elif TargetState[i] == TARGET_LOWERING:
+				TargetAnims[i].translate(Vector2(0, TARGET_VELOCITY * delta))
+				if TargetAnims[i].position.y >= TARGET_YBOTTOM:
+					TargetAnims[i].position.y = TARGET_YBOTTOM
+					TargetState[i] = TARGET_RAISING
+					fHoleActive[i] = false
+					_show_lid(i, true)
 	pass
 	
 func _input(_event):
@@ -26,9 +50,11 @@ func _input(_event):
 		if Input.is_action_just_pressed(action_name) and fHoleActive[i]:
 			print("hole " + str(i) + " target hit")
 			_score_hit()
-			fHoleActive[i] = false
+			#fHoleActive[i] = false
 			# TODO: play hit animation, return lid when it's done
-			_show_lid(i, true)
+			#_show_lid(i, true)
+			TargetAnims[i].play("micah_hit")
+			TargetState[i] = TARGET_LOWERING
 			return
 			
 	# TODO: figure out button mappings for test joystick setup
@@ -56,8 +82,10 @@ func raise_target():
 	# Choose a target type
 	if randf() < 0.25:
 		print("scientist target")
+		#TargetAnims[itarget].play("micah_raise")
 	else:
 		print("monster target")
+	TargetAnims[itarget].play("micah_raise")
 	
 	# TODO: move cover (need individual lids)
 	
