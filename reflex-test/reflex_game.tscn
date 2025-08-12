@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://cybspqymj4ic8"]
+[gd_scene load_steps=41 format=3 uid="uid://cybspqymj4ic8"]
 
 [ext_resource type="Script" uid="uid://cmfgcelmnbk0p" path="res://reflex_game.gd" id="1_jp0xa"]
 [ext_resource type="Texture2D" uid="uid://b46eovjtsekp3" path="res://reflexlab_background.png" id="1_v3j5b"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c1eockiwluxab" path="res://scientist_senia.png" id="6_j7wn0"]
 [ext_resource type="AudioStream" uid="uid://c5j4j6xpsmoof" path="res://sounds/monster_hit.wav" id="8_mmrs6"]
 [ext_resource type="AudioStream" uid="uid://cgtg2sjvn1ls2" path="res://sounds/scientist_hit.wav" id="9_oyhy4"]
+[ext_resource type="Script" uid="uid://cmf7kxnyeur36" path="res://game_clock.gd" id="10_ear4u"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vjh6j"]
 font_size = 44
@@ -212,8 +213,18 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oyhy4"]
+size = Vector2(1015, 242.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ear4u"]
+font_size = 44
+
 [node name="ReflexGame" type="Node2D"]
 script = ExtResource("1_jp0xa")
+
+[node name="RaiseTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(960, 540)
@@ -242,6 +253,7 @@ label_settings = SubResource("LabelSettings_j7wn0")
 [node name="ScoreDownLabel" type="Label" parent="CurrentScoreLabel"]
 visible = false
 z_index = 1
+layout_mode = 0
 offset_left = 129.0
 offset_top = 21.0
 offset_right = 179.0
@@ -253,9 +265,6 @@ label_settings = SubResource("LabelSettings_lg64v")
 z_index = 1
 position = Vector2(960, 540)
 texture = ExtResource("3_vjh6j")
-
-[node name="TargetRaiseTimer" type="Timer" parent="."]
-autostart = true
 
 [node name="LidPivot1" type="Node2D" parent="."]
 position = Vector2(451, 866)
@@ -326,3 +335,24 @@ stream = ExtResource("8_mmrs6")
 
 [node name="ScoreDownSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_oyhy4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="TargetWindows" type="Area2D" parent="."]
+
+[node name="MovementWindow" type="CollisionShape2D" parent="TargetWindows"]
+position = Vector2(924, 779.75)
+shape = SubResource("RectangleShape2D_oyhy4")
+
+[node name="GameClock" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+script = ExtResource("10_ear4u")
+
+[node name="GameClockLabel" type="Label" parent="GameClock"]
+offset_left = 899.0
+offset_top = 351.0
+offset_right = 982.0
+offset_bottom = 412.0
+text = "15 s"
+label_settings = SubResource("LabelSettings_ear4u")

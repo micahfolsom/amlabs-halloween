@@ -1,24 +1,25 @@
 extends Node2D
 
-var NTARGETS: int = 4
-var PlayerScore: int = 0
-var fHoleActive: Array = [false, false, false, false]
-var fTargetHit: Array = [false, false, false, false]
-var LidPivots: Array = [null, null, null, null]
-enum {TARGET_RAISING, TARGET_LOWERING}
-var TargetState: Array = [TARGET_RAISING,TARGET_RAISING,TARGET_RAISING,TARGET_RAISING]
-var TargetAnims: Array = [null, null, null, null]
+# Editor parameters
+@export_group("Target Params")
+@export var TargetRiseTime: float = 0.5
+@export var TargetFallTime: float = 0.3
+@export var TargetHitFallTime: float = 0.15
 
-var TARGET_YBOTTOM: float = 974.0
-var TARGET_YTOP: float = 735.0
-var TARGET_RAISE_TIME: float = 2.0
-var TARGET_VELOCITY = (TARGET_YBOTTOM - TARGET_YTOP) / TARGET_RAISE_TIME
+const NTARGETS: int = 4
+@onready var PlayerScore: int = 0
+@onready var fHoleActive: Array = [false, false, false, false]
+@onready var fTargetHit: Array = [false, false, false, false]
+@onready var LidPivots: Array = [$LidPivot1, $LidPivot2, $LidPivot3, $LidPivot4]
+enum {TARGET_RAISING, TARGET_LOWERING}
+@onready var TargetState: Array = [TARGET_RAISING,TARGET_RAISING,TARGET_RAISING,TARGET_RAISING]
+@onready var TargetAnims: Array = [$Target1, $Target2, $Target3, $Target4]
+
+@onready var TARGET_YBOTTOM: float = $TargetWindows/MovementWindow.position.y + $TargetWindows/MovementWindow.shape.size.y
+@onready var TARGET_YTOP: float = $TargetWindows/MovementWindow.position.y
 
 func _ready():
-	$TargetRaiseTimer.connect("timeout", raise_target)
-	PlayerScore = 0
-	LidPivots = [$LidPivot1, $LidPivot2, $LidPivot3, $LidPivot4]
-	TargetAnims = [$Target1, $Target2, $Target3, $Target4]
+	$RaiseTimer.connect("timeout", raise_target)
 	
 func _physics_process(delta: float) -> void:
 	# move targets if they are 1) active and 2) in the correct
@@ -26,12 +27,14 @@ func _physics_process(delta: float) -> void:
 	for i in range(NTARGETS):
 		if fHoleActive[i]:
 			if TargetState[i] == TARGET_RAISING:
-				TargetAnims[i].translate(Vector2(0, -TARGET_VELOCITY * delta))
-				if TargetAnims[i].position.y <= TARGET_YTOP:
-					TargetAnims[i].position.y = TARGET_YTOP
+				var velocity = (TARGET_YTOP - TARGET_YBOTTOM) / TargetRiseTime
+				TargetAnims[i].translate(Vector2(0, velocity * delta))
+				if TargetAnims[i].position.y <= $TargetWindows/MovementWindow.position.y:
+					TargetAnims[i].position.y = $TargetWindows/MovementWindow.position.y
 					TargetState[i] = TARGET_LOWERING
 			elif TargetState[i] == TARGET_LOWERING:
-				TargetAnims[i].translate(Vector2(0, TARGET_VELOCITY * delta))
+				var velocity = (TARGET_YBOTTOM - TARGET_YTOP) / TargetFallTime
+				TargetAnims[i].translate(Vector2(0, velocity * delta))
 				if TargetAnims[i].position.y >= TARGET_YBOTTOM:
 					TargetAnims[i].position.y = TARGET_YBOTTOM
 					TargetState[i] = TARGET_RAISING
@@ -43,22 +46,16 @@ func _input(_event):
 	for i in range(NTARGETS):
 		var action_name = "hole" + str(i + 1)
 		if Input.is_action_just_pressed(action_name) and fHoleActive[i]:
-			if not fHoleActive[i]:
-				return
-			print("hole " + str(i) + " target hit")
-			_score_hit()
-			#fHoleActive[i] = false
-			# TODO: play hit animation, return lid when it's done
-			#_show_lid(i, true)
-			TargetAnims[i].play("micah_hit")
-			TargetState[i] = TARGET_LOWERING
+			_check_for_hit(i)
 			return
 			
-	# TODO: figure out button mappings for test joystick setup
-	var accept_pressed = Input.is_action_just_pressed("ui_accept")
-	if (accept_pressed):
-		print('accept_pressed: ', accept_pressed)
-
+func _check_for_hit(itarget: int) -> void:
+	if not fHoleActive[itarget]:
+		return
+	_score_hit()
+	TargetAnims[itarget].play("micah_hit")
+	TargetState[itarget] = TARGET_LOWERING
+	
 func raise_target():
 	# Don't do anything if all holes are active
 	var is_active = func(hole_flag):
