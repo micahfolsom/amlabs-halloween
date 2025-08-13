@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cqy5iqdocd73e"]
 
-[ext_resource type="Script" path="res://power_gauge.gd" id="1_vxxga"]
-[ext_resource type="Texture2D" uid="uid://cgabpmlgwao1q" path="res://gauge.png" id="2_lf5tl"]
+[ext_resource type="Script" uid="uid://m7xrba74bkc6" path="res://power_gauge.gd" id="1_vxxga"]
+[ext_resource type="Texture2D" uid="uid://bt1pc3kbsadiv" path="res://gauge.png" id="2_lf5tl"]
 
 [sub_resource type="Animation" id="Animation_koskr"]
 resource_name = "MaxPower"
@@ -37,8 +37,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xqbrj"]
 _data = {
-"MaxPower": SubResource("Animation_koskr"),
-"RESET": SubResource("Animation_0738v")
+&"MaxPower": SubResource("Animation_koskr"),
+&"RESET": SubResource("Animation_0738v")
 }
 
 [node name="PowerGauge" type="Node2D"]
