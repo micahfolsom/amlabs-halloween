@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://cybspqymj4ic8"]
+[gd_scene load_steps=43 format=3 uid="uid://cybspqymj4ic8"]
 
 [ext_resource type="Script" uid="uid://cmfgcelmnbk0p" path="res://reflex_game.gd" id="1_jp0xa"]
 [ext_resource type="Texture2D" uid="uid://b46eovjtsekp3" path="res://reflexlab_background.png" id="1_v3j5b"]
@@ -216,8 +216,14 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oyhy4"]
 size = Vector2(1015, 242.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ear4u"]
+size = Vector2(1015, 107.5)
+
 [sub_resource type="LabelSettings" id="LabelSettings_ear4u"]
 font_size = 44
+
+[sub_resource type="LabelSettings" id="LabelSettings_62sr6"]
+font_size = 54
 
 [node name="ReflexGame" type="Node2D"]
 script = ExtResource("1_jp0xa")
@@ -341,18 +347,42 @@ stream = ExtResource("9_oyhy4")
 [node name="TargetWindows" type="Area2D" parent="."]
 
 [node name="MovementWindow" type="CollisionShape2D" parent="TargetWindows"]
+visible = false
 position = Vector2(924, 779.75)
 shape = SubResource("RectangleShape2D_oyhy4")
 
+[node name="Hitbox" type="CollisionShape2D" parent="TargetWindows"]
+position = Vector2(924, 712.25)
+shape = SubResource("RectangleShape2D_ear4u")
+
 [node name="GameClock" type="Timer" parent="."]
 wait_time = 15.0
+one_shot = true
 autostart = true
 script = ExtResource("10_ear4u")
 
 [node name="GameClockLabel" type="Label" parent="GameClock"]
-offset_left = 899.0
+offset_left = 917.0
 offset_top = 351.0
-offset_right = 982.0
+offset_right = 1000.0
 offset_bottom = 412.0
 text = "15 s"
 label_settings = SubResource("LabelSettings_ear4u")
+
+[node name="GameFinishedLabel" type="Label" parent="GameClock"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -116.5
+offset_top = -236.0
+offset_right = 116.5
+offset_bottom = -162.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Finished!"
+label_settings = SubResource("LabelSettings_62sr6")
+
+[connection signal="timeout" from="GameClock" to="." method="_on_game_clock_timeout"]

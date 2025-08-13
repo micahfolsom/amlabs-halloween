@@ -7,67 +7,86 @@ extends Node2D
 @export var TargetHitFallTime: float = 0.15
 
 const NTARGETS: int = 4
+@onready var fGameFinished: bool = false
+
 @onready var PlayerScore: int = 0
-@onready var fHoleActive: Array = [false, false, false, false]
-@onready var fTargetHit: Array = [false, false, false, false]
+
 @onready var LidPivots: Array = [$LidPivot1, $LidPivot2, $LidPivot3, $LidPivot4]
-enum {TARGET_RAISING, TARGET_LOWERING}
-@onready var TargetState: Array = [TARGET_RAISING,TARGET_RAISING,TARGET_RAISING,TARGET_RAISING]
 @onready var TargetAnims: Array = [$Target1, $Target2, $Target3, $Target4]
+@onready var Targets: Array[TargetData] = [null, null, null, null]
 
 @onready var TARGET_YBOTTOM: float = $TargetWindows/MovementWindow.position.y + $TargetWindows/MovementWindow.shape.size.y
 @onready var TARGET_YTOP: float = $TargetWindows/MovementWindow.position.y
 
+func _populate_target_data() -> void:
+	for i in range(NTARGETS):
+		Targets[i] = TargetData.new() as TargetData
+		Targets[i].pivot = LidPivots[i]
+		Targets[i].anim = TargetAnims[i]
+
 func _ready():
 	$RaiseTimer.connect("timeout", raise_target)
+	_populate_target_data()
 	
 func _physics_process(delta: float) -> void:
 	# move targets if they are 1) active and 2) in the correct
 	# state
 	for i in range(NTARGETS):
-		if fHoleActive[i]:
-			if TargetState[i] == TARGET_RAISING:
+		if Targets[i].active:
+			if Targets[i].state == TargetData.TargetState.Raising:
 				var velocity = (TARGET_YTOP - TARGET_YBOTTOM) / TargetRiseTime
 				TargetAnims[i].translate(Vector2(0, velocity * delta))
 				if TargetAnims[i].position.y <= $TargetWindows/MovementWindow.position.y:
 					TargetAnims[i].position.y = $TargetWindows/MovementWindow.position.y
-					TargetState[i] = TARGET_LOWERING
-			elif TargetState[i] == TARGET_LOWERING:
+					Targets[i].state = TargetData.TargetState.Lowering
+			elif Targets[i].state == TargetData.TargetState.Lowering:
 				var velocity = (TARGET_YBOTTOM - TARGET_YTOP) / TargetFallTime
 				TargetAnims[i].translate(Vector2(0, velocity * delta))
 				if TargetAnims[i].position.y >= TARGET_YBOTTOM:
 					TargetAnims[i].position.y = TARGET_YBOTTOM
-					TargetState[i] = TARGET_RAISING
-					fHoleActive[i] = false
+					Targets[i].state = TargetData.TargetState.Raising
+					Targets[i].active = false
 					_show_lid(i, true)
 	
 func _input(_event):
+	if fGameFinished:
+		# TODO: go to score screen
+		return
 	# Keyboard bindings: 1, 2, 3, 4 for the 4 holes
 	for i in range(NTARGETS):
 		var action_name = "hole" + str(i + 1)
-		if Input.is_action_just_pressed(action_name) and fHoleActive[i]:
+		if Input.is_action_just_pressed(action_name) and Targets[i].active:
 			_check_for_hit(i)
 			return
 			
 func _check_for_hit(itarget: int) -> void:
-	if not fHoleActive[itarget]:
+	if not Targets[itarget].active:
 		return
-	_score_hit()
-	TargetAnims[itarget].play("micah_hit")
-	TargetState[itarget] = TARGET_LOWERING
+	if fGameFinished:
+		return
+		
+	if _target_is_in_hitbox(itarget):
+		_score_hit()
+		TargetAnims[itarget].play("micah_hit")
+		Targets[itarget].state = TargetData.TargetState.Lowering
+	
+func _target_is_in_hitbox(itarget: int) -> bool:
+	return true
 	
 func raise_target():
+	if fGameFinished:
+		return
 	# Don't do anything if all holes are active
 	var is_active = func(hole_flag):
 		return hole_flag
-	if fHoleActive.all(is_active):
+	if [Targets[0].active, Targets[1].active, Targets[2].active, Targets[3].active].all(is_active):
 		return
 		
 	# Pick a hole
 	var itarget = randi() % NTARGETS
-	while fHoleActive[itarget]:
+	while Targets[itarget].active:
 		itarget = randi() % NTARGETS
-	fHoleActive[itarget] = true
+	Targets[itarget].active = true
 	print("chose target " + str(itarget))
 	_show_lid(itarget, false)
 	
@@ -97,3 +116,10 @@ func _show_lid(ilid: int, toggle: bool):
 		LidPivots[ilid].rotation_degrees = 0
 	else:
 		LidPivots[ilid].rotation_degrees = -90
+		
+
+func _on_game_clock_timeout() -> void:
+	print("game finished")
+	fGameFinished = true
+	$GameClock/GameClockLabel.hide()
+	$GameClock/GameFinishedLabel.show()
