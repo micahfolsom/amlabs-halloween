@@ -5,6 +5,7 @@ extends Node2D
 @export var TargetRiseTime: float = 0.5
 @export var TargetFallTime: float = 0.3
 @export var TargetHitFallTime: float = 0.15
+@export var ScientistProbability: float = 0.25
 
 const NTARGETS: int = 4
 @onready var fGameFinished: bool = false
@@ -67,7 +68,7 @@ func _check_for_hit(itarget: int) -> void:
 		
 	if _target_is_in_hitbox(itarget):
 		_score_hit()
-		TargetAnims[itarget].play("micah_hit")
+		Targets[itarget].anim.play(Targets[itarget].anim_prefix + "_hit")
 		Targets[itarget].state = TargetData.TargetState.Lowering
 	
 func _target_is_in_hitbox(itarget: int) -> bool:
@@ -87,16 +88,21 @@ func raise_target():
 	while Targets[itarget].active:
 		itarget = randi() % NTARGETS
 	Targets[itarget].active = true
-	print("chose target " + str(itarget))
+	print("chose hole " + str(itarget))
 	_show_lid(itarget, false)
 	
 	# Choose a target type
-	if randf() < 0.25:
+	if randf() < ScientistProbability:
 		print("scientist target")
-		#TargetAnims[itarget].play("micah_raise")
+		# pick a random scientist
+		var isci: int = randi() % TargetData.SCI_PREFIX.size()
+		Targets[itarget].anim.play(TargetData.SCI_PREFIX[isci] + "_raise")
+		Targets[itarget].anim_prefix = TargetData.SCI_PREFIX[isci]
 	else:
 		print("monster target")
-	TargetAnims[itarget].play("micah_raise")
+		var imon: int = randi() % TargetData.MON_PREFIX.size()
+		Targets[itarget].anim.play(TargetData.MON_PREFIX[imon] + "_raise")
+		Targets[itarget].anim_prefix = TargetData.MON_PREFIX[imon]
 	
 
 func _score_hit():
