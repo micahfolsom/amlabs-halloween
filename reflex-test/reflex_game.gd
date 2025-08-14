@@ -75,7 +75,14 @@ func _check_for_hit(itarget: int) -> void:
 		Targets[itarget].state = TargetData.TargetState.Lowering
 	
 func _target_is_in_hitbox(itarget: int) -> bool:
-	return true
+	# y is up; the base y-coord of the target sprite needs to pass the "top"
+	# (down in this case) of the hitbox
+	var hitbox_y_thresh = $TargetWindows/Hitbox.position.y + $TargetWindows/Hitbox.shape.size.y
+	if Targets[itarget].anim.position.y <= hitbox_y_thresh:
+		return true
+	else:
+		return false
+
 	
 func raise_target():
 	if fGameFinished:

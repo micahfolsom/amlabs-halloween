@@ -372,7 +372,7 @@ animations = [{
 size = Vector2(1015, 242.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ear4u"]
-size = Vector2(1015, 107.5)
+size = Vector2(1015, 152.5)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ear4u"]
 font_size = 44
@@ -507,7 +507,7 @@ position = Vector2(924, 779.75)
 shape = SubResource("RectangleShape2D_oyhy4")
 
 [node name="Hitbox" type="CollisionShape2D" parent="TargetWindows"]
-position = Vector2(924, 712.25)
+position = Vector2(924, 734.75)
 shape = SubResource("RectangleShape2D_ear4u")
 
 [node name="GameClock" type="Timer" parent="."]
