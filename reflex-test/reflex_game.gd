@@ -36,15 +36,15 @@ func _physics_process(delta: float) -> void:
 		if Targets[i].active:
 			if Targets[i].state == TargetData.TargetState.Raising:
 				var velocity = (TARGET_YTOP - TARGET_YBOTTOM) / TargetRiseTime
-				TargetAnims[i].translate(Vector2(0, velocity * delta))
-				if TargetAnims[i].position.y <= $TargetWindows/MovementWindow.position.y:
-					TargetAnims[i].position.y = $TargetWindows/MovementWindow.position.y
+				Targets[i].anim.translate(Vector2(0, velocity * delta))
+				if Targets[i].anim.position.y <= $TargetWindows/MovementWindow.position.y:
+					Targets[i].anim.position.y = $TargetWindows/MovementWindow.position.y
 					Targets[i].state = TargetData.TargetState.Lowering
 			elif Targets[i].state == TargetData.TargetState.Lowering:
 				var velocity = (TARGET_YBOTTOM - TARGET_YTOP) / TargetFallTime
-				TargetAnims[i].translate(Vector2(0, velocity * delta))
-				if TargetAnims[i].position.y >= TARGET_YBOTTOM:
-					TargetAnims[i].position.y = TARGET_YBOTTOM
+				Targets[i].anim.translate(Vector2(0, velocity * delta))
+				if Targets[i].anim.position.y >= TARGET_YBOTTOM:
+					Targets[i].anim.position.y = TARGET_YBOTTOM
 					Targets[i].state = TargetData.TargetState.Raising
 					Targets[i].active = false
 					_show_lid(i, true)
@@ -67,7 +67,10 @@ func _check_for_hit(itarget: int) -> void:
 		return
 		
 	if _target_is_in_hitbox(itarget):
-		_score_hit()
+		if Targets[itarget].type == TargetData.TargetType.Monster:
+			_score_hit()
+		else:
+			_score_error()
 		Targets[itarget].anim.play(Targets[itarget].anim_prefix + "_hit")
 		Targets[itarget].state = TargetData.TargetState.Lowering
 	
@@ -98,11 +101,13 @@ func raise_target():
 		var isci: int = randi() % TargetData.SCI_PREFIX.size()
 		Targets[itarget].anim.play(TargetData.SCI_PREFIX[isci] + "_raise")
 		Targets[itarget].anim_prefix = TargetData.SCI_PREFIX[isci]
+		Targets[itarget].type = TargetData.TargetType.Scientist
 	else:
 		print("monster target")
 		var imon: int = randi() % TargetData.MON_PREFIX.size()
 		Targets[itarget].anim.play(TargetData.MON_PREFIX[imon] + "_raise")
 		Targets[itarget].anim_prefix = TargetData.MON_PREFIX[imon]
+		Targets[itarget].type = TargetData.TargetType.Monster
 	
 
 func _score_hit():
@@ -114,7 +119,7 @@ func _score_hit():
 func _score_error():
 	PlayerScore -= 1
 	$CurrentScoreLabel.text = "Score: " + str(PlayerScore)
-	$CurrentScoreLabel.remove_score()
+	$CurrentScoreLabel.subtract_score()
 	$ScoreDownSFX.play()
 	
 func _show_lid(ilid: int, toggle: bool):
