@@ -2,10 +2,10 @@ extends Label
 
 var DISPLAY_TIME: float = 1.0 # sec
 var VEL_Y: float = 75.0 # pixels/sec
-var UpTimeSpentMoving: float = 0.0 # sec
-var DownTimeSpentMoving: float = 0.0 # sec
-var fUpMoving: bool = false
-var fDownMoving: bool = false
+@onready var UpTimeSpentMoving: float = 0.0 # sec
+@onready var DownTimeSpentMoving: float = 0.0 # sec
+@onready var fUpMoving: bool = false
+@onready var fDownMoving: bool = false
 # relative to the parent label
 var UP_Y_POS = -29.0
 var DOWN_Y_POS = 21.0
@@ -14,10 +14,6 @@ var DOWN_Y_POS = 21.0
 func _ready() -> void:
 	$ScoreUpLabel.visible = false
 	$ScoreDownLabel.visible = false
-	UpTimeSpentMoving = 0.0
-	DownTimeSpentMoving = 0.0
-	fUpMoving = false
-	fDownMoving = false
 
 func _process(delta: float) -> void:
 	if fUpMoving:
