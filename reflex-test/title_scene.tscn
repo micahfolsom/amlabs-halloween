@@ -1,14 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://dxhacy0x6cx2k"]
+[gd_scene load_steps=7 format=3 uid="uid://dxhacy0x6cx2k"]
 
 [ext_resource type="Script" uid="uid://dpww3rvkgaj51" path="res://title_scene.gd" id="1_vf8ll"]
 [ext_resource type="Texture2D" uid="uid://cheu7jnmvppe6" path="res://blank.png" id="2_iiee8"]
 [ext_resource type="FontFile" uid="uid://by5tl6nk3w3fu" path="res://neon_pixel-7.ttf" id="3_cjp6w"]
 
+[sub_resource type="SystemFont" id="SystemFont_8vtwa"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_4gywk"]
-font = ExtResource("3_cjp6w")
-font_size = 19
+line_spacing = 0.0
+font = SubResource("SystemFont_8vtwa")
+font_size = 60
 font_color = Color(0.380392, 0.819608, 0.129412, 1)
-outline_size = 2
 
 [sub_resource type="LabelSettings" id="LabelSettings_q2lbm"]
 font = ExtResource("3_cjp6w")
@@ -19,39 +21,20 @@ script = ExtResource("1_vf8ll")
 
 [node name="Title Display" type="Label" parent="."]
 z_index = 1
-offset_left = 134.0
-offset_top = 80.0
-offset_right = 794.0
-offset_bottom = 720.0
-text = "
-╭╮╭╮╭╮╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭╮╭━╮
-┃┃┃┃┃┃╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱┃┃┃╭╯
-┃┃┃┃┃┣━━┳━┳━━┳╮╭╮╭┳━━┫┣╯╰╮
-┃╰╯╰╯┃┃━┫╭┫┃━┫╰╯╰╯┃╭╮┃┣╮╭╯
-╰╮╭╮╭┫┃━┫┃┃┃━╋╮╭╮╭┫╰╯┃╰┫┃
-╱╰╯╰╯╰━━┻╯╰━━╯╰╯╰╯╰━━┻━┻╯
-╭━━━╮╱╱╱╱╭╮
-┃╭━━╯╱╱╱╱┃┃
-┃╰━━┳━╮╭━╯┣╮╭┳━┳━━┳━╮╭━━┳━━╮
-┃╭━━┫╭╮┫╭╮┃┃┃┃╭┫╭╮┃╭╮┫╭━┫┃━┫
-┃╰━━┫┃┃┃╰╯┃╰╯┃┃┃╭╮┃┃┃┃╰━┫┃━┫
-╰━━━┻╯╰┻━━┻━━┻╯╰╯╰┻╯╰┻━━┻━━╯
-╭━━━━╮╱╱╱╱╭╮
-┃╭╮╭╮┃╱╱╱╭╯╰╮
-╰╯┃┃┣┻━┳━┻╮╭╋┳━╮╭━━╮
-╱╱┃┃┃┃━┫━━┫┃┣┫╭╮┫╭╮┃
-╱╱┃┃┃┃━╋━━┃╰┫┃┃┃┃╰╯┃
-╱╱╰╯╰━━┻━━┻━┻┻╯╰┻━╮┃
-╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭━╯┃
-╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╰━━╯"
+offset_left = 619.0
+offset_top = 220.0
+offset_right = 1296.0
+offset_bottom = 679.0
+text = "Reflex Test"
 label_settings = SubResource("LabelSettings_4gywk")
+horizontal_alignment = 1
 
 [node name="PlayLabel" type="Label" parent="."]
 top_level = true
-offset_left = 290.0
-offset_top = 721.0
-offset_right = 576.0
-offset_bottom = 760.0
+offset_left = 682.0
+offset_top = 773.0
+offset_right = 968.0
+offset_bottom = 812.0
 scale = Vector2(2.08661, 2.08661)
 theme_type_variation = &"HeaderLarge"
 text = "Press enter to start"
@@ -61,7 +44,6 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(600, 480)
-scale = Vector2(2, 2)
+position = Vector2(959.5, 540.5)
+scale = Vector2(3.19833, 2.25208)
 texture = ExtResource("2_iiee8")
-metadata/_edit_lock_ = true
