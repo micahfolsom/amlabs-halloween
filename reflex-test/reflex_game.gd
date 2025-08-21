@@ -42,6 +42,8 @@ func _physics_process(delta: float) -> void:
 					Targets[i].state = TargetData.TargetState.Lowering
 			elif Targets[i].state == TargetData.TargetState.Lowering:
 				var velocity = (TARGET_YBOTTOM - TARGET_YTOP) / TargetFallTime
+				if Targets[i].hit:
+					velocity = (TARGET_YBOTTOM - TARGET_YTOP) / TargetHitFallTime
 				Targets[i].anim.translate(Vector2(0, velocity * delta))
 				if Targets[i].anim.position.y >= TARGET_YBOTTOM:
 					Targets[i].anim.position.y = TARGET_YBOTTOM
@@ -73,6 +75,7 @@ func _check_for_hit(itarget: int) -> void:
 			_score_error()
 		Targets[itarget].anim.play(Targets[itarget].anim_prefix + "_hit")
 		Targets[itarget].state = TargetData.TargetState.Lowering
+		Targets[itarget].hit = true
 	
 func _target_is_in_hitbox(itarget: int) -> bool:
 	# y is up; the base y-coord of the target sprite needs to pass the "top"
@@ -100,6 +103,7 @@ func raise_target():
 	Targets[itarget].active = true
 	print("chose hole " + str(itarget))
 	_show_lid(itarget, false)
+	Targets[itarget].hit = false
 	
 	# Choose a target type
 	if randf() < ScientistProbability:
