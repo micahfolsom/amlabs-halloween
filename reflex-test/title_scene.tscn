@@ -74,4 +74,3 @@ stream = ExtResource("4_uah43")
 volume_db = 1.0
 pitch_scale = 0.5
 autoplay = true
-attenuation = 1.03527

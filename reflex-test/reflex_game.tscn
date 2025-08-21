@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://cybspqymj4ic8"]
+[gd_scene load_steps=70 format=3 uid="uid://cybspqymj4ic8"]
 
 [ext_resource type="Script" uid="uid://cmfgcelmnbk0p" path="res://reflex_game.gd" id="1_jp0xa"]
 [ext_resource type="Texture2D" uid="uid://b46eovjtsekp3" path="res://reflexlab_background.png" id="1_v3j5b"]
@@ -107,51 +107,19 @@ region = Rect2(384, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ppmp"]
 atlas = ExtResource("8_8mgt1")
-region = Rect2(512, 128, 128, 128)
+region = Rect2(0, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jxpqe"]
 atlas = ExtResource("8_8mgt1")
-region = Rect2(640, 128, 128, 128)
+region = Rect2(128, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eg213"]
 atlas = ExtResource("8_8mgt1")
-region = Rect2(768, 128, 128, 128)
+region = Rect2(256, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4g5he"]
 atlas = ExtResource("8_8mgt1")
-region = Rect2(896, 128, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yl6ia"]
-atlas = ExtResource("8_8mgt1")
-region = Rect2(0, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_igsld"]
-atlas = ExtResource("8_8mgt1")
-region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1v5tp"]
-atlas = ExtResource("8_8mgt1")
-region = Rect2(256, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bv74u"]
-atlas = ExtResource("8_8mgt1")
 region = Rect2(384, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6hx2o"]
-atlas = ExtResource("8_8mgt1")
-region = Rect2(512, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yvecj"]
-atlas = ExtResource("8_8mgt1")
-region = Rect2(640, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rv111"]
-atlas = ExtResource("8_8mgt1")
-region = Rect2(768, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ee100"]
-atlas = ExtResource("8_8mgt1")
-region = Rect2(896, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8mgt1"]
 atlas = ExtResource("6_j7wn0")
@@ -331,7 +299,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1r548")
+}],
+"loop": true,
+"name": &"mummy_hit",
+"speed": 10.0
 }, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4ppmp")
 }, {
@@ -343,35 +316,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4g5he")
-}],
-"loop": true,
-"name": &"mummy_hit",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yl6ia")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_igsld")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1v5tp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bv74u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6hx2o")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yvecj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rv111")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ee100")
 }],
 "loop": true,
 "name": &"mummy_raise",
@@ -574,7 +518,7 @@ region_rect = Rect2(446.154, 827.718, 196.82, 89.6411)
 position = Vector2(547, 974)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_ear4u")
-animation = &"tyler_raise"
+animation = &"mummy_raise"
 
 [node name="Target2" type="AnimatedSprite2D" parent="."]
 position = Vector2(796, 974)

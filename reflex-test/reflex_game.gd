@@ -71,8 +71,10 @@ func _check_for_hit(itarget: int) -> void:
 	if _target_is_in_hitbox(itarget):
 		if Targets[itarget].type == TargetData.TargetType.Monster:
 			_score_hit()
+			Targets[itarget].anim.self_modulate = Color(0.5, 1.0, 0.5, 1.0)
 		else:
 			_score_error()
+			Targets[itarget].anim.self_modulate = Color(1.0, 0.5, 0.5, 1.0)
 		Targets[itarget].anim.play(Targets[itarget].anim_prefix + "_hit")
 		Targets[itarget].state = TargetData.TargetState.Lowering
 		Targets[itarget].hit = true
@@ -102,8 +104,11 @@ func raise_target():
 		itarget = randi() % NTARGETS
 	Targets[itarget].active = true
 	print("chose hole " + str(itarget))
+	
+	
 	_show_lid(itarget, false)
 	Targets[itarget].hit = false
+	Targets[itarget].anim.self_modulate = Color(1.0, 1.0, 1.0, 1.0)
 	
 	# Choose a target type
 	if randf() < ScientistProbability:
