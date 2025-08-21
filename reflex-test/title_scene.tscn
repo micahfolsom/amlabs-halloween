@@ -5,12 +5,16 @@
 [ext_resource type="FontFile" uid="uid://by5tl6nk3w3fu" path="res://neon_pixel-7.ttf" id="3_cjp6w"]
 
 [sub_resource type="SystemFont" id="SystemFont_8vtwa"]
+font_names = PackedStringArray("Monospace")
+keep_rounding_remainders = false
 
 [sub_resource type="LabelSettings" id="LabelSettings_4gywk"]
 line_spacing = 0.0
 font = SubResource("SystemFont_8vtwa")
-font_size = 60
+font_size = 33
 font_color = Color(0.380392, 0.819608, 0.129412, 1)
+outline_size = 2
+outline_color = Color(0.380392, 0.819608, 0.129412, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_q2lbm"]
 font = ExtResource("3_cjp6w")
@@ -21,20 +25,36 @@ script = ExtResource("1_vf8ll")
 
 [node name="Title Display" type="Label" parent="."]
 z_index = 1
-offset_left = 619.0
-offset_top = 220.0
-offset_right = 1296.0
-offset_bottom = 679.0
-text = "Reflex Test"
+offset_left = 125.0
+offset_top = 98.0
+offset_right = 1764.0
+offset_bottom = 781.0
+text = "  __________________ .______________ __________________.___  ____________________
+ /   _____/\\_   ___ \\|   \\_   _____/ \\      \\__    ___/|   |/   _____/\\__    ___/
+ \\_____  \\ /    \\  \\/|   ||    __)_  /   |   \\|    |   |   |\\_____  \\   |    |   
+ /        \\\\     \\___|   ||        \\/    |    \\    |   |   |/        \\  |    |   
+/_______  / \\______  /___/_______  /\\____|__  /____|   |___/_______  /  |____|   
+        \\/         \\/            \\/         \\/                     \\/            
+________________________________.____     _______________  ___                   
+\\______   \\_   _____/\\_   _____/|    |    \\_   _____/\\   \\/  /                   
+ |       _/|    __)_  |    __)  |    |     |    __)_  \\     /                    
+ |    |   \\|        \\ |     \\   |    |___  |        \\ /     \\                    
+ |____|_  /_______  / \\___  /   |_______ \\/_______  //___/\\  \\                   
+        \\/        \\/      \\/            \\/        \\/       \\_/                   
+______________________ ____________________                                      
+\\__    ___/\\_   _____//   _____/\\__    ___/                                      
+  |    |    |    __)_ \\_____  \\   |    |                                         
+  |    |    |        \\/        \\  |    |                                         
+  |____|   /_______  /_______  /  |____|     "
 label_settings = SubResource("LabelSettings_4gywk")
-horizontal_alignment = 1
+clip_text = true
 
 [node name="PlayLabel" type="Label" parent="."]
 top_level = true
 offset_left = 682.0
-offset_top = 773.0
+offset_top = 833.0
 offset_right = 968.0
-offset_bottom = 812.0
+offset_bottom = 872.0
 scale = Vector2(2.08661, 2.08661)
 theme_type_variation = &"HeaderLarge"
 text = "Press enter to start"
