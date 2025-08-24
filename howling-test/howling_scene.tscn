@@ -1,0 +1,125 @@
+[gd_scene load_steps=16 format=3 uid="uid://ddn01sl7g7oth"]
+
+[ext_resource type="Script" uid="uid://sp4n51wwh12s" path="res://howling_scene.gd" id="1_ulxf6"]
+[ext_resource type="Texture2D" uid="uid://vl2lgkj0ocii" path="res://assets/lab_background.png" id="2_g6s7y"]
+[ext_resource type="Texture2D" uid="uid://265u6ifvguxx" path="res://assets/gauge.png" id="3_pf2jv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_en7f7"]
+atlas = ExtResource("3_pf2jv")
+region = Rect2(0, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8kob"]
+atlas = ExtResource("3_pf2jv")
+region = Rect2(32, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sssgw"]
+atlas = ExtResource("3_pf2jv")
+region = Rect2(64, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hhjki"]
+atlas = ExtResource("3_pf2jv")
+region = Rect2(96, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jehjr"]
+atlas = ExtResource("3_pf2jv")
+region = Rect2(128, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1jxf"]
+atlas = ExtResource("3_pf2jv")
+region = Rect2(160, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbqcx"]
+atlas = ExtResource("3_pf2jv")
+region = Rect2(192, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mrxhg"]
+atlas = ExtResource("3_pf2jv")
+region = Rect2(224, 0, 32, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x8b6q"]
+atlas = ExtResource("3_pf2jv")
+region = Rect2(256, 0, 32, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tweyf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_en7f7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8kob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sssgw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hhjki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jehjr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p1jxf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbqcx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mrxhg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x8b6q")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1lj4o"]
+font_size = 52
+
+[sub_resource type="LabelSettings" id="LabelSettings_cekwg"]
+font_size = 40
+
+[node name="HowlingScene" type="Node2D"]
+script = ExtResource("1_ulxf6")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(600, 480)
+scale = Vector2(2, 2)
+texture = ExtResource("2_g6s7y")
+
+[node name="Gauge" type="AnimatedSprite2D" parent="."]
+position = Vector2(600, 660)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_tweyf")
+
+[node name="CountdownTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="CountdownTimerLabel" type="Label" parent="CountdownTimer"]
+offset_left = 510.0
+offset_top = 237.0
+offset_right = 705.0
+offset_bottom = 309.0
+text = "3..."
+label_settings = SubResource("LabelSettings_1lj4o")
+horizontal_alignment = 1
+
+[node name="GameTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="GameTimerLabel" type="Label" parent="GameTimer"]
+offset_left = 578.0
+offset_top = 324.0
+offset_right = 632.0
+offset_bottom = 379.0
+text = "5 s"
+label_settings = SubResource("LabelSettings_cekwg")
+horizontal_alignment = 1
+
+[connection signal="timeout" from="CountdownTimer" to="." method="_on_countdown_timer_timeout"]
+[connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
