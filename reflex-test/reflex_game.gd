@@ -10,8 +10,6 @@ extends Node2D
 const NTARGETS: int = 4
 @onready var fGameFinished: bool = false
 
-@onready var PlayerScore: int = 0
-
 @onready var LidPivots: Array = [$LidPivot1, $LidPivot2, $LidPivot3, $LidPivot4]
 @onready var TargetAnims: Array = [$Target1, $Target2, $Target3, $Target4]
 @onready var Targets: Array[TargetData] = [null, null, null, null]
@@ -24,10 +22,12 @@ func _populate_target_data() -> void:
 		Targets[i] = TargetData.new() as TargetData
 		Targets[i].pivot = LidPivots[i]
 		Targets[i].anim = TargetAnims[i]
+		Targets[i].hit = false
 
 func _ready():
 	$RaiseTimer.connect("timeout", raise_target)
 	_populate_target_data()
+	GameManager.nPoints = 0
 	
 func _physics_process(delta: float) -> void:
 	# move targets if they are 1) active and 2) in the correct
@@ -53,7 +53,8 @@ func _physics_process(delta: float) -> void:
 	
 func _input(_event):
 	if fGameFinished:
-		# TODO: go to score screen
+		if Input.is_action_just_pressed("ui_accept"):
+			GameManager.change_to_scene_path("res://score_scene.tscn")
 		return
 	# Keyboard bindings: 1, 2, 3, 4 for the 4 holes
 	for i in range(NTARGETS):
@@ -66,6 +67,8 @@ func _check_for_hit(itarget: int) -> void:
 	if not Targets[itarget].active:
 		return
 	if fGameFinished:
+		return
+	if Targets[itarget].hit:
 		return
 		
 	if _target_is_in_hitbox(itarget):
@@ -105,7 +108,6 @@ func raise_target():
 	Targets[itarget].active = true
 	print("chose hole " + str(itarget))
 	
-	
 	_show_lid(itarget, false)
 	Targets[itarget].hit = false
 	Targets[itarget].anim.self_modulate = Color(1.0, 1.0, 1.0, 1.0)
@@ -127,14 +129,14 @@ func raise_target():
 	
 
 func _score_hit():
-	PlayerScore += 1
-	$CurrentScoreLabel.text = "Score: " + str(PlayerScore)
+	GameManager.nPoints += 1
+	$CurrentScoreLabel.text = "Score: " + str(GameManager.nPoints)
 	$CurrentScoreLabel.add_score()
 	$ScoreUpSFX.play()
 	
 func _score_error():
-	PlayerScore -= 1
-	$CurrentScoreLabel.text = "Score: " + str(PlayerScore)
+	GameManager.nPoints -= 1
+	$CurrentScoreLabel.text = "Score: " + str(GameManager.nPoints)
 	$CurrentScoreLabel.subtract_score()
 	$ScoreDownSFX.play()
 	
