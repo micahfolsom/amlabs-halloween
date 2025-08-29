@@ -27,8 +27,8 @@ script = ExtResource("1_w68ab")
 
 [node name="ScoreBackground" type="Sprite2D" parent="."]
 z_index = -1
-position = Vector2(600, 480)
-scale = Vector2(2, 2)
+position = Vector2(958.5, 540)
+scale = Vector2(3.195, 2.25)
 texture = ExtResource("1_qplyj")
 
 [node name="StartForTitleLabel" type="Label" parent="."]

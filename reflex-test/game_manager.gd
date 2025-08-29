@@ -1,10 +1,11 @@
 extends Node
 
-const HIGH_SCORE_SAVE_PATH = "user://high_scores.json"
+const HIGH_SCORE_SAVE_PATH = "user://high_sfcores.json"
 
 var high_scores = []
 var hs_last_add_ts = 0
 var nPoints: int = 0
+var nGoodHits: int = 0
 var power_level = 0
 
 # Called when the node enters the scene tree for the first time.

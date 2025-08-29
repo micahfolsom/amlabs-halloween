@@ -419,7 +419,7 @@ animations = [{
 size = Vector2(1015, 242.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ear4u"]
-size = Vector2(1015, 152.5)
+size = Vector2(1015, 202.5)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ear4u"]
 font_size = 44
@@ -430,6 +430,7 @@ font_size = 54
 [node name="ReflexGame" type="Node2D"]
 script = ExtResource("1_jp0xa")
 TargetHitFallTime = 1.0
+DifficultyScalingFactor = 0.03
 
 [node name="RaiseTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -441,7 +442,8 @@ texture = ExtResource("1_v3j5b")
 
 [node name="HolePlatformForeground" type="Sprite2D" parent="."]
 z_index = 1
-position = Vector2(960, 540)
+position = Vector2(960, 541)
+scale = Vector2(1, 1.00185)
 texture = ExtResource("3_vjh6j")
 
 [node name="CurrentScoreLabel" type="Label" parent="."]
@@ -559,11 +561,11 @@ position = Vector2(924, 779.75)
 shape = SubResource("RectangleShape2D_oyhy4")
 
 [node name="Hitbox" type="CollisionShape2D" parent="TargetWindows"]
-position = Vector2(924, 734.75)
+position = Vector2(924, 759.75)
 shape = SubResource("RectangleShape2D_ear4u")
 
 [node name="GameClock" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 20.0
 one_shot = true
 autostart = true
 script = ExtResource("10_ear4u")

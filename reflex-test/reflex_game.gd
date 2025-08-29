@@ -2,10 +2,12 @@ extends Node2D
 
 # Editor parameters
 @export_group("Target Params")
-@export var TargetRiseTime: float = 0.5
-@export var TargetFallTime: float = 0.3
+@export var TargetRiseTime: float = 1
+@export var TargetFallTime: float = 0.2
 @export var TargetHitFallTime: float = 0.15
 @export var ScientistProbability: float = 0.25
+# each point, rise time gets faster by (1 - (DSF * score)) * RiseTime
+@export var DifficultyScalingFactor: float = 0.5 / 20.0
 
 const NTARGETS: int = 4
 @onready var fGameFinished: bool = false
@@ -28,6 +30,7 @@ func _ready():
 	$RaiseTimer.connect("timeout", raise_target)
 	_populate_target_data()
 	GameManager.nPoints = 0
+	GameManager.nGoodHits = 0
 	
 func _physics_process(delta: float) -> void:
 	# move targets if they are 1) active and 2) in the correct
@@ -130,6 +133,8 @@ func raise_target():
 
 func _score_hit():
 	GameManager.nPoints += 1
+	GameManager.nGoodHits += 1
+	TargetRiseTime = 1.0 - (DifficultyScalingFactor * GameManager.nGoodHits)
 	$CurrentScoreLabel.text = "Score: " + str(GameManager.nPoints)
 	$CurrentScoreLabel.add_score()
 	$ScoreUpSFX.play()
