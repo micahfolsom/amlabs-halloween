@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://cybspqymj4ic8"]
+[gd_scene load_steps=80 format=3 uid="uid://cybspqymj4ic8"]
 
 [ext_resource type="Script" uid="uid://cmfgcelmnbk0p" path="res://reflex_game.gd" id="1_jp0xa"]
 [ext_resource type="Texture2D" uid="uid://b46eovjtsekp3" path="res://reflexlab_background.png" id="1_v3j5b"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://d1vr6ebfu5xk3" path="res://scientist_micah.png" id="5_5y4j1"]
 [ext_resource type="Texture2D" uid="uid://clvrryrvngrxk" path="res://scientist_alex.png" id="6_fdfsy"]
 [ext_resource type="Texture2D" uid="uid://c1eockiwluxab" path="res://scientist_senia.png" id="6_j7wn0"]
+[ext_resource type="Texture2D" uid="uid://dbas7cnujgs4r" path="res://cthulu.png" id="7_1tid2"]
 [ext_resource type="Texture2D" uid="uid://cc01272lyl0hu" path="res://mummy.png" id="8_8mgt1"]
 [ext_resource type="AudioStream" uid="uid://c5j4j6xpsmoof" path="res://sounds/monster_hit.wav" id="8_mmrs6"]
 [ext_resource type="Texture2D" uid="uid://cn8khoicbmev3" path="res://scientist_tyler.png" id="9_8mgt1"]
@@ -56,6 +57,38 @@ region = Rect2(256, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p0w2c"]
 atlas = ExtResource("6_fdfsy")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yl6ia"]
+atlas = ExtResource("7_1tid2")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_igsld"]
+atlas = ExtResource("7_1tid2")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1v5tp"]
+atlas = ExtResource("7_1tid2")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bv74u"]
+atlas = ExtResource("7_1tid2")
+region = Rect2(384, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6hx2o"]
+atlas = ExtResource("7_1tid2")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvecj"]
+atlas = ExtResource("7_1tid2")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rv111"]
+atlas = ExtResource("7_1tid2")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ee100"]
+atlas = ExtResource("7_1tid2")
 region = Rect2(384, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5y4j1"]
@@ -256,6 +289,40 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_yl6ia")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_igsld")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1v5tp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bv74u")
+}],
+"loop": true,
+"name": &"cthulu_hit",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6hx2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvecj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rv111")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ee100")
+}],
+"loop": true,
+"name": &"cthulu_raise",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_5y4j1")
 }, {
 "duration": 1.0,
@@ -430,7 +497,6 @@ font_size = 54
 [node name="ReflexGame" type="Node2D"]
 script = ExtResource("1_jp0xa")
 TargetHitFallTime = 1.0
-DifficultyScalingFactor = 0.03
 
 [node name="RaiseTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -521,7 +587,7 @@ region_rect = Rect2(446.154, 827.718, 196.82, 89.6411)
 position = Vector2(547, 974)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_ear4u")
-animation = &"mummy_raise"
+animation = &"cthulu_hit"
 
 [node name="Target2" type="AnimatedSprite2D" parent="."]
 position = Vector2(796, 974)

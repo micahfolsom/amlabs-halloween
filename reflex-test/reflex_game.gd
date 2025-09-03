@@ -6,8 +6,8 @@ extends Node2D
 @export var TargetFallTime: float = 0.2
 @export var TargetHitFallTime: float = 0.15
 @export var ScientistProbability: float = 0.25
-# each point, rise time gets faster by (1 - (DSF * score)) * RiseTime
-@export var DifficultyScalingFactor: float = 0.5 / 20.0
+@export var RiseTimeMaxDifficulty: float = 0.5
+@export var MaxDifficultyScoreTarget: int = 100
 
 const NTARGETS: int = 4
 @onready var fGameFinished: bool = false
@@ -134,7 +134,7 @@ func raise_target():
 func _score_hit():
 	GameManager.nPoints += 1
 	GameManager.nGoodHits += 1
-	TargetRiseTime = 1.0 - (DifficultyScalingFactor * GameManager.nGoodHits)
+	TargetRiseTime = 1.0 - (_calc_dsf(GameManager.nGoodHits) * GameManager.nGoodHits)
 	$CurrentScoreLabel.text = "Score: " + str(GameManager.nPoints)
 	$CurrentScoreLabel.add_score()
 	$ScoreUpSFX.play()
@@ -157,3 +157,15 @@ func _on_game_clock_timeout() -> void:
 	fGameFinished = true
 	$GameClock/GameClockLabel.hide()
 	$GameClock/GameFinishedLabel.show()
+
+func _calc_dsf(score: int) -> float:
+	"""Using the score, return the difficulty scaling factor
+	
+	A (log): gives an "ease out" feel, fast at first, slower later
+	"""
+	if score <= 1:
+		return 0.0
+	# this is equivalent to log_20(score)
+	# A
+	return 0.1 * (log(score) / log(MaxDifficultyScoreTarget))
+	
