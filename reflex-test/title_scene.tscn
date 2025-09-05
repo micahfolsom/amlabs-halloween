@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dxhacy0x6cx2k"]
+[gd_scene load_steps=9 format=3 uid="uid://dxhacy0x6cx2k"]
 
 [ext_resource type="Script" uid="uid://dpww3rvkgaj51" path="res://title_scene.gd" id="1_vf8ll"]
 [ext_resource type="Texture2D" uid="uid://cheu7jnmvppe6" path="res://blank.png" id="2_iiee8"]
 [ext_resource type="FontFile" uid="uid://by5tl6nk3w3fu" path="res://neon_pixel-7.ttf" id="3_cjp6w"]
 [ext_resource type="AudioStream" uid="uid://cevrvpmvn1161" path="res://sounds/whack intro.mp3" id="4_uah43"]
+[ext_resource type="AudioStream" uid="uid://ci1nei7cg0t30" path="res://sounds/insertCoin.wav" id="5_wp7ut"]
 
 [sub_resource type="SystemFont" id="SystemFont_8vtwa"]
 font_names = PackedStringArray("Monospace")
@@ -74,3 +75,6 @@ stream = ExtResource("4_uah43")
 volume_db = 1.0
 pitch_scale = 0.5
 autoplay = true
+
+[node name="CoinSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_wp7ut")
