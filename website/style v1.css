@@ -1,0 +1,68 @@
+/* --- General Reset --- */
+* { margin:0; padding:0; box-sizing:border-box; }
+html { background:#000; color:#00FF00; font-family:'Courier New', monospace; }
+
+/* --- Cursor Animation --- */
+@keyframes blink { 0%, 49% { opacity:1; } 50%, 100% { opacity:0; } }
+.cursor { display:inline-block; width:0.6em; background:#00FF00; animation:blink 1s step-start infinite; }
+
+/* --- Flicker Effect --- */
+@keyframes flicker {
+  0%   { opacity:1; }
+  20%  { opacity:0.7; }
+  40%  { opacity:0.9; }
+  60%  { opacity:0.8; }
+  80%  { opacity:1; }
+  100% { opacity:1; }
+}
+.flicker { animation:flicker 3s infinite; }
+
+/* --- Layout --- */
+body { display:flex; flex-direction:column; min-height:100vh; }
+header, footer { padding:1rem 2rem; text-align:center; }
+nav { background:#111; padding:0.5rem 2rem; }
+nav a { color:#0FF000; text-decoration:none; margin:0 1rem; }
+nav a:hover { text-decoration:underline; }
+
+/* --- Content --- */
+main { flex:1; padding:2rem; line-height:1.6; }
+h1,h2,h3 { color:#0FF000; margin-bottom:1rem; }
+h1.flicker { font-size:2.5rem; }
+h2.flicker { font-size:1.8rem; }
+p,li,dt,dd { color:#00FF00; }
+blockquote { border-left:3px solid #0FF000; margin-left:1rem; padding-left:1rem; font-style:italic; }
+
+/* --- Lists --- */
+ul,ol { margin-left:2rem; }
+li { margin-bottom:0.5rem; }
+
+/* --- Tables (for faculty) --- */
+table { width:100%; border-collapse:collapse; margin-top:1rem; }
+th,td { border:1px solid #0FF000; padding:0.5rem; }
+th { background:#111; }
+
+/* --- Footer --- */
+footer { background:#111; color:#AAA; font-size:0.8rem; }
+
+/* --- Optional: Image Styles --- */
+img { max-width:100%; height:auto; margin:1rem 0; }
+
+/* Place at the end of your style.css or inside <style> */
+#bg-glitch {
+    position: fixed;
+    inset: 0;          /* top:0; right:0; bottom:0; left:0; */
+    background: radial-gradient(circle at center, #001000 0%, #000 100%);
+    opacity: 0.05;     /* very subtle, so green text stays visible */
+    z-index: -1;
+    pointer-events: none;
+    animation: glitchWave 20s linear infinite;
+}
+
+@keyframes glitchWave {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(-5%); }
+    50%  { transform: translateX(5%); }
+    75%  { transform: translateX(-2%); }
+    100% { transform: translateX(0); }
+}
+

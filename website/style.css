@@ -1,0 +1,130 @@
+/* ==============================
+   1.  General Reset
+   ============================== */
+* { margin:0; padding:0; box-sizing:border-box; }
+html { background:#000; color:#00FF00; font-family:'Courier New', monospace; }
+
+/* ==============================
+   2.  Cursor Animation
+   ============================== */
+@keyframes blink { 0%,49%{opacity:1;} 50%,100%{opacity:0;} }
+.cursor { display:inline-block; width:.6em; background:#00FF00; animation:blink 1s step-start infinite; }
+
+/* ==============================
+   3.  Flicker Effect
+   ============================== */
+@keyframes flicker {
+  0%   { opacity:1; }
+  20%  { opacity:0.6; }
+  40%  { opacity:0.9; }
+  60%  { opacity:0.8; }
+  80%  { opacity:0.7; }
+  100% { opacity:1; }
+}
+.flicker { animation:flicker 3s infinite; }
+
+/* ==============================
+   4.  Layout
+   ============================== */
+body { display:flex; flex-direction:column; min-height:100vh; }
+header, footer { padding:1rem 2rem; text-align:center; }
+nav { background:#111; padding:.5rem 2rem; }
+nav a { color:#0FF000; text-decoration:none; margin:0 1rem; }
+nav a:hover { text-decoration:underline; }
+
+/* ==============================
+   5.  Content
+   ============================== */
+main { flex:1; padding:2rem; line-height:1.6; }
+h1,h2,h3 { color:#0FF000; margin-bottom:1rem; }
+h1.flicker { font-size:2.5rem; }
+h2.flicker { font-size:1.8rem; }
+p,li,dt,dd { color:#00FF00; }
+blockquote { border-left:3px solid #0FF000; margin-left:1rem; padding-left:1rem; font-style:italic; }
+
+/* ==============================
+   6.  Lists
+   ============================== */
+ul,ol { margin-left:2rem; }
+li { margin-bottom:.5rem; }
+
+/* ==============================
+   7.  Tables (for faculty)
+   ============================== */
+table { width:100%; border-collapse:collapse; margin-top:1rem; }
+th,td { border:1px solid #0FF000; padding:.5rem; }
+th { background:#111; }
+
+/* ==============================
+   8.  Footer
+   ============================== */
+footer { background:#111; color:#AAA; font-size:.8rem; }
+
+/* ==============================
+   9.  Optional Image Styles
+   ============================== */
+img { max-width:100%; height:auto; margin:1rem 0; }
+
+/* ==============================
+   10.  Background Glitch
+   ============================== */
+#bg-glitch {
+    position:fixed; inset:0;
+    background: radial-gradient(circle at center, #001000 0%, #000 100%);
+    opacity:.05;     /* very subtle – green text stays visible */
+    z-index:-1;
+    pointer-events:none;
+    animation:glitchWave 20s linear infinite;
+}
+@keyframes glitchWave {
+    0%   { transform:translateX(0); }
+    25%  { transform:translateX(-5%); }
+    50%  { transform:translateX(5%); }
+    75%  { transform:translateX(-2%); }
+    100% { transform:translateX(0); }
+}
+
+/* ==============================
+   11. Pulsating Radial Gradient + Noise
+   ============================== */
+/* Core pulsating background (can be applied to any element) */
+.bg-pulse{
+  position:relative;            /* needed for the pseudo‑element */
+  overflow:hidden;              /* keep noise from leaking */
+  padding:2rem;                 /* space for content */
+  background: radial-gradient(
+                circle at center,
+                #004400 0%,
+                #000 70%
+              );
+  background-size:200% 200%;    /* starting size */
+  animation:pulse 15s ease-in-out infinite;
+}
+
+/* Pulsation keyframes */
+@keyframes pulse{
+  0%,100%{background-size:200% 200%;}
+  40%   {background-size:95% 80%;}
+}
+
+/* Tiny radial‑gradient dot overlay – “static” */
+.bg-pulse::after{
+  content:"";
+  position:absolute; inset:0;
+  background-image: radial-gradient(
+                      circle,
+                      rgba(0,0,0,0.04) 0%,
+                      rgba(0,0,0,0) 50%
+                    );
+  background-size:50px 50px;   /* grain size – adjust as needed */
+  background-repeat:repeat;
+  opacity:.6;                  /* how visible the static is */
+  pointer-events:none;         /* let clicks pass through */
+  animation:noiseDrift 2s linear infinite;
+}
+
+/* Optional subtle drifting of the noise */
+@keyframes noiseDrift{
+  10%{background-position:0 0;}
+  100%{background-position:8px 8px;}
+}

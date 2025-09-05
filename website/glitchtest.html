@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pulsating Radial Gradient + Noise Demo</title>
+<style>
+/* ── Base page styling ───────────────────────────────────────────── */
+body{
+  margin:0; padding:0; font-family:monospace;
+  background:#111; color:#0f0; line-height:1.4;
+}
+
+/* ── Pulsating radial gradient (original) ───────────────────────────── */
+.bg-pulse{
+  position:relative;            /* needed for the pseudo‑element */
+  overflow:hidden;              /* keep noise from leaking */
+  padding:2rem;                 /* space for content */
+  background: radial-gradient(circle at center,
+                               #004400 0%, #000 70%);
+  background-size: 200% 200%;
+  animation:pulse 15s ease-in-out infinite;
+}
+
+/* ── Pulsating keyframes ───────────────────────────────────────────── */
+@keyframes pulse{
+  0%,100%{background-size:200% 200%}
+  40%{background-size:95% 80%}
+}
+
+/* ── Noise overlay (tiny radial‑gradient dots) ─────────────────────── */
+.bg-pulse::after{
+  content:"";
+  position:absolute; inset:0;
+  background-image: radial-gradient(circle,
+                                    rgba(0,0,0,0.04) 0%,
+                                    rgba(0,0,0,0) 50%);
+  background-size:50px 50px;       /* grain size */
+  background-repeat:repeat;
+  opacity:0.6;                  /* how visible the static is */
+  pointer-events:none;           /* let clicks pass through */
+  animation:noiseDrift 2s linear infinite;
+}
+
+/* ── Optional subtle drifting of the noise ──────────────────────────── */
+@keyframes noiseDrift{
+  10%{background-position:0 0}
+  100%{background-position:8px 8px}
+}
+</style>
+</head>
+
+<body>
+<div class="bg-pulse">
+  <h1>Pulsating Radial Gradient + Noise</h1>
+  <p>
+    This is a single‑page demo of a pulsating radial gradient background
+    combined with a subtle, drifting “static” effect.  
+    The noise is generated entirely in CSS and adds a faint texture
+    without any image files or external resources.
+  </p>
+  <p>
+    Resize the window or scroll; the animation continues smoothly.
+  </p>
+</div>
+</body>
+</html>
