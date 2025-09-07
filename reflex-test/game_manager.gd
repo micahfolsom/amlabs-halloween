@@ -1,6 +1,6 @@
 extends Node
 
-const HIGH_SCORE_SAVE_PATH = "user://high_sfcores.json"
+const HIGH_SCORE_SAVE_PATH = "user://high_scores.json"
 
 var high_scores = []
 var hs_last_add_ts = 0
