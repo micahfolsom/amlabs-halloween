@@ -11,7 +11,7 @@ var pivot: Node2D = null
 var anim: AnimatedSprite2D = null
 enum TargetState { Raising, Lowering }
 static var SCI_PREFIX: Array[String] = ["alex", "tyler", "senia", "micah"]
-static var MON_PREFIX: Array[String] = ["mummy", "cthulu"]
+static var MON_PREFIX: Array[String] = ["mummy", "cthulu", "vampire", "werewolf"]
 enum TargetType { Scientist, Monster }
 var type: TargetType = TargetType.Monster
 var anim_prefix: String = ""

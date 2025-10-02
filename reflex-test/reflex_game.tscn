@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://cybspqymj4ic8"]
+[gd_scene load_steps=98 format=3 uid="uid://cybspqymj4ic8"]
 
 [ext_resource type="Script" uid="uid://cmfgcelmnbk0p" path="res://reflex_game.gd" id="1_jp0xa"]
 [ext_resource type="Texture2D" uid="uid://b46eovjtsekp3" path="res://reflexlab_background.png" id="1_v3j5b"]
@@ -14,7 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://cn8khoicbmev3" path="res://scientist_tyler.png" id="9_8mgt1"]
 [ext_resource type="AudioStream" uid="uid://cgtg2sjvn1ls2" path="res://sounds/scientist_hit.wav" id="9_oyhy4"]
 [ext_resource type="Script" uid="uid://cmf7kxnyeur36" path="res://game_clock.gd" id="10_ear4u"]
+[ext_resource type="Texture2D" uid="uid://d4cdko6syiwb" path="res://vampire.png" id="12_431w0"]
 [ext_resource type="AudioStream" uid="uid://cevrvpmvn1161" path="res://sounds/whack intro.mp3" id="13_agelm"]
+[ext_resource type="Texture2D" uid="uid://bitpxrf0m3hol" path="res://werewolf.png" id="13_ca841"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vjh6j"]
 font_size = 44
@@ -251,6 +253,70 @@ region = Rect2(256, 0, 128, 128)
 atlas = ExtResource("9_8mgt1")
 region = Rect2(384, 0, 128, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_lyag1"]
+atlas = ExtResource("12_431w0")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_poq5y"]
+atlas = ExtResource("12_431w0")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3c8yg"]
+atlas = ExtResource("12_431w0")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jc2i3"]
+atlas = ExtResource("12_431w0")
+region = Rect2(384, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_diwmb"]
+atlas = ExtResource("12_431w0")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7apw"]
+atlas = ExtResource("12_431w0")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_am1bg"]
+atlas = ExtResource("12_431w0")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_68bmb"]
+atlas = ExtResource("12_431w0")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pfoj7"]
+atlas = ExtResource("13_ca841")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_65v5e"]
+atlas = ExtResource("13_ca841")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gg5r4"]
+atlas = ExtResource("13_ca841")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xi65w"]
+atlas = ExtResource("13_ca841")
+region = Rect2(384, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7b4x6"]
+atlas = ExtResource("13_ca841")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rytev"]
+atlas = ExtResource("13_ca841")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n27x7"]
+atlas = ExtResource("13_ca841")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2tivv"]
+atlas = ExtResource("13_ca841")
+region = Rect2(384, 0, 128, 128)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_ear4u"]
 animations = [{
 "frames": [{
@@ -480,6 +546,74 @@ animations = [{
 "loop": true,
 "name": &"tyler_raise",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lyag1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_poq5y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3c8yg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jc2i3")
+}],
+"loop": true,
+"name": &"vampire_hit",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_diwmb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7apw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_am1bg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_68bmb")
+}],
+"loop": true,
+"name": &"vampire_raise",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pfoj7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_65v5e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gg5r4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xi65w")
+}],
+"loop": true,
+"name": &"werewolf_hit",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7b4x6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rytev")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n27x7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2tivv")
+}],
+"loop": true,
+"name": &"werewolf_raise",
+"speed": 10.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oyhy4"]
@@ -587,7 +721,7 @@ region_rect = Rect2(446.154, 827.718, 196.82, 89.6411)
 position = Vector2(547, 974)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_ear4u")
-animation = &"cthulu_hit"
+animation = &"werewolf_hit"
 
 [node name="Target2" type="AnimatedSprite2D" parent="."]
 position = Vector2(796, 974)
