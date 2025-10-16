@@ -2,12 +2,15 @@ extends Node2D
 
 # Editor parameters
 @export_group("Target Params")
-@export var TargetRiseTime: float = 1
+@export var StartingRiseTime: float = 2
+@export var TargetRiseTime: float = StartingRiseTime
 @export var TargetFallTime: float = 0.2
 @export var TargetHitFallTime: float = 0.15
 @export var ScientistProbability: float = 0.25
 @export var RiseTimeMaxDifficulty: float = 0.5
-@export var MaxDifficultyScoreTarget: int = 100
+@export var MaxDifficultyScoreTarget: int = 5
+var PowerLevelStep = (StartingRiseTime - RiseTimeMaxDifficulty) / 10
+var CurrentPowerLevel = 1
 
 const NTARGETS: int = 4
 @onready var fGameFinished: bool = false
@@ -31,6 +34,7 @@ func _ready():
 	_populate_target_data()
 	GameManager.nPoints = 0
 	GameManager.nGoodHits = 0
+	$PowerLevelLabel.text = "Difficulty: %d / 10" % CurrentPowerLevel
 	
 func _physics_process(delta: float) -> void:
 	# move targets if they are 1) active and 2) in the correct
@@ -132,9 +136,11 @@ func raise_target():
 	
 
 func _score_hit():
-	GameManager.nPoints += 1
-	GameManager.nGoodHits += 1
-	TargetRiseTime = 1.0 - (_calc_dsf(GameManager.nGoodHits) * GameManager.nGoodHits)
+	GameManager.nPoints += 2
+	GameManager.nGoodHits += 2
+	TargetRiseTime = StartingRiseTime - _calc_dsf(GameManager.nGoodHits)
+	CurrentPowerLevel = _calc_dsf(GameManager.nGoodHits) / PowerLevelStep
+	$PowerLevelLabel.text = "Difficulty: %d / 10" % CurrentPowerLevel
 	$CurrentScoreLabel.text = "Score: " + str(GameManager.nPoints)
 	$CurrentScoreLabel.add_score()
 	$ScoreUpSFX.play()
@@ -166,6 +172,6 @@ func _calc_dsf(score: int) -> float:
 	if score <= 1:
 		return 0.0
 	# this is equivalent to log_20(score)
-	# A
-	return 0.1 * (log(score) / log(MaxDifficultyScoreTarget))
+	var A = (1 - RiseTimeMaxDifficulty) / log(MaxDifficultyScoreTarget)
+	return A * log(score)
 	
