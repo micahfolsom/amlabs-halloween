@@ -765,7 +765,7 @@ position = Vector2(924, 759.75)
 shape = SubResource("RectangleShape2D_ear4u")
 
 [node name="GameClock" type="Timer" parent="."]
-wait_time = 20.0
+wait_time = 30.0
 one_shot = true
 autostart = true
 script = ExtResource("10_ear4u")
@@ -775,7 +775,7 @@ offset_left = 917.0
 offset_top = 351.0
 offset_right = 1000.0
 offset_bottom = 412.0
-text = "15 s"
+text = "30 s"
 label_settings = SubResource("LabelSettings_ear4u")
 
 [node name="GameFinishedLabel" type="Label" parent="GameClock"]
