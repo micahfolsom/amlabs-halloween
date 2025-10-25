@@ -162,7 +162,7 @@ func _on_game_clock_timeout() -> void:
 	print("game finished")
 	fGameFinished = true
 	$GameClock/GameClockLabel.hide()
-	$GameClock/GameFinishedLabel.show()
+	#$GameClock/GameFinishedLabel.show()
 
 func _calc_dsf(score: int) -> float:
 	"""Using the score, return the difficulty scaling factor
