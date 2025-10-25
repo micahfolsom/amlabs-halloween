@@ -102,7 +102,7 @@ offset_bottom = 339.0
 text = "Please input your initials
 
 
-_ _ _"
+_ _ _ _ _ _"
 label_settings = SubResource("LabelSettings_fviek")
 
 [node name="InputInitialsActual" type="Label" parent="."]

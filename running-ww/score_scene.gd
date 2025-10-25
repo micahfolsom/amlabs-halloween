@@ -43,14 +43,14 @@ func _input(event):
 			# 65 = A, 90 = Z
 			if event.keycode >= 65 and event.keycode <= 90:
 				kp_letter = true
-			if (kp_number or kp_letter) and (num_initials_entered < 3):
+			if (kp_number or kp_letter) and (num_initials_entered < 6):
 				print(event.as_text_key_label() + ' was pressed')
 				$InputInitialsActual.text += event.as_text_key_label() + ' '
 				initials_entered += event.as_text_key_label().to_upper()
 				num_initials_entered += 1
 	
 	# 3 entered, confirm, then enable scroll
-	if (not scroll_lines_enabled) and (num_initials_entered == 3):
+	if (not scroll_lines_enabled) and (num_initials_entered == 6):
 		var accept_pressed = Input.is_action_just_pressed("ui_accept")
 		if accept_pressed:
 			_save_latest_score()
